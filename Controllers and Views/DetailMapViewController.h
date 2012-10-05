@@ -23,6 +23,9 @@
     NSString *startPoint;
     NSString *endPoint;
     NSArray *wayPoints;
+    
+    NSArray *routePoints;
+    MKPolyline *objPolyline;
 }
 
 // model object

@@ -25,6 +25,9 @@
 @property (copy) NSString* subtitle;
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 
+// just initialize with the raw data needed for display
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocationCoordinate2D)loc;
+
 // save the streetname and perform forward Geocoding to convert to coordinate
 - (id)initWithAddress:(NSString*)address;
 

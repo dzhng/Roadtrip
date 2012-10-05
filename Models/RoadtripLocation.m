@@ -22,6 +22,16 @@
     return self;
 }
 
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocationCoordinate2D)loc
+{
+    if (self = [super init]) {
+        [self setTitle:title];
+        [self setSubtitle:subtitle];
+        [self setCoordinate:loc];
+    }
+    return self;
+}
+
 - (id)initWithLatitude:(float)latitude andLongitude:(float)longitude
 {
     if (self = [super init]) {

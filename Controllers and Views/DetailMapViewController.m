@@ -41,6 +41,24 @@
     mapView.showsUserLocation = NO;
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:mapView];
+    
+    // Origin Location.
+    CLLocationCoordinate2D loc1;
+    loc1.latitude = 29.0167;
+    loc1.longitude = 77.3833;
+    RoadtripLocation *origin = [[RoadtripLocation alloc] initWithTitle:@"loc1" subTitle:@"Home1" andCoordinate:loc1];
+    [mapView addAnnotation:origin];
+    
+    // Destination Location.
+    CLLocationCoordinate2D loc2;
+    loc2.latitude = 19.076000;
+    loc2.longitude = 72.877670;
+    RoadtripLocation *destination = [[RoadtripLocation alloc] initWithTitle:@"loc2" subTitle:@"Home2" andCoordinate:loc2];
+    [mapView addAnnotation:destination];
+    
+    routePoints = [self getRoutePointFrom:origin to:destination];
+    [self drawRoute];
+    [self centerMap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -150,6 +168,115 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
+#pragma mark Routing functions
+/* This will get the route coordinates from the google api. */
+- (NSArray*)getRoutePointFrom:(RoadtripLocation *)origin to:(RoadtripLocation *)destination
+{
+    NSString* saddr = [NSString stringWithFormat:@"%f,%f", origin.coordinate.latitude, origin.coordinate.longitude];
+    NSString* daddr = [NSString stringWithFormat:@"%f,%f", destination.coordinate.latitude, destination.coordinate.longitude];
+    
+    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@", saddr, daddr];
+    NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
+    
+    NSError *error;
+    NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"points:\\\"([^\\\"]*)\\\"" options:0 error:NULL];
+    NSTextCheckingResult *match = [regex firstMatchInString:apiResponse options:0 range:NSMakeRange(0, [apiResponse length])];
+    NSString *encodedPoints = [apiResponse substringWithRange:[match rangeAtIndex:1]];
+    
+    return [self decodePolyLine:[encodedPoints mutableCopy]];
+}
+
+- (NSMutableArray *)decodePolyLine:(NSMutableString *)encodedString
+{
+    [encodedString replaceOccurrencesOfString:@"\\\\" withString:@"\\"
+                                      options:NSLiteralSearch
+                                        range:NSMakeRange(0, [encodedString length])];
+    NSInteger len = [encodedString length];
+    NSInteger index = 0;
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger lat=0;
+    NSInteger lng=0;
+    while (index < len) {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        do {
+            b = [encodedString characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lat += dlat;
+        shift = 0;
+        result = 0;
+        do {
+            b = [encodedString characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
+        lng += dlng;
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        printf("\n[%f,", [latitude doubleValue]);
+        printf("%f]", [longitude doubleValue]);
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:loc];
+    }
+    return array;
+}
+
+- (void)drawRoute
+{
+    int numPoints = [routePoints count];
+    if (numPoints > 1)
+    {
+        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
+        for (int i = 0; i < numPoints; i++)
+        {
+            CLLocation* current = [routePoints objectAtIndex:i];
+            coords[i] = current.coordinate;
+        }
+        
+        objPolyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
+        free(coords);
+        
+        [mapView addOverlay:objPolyline];
+        [mapView setNeedsDisplay];
+    }
+}
+
+- (void)centerMap
+{
+    MKCoordinateRegion region;
+    
+    CLLocationDegrees maxLat = -90;
+    CLLocationDegrees maxLon = -180;
+    CLLocationDegrees minLat = 90;
+    CLLocationDegrees minLon = 180;
+    
+    for(int idx = 0; idx < routePoints.count; idx++)
+    {
+        CLLocation* currentLocation = [routePoints objectAtIndex:idx];
+        if(currentLocation.coordinate.latitude > maxLat)
+            maxLat = currentLocation.coordinate.latitude;
+        if(currentLocation.coordinate.latitude < minLat)
+            minLat = currentLocation.coordinate.latitude;
+        if(currentLocation.coordinate.longitude > maxLon)
+            maxLon = currentLocation.coordinate.longitude;
+        if(currentLocation.coordinate.longitude < minLon)
+            minLon = currentLocation.coordinate.longitude;
+    }
+    
+    region.center.latitude     = (maxLat + minLat) / 2;
+    region.center.longitude    = (maxLon + minLon) / 2;
+    region.span.latitudeDelta  = maxLat - minLat;
+    region.span.longitudeDelta = maxLon - minLon;
+    
+    [mapView setRegion:region animated:YES];
+}
+
 #pragma mark Mapview delegate Functions
 - (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated
 {
@@ -164,6 +291,16 @@
 	[routeOverlayView setNeedsDisplay];
     // we might want to center again, just incase
     momentumScrolling = false;
+}
+
+/* MKMapViewDelegate Meth0d -- for viewForOverlay*/
+- (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
+{
+    MKPolylineView *view = [[MKPolylineView alloc] initWithPolyline:objPolyline];
+    view.fillColor = [UIColor blackColor];
+    view.strokeColor = [UIColor blackColor];
+    view.lineWidth = 4;
+    return view;
 }
 
 // show annotations on each placemarks
