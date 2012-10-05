@@ -27,7 +27,6 @@
         momentumScrolling = false;
         startPoint = @"New York City";
         endPoint = @"Boston";
-        travelMode = UICGTravelModeDriving;
     }
     return self;
 }
@@ -42,15 +41,6 @@
     mapView.showsUserLocation = NO;
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:mapView];
-    
-    routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:mapView];
-    
-    directions = [UICGDirections sharedDirections];
-    directions.delegate = self;
-    
-    if (directions.isInitialized) {
-		[self update];
-	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,17 +60,6 @@
         [loc setSearch:false];
         [mapView addAnnotation:loc];
     }
-    
-    UICGDirectionsOptions *options = [[UICGDirectionsOptions alloc] init];
-	options.travelMode = travelMode;
-	if ([wayPoints count] > 0) {
-		NSArray *routePoints = [NSArray arrayWithObject:startPoint];
-		routePoints = [routePoints arrayByAddingObjectsFromArray:wayPoints];
-		routePoints = [routePoints arrayByAddingObject:endPoint];
-		[directions loadFromWaypoints:routePoints options:options];
-	} else {
-		[directions loadWithStartPoint:startPoint endPoint:endPoint options:options];
-	}
 }
 
 - (void)updateSearchLocations
@@ -171,61 +150,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
-#pragma mark UICGDirections Delegate Methods
-
-- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
-	[self update];
-}
-
-- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-	[alertView show];
-}
-
-- (void)directionsDidUpdateDirections:(UICGDirections *)dir {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	
-	// Overlay polylines
-	UICGPolyline *polyline = [dir polyline];
-	NSArray *routePoints = [polyline routePoints];
-	[routeOverlayView setRoutes:routePoints];
-	
-	// Add annotations
-	UICRouteAnnotation *startAnnotation = [[UICRouteAnnotation alloc]
-                                           initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
-                                                        title:startPoint
-                                              annotationType:UICRouteAnnotationTypeStart];
-    
-	UICRouteAnnotation *endAnnotation = [[UICRouteAnnotation alloc]
-                                         initWithCoordinate:[[routePoints lastObject] coordinate]
-                                                      title:endPoint
-                                            annotationType:UICRouteAnnotationTypeEnd];
-    
-	if ([wayPoints count] > 0) {
-		NSInteger numberOfRoutes = [dir numberOfRoutes];
-		for (NSInteger index = 0; index < numberOfRoutes; index++) {
-			UICGRoute *route = [dir routeAtIndex:index];
-			CLLocation *location = [route endLocation];
-			UICRouteAnnotation *annotation = [[UICRouteAnnotation alloc]
-                                              initWithCoordinate:[location coordinate]
-                                                           title:[[route endGeocode] objectForKey:@"address"]
-                                                 annotationType:UICRouteAnnotationTypeWayPoint];
-            
-			[mapView addAnnotation:annotation];
-		}
-	}
-    
-	[mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
-}
-
-- (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-	[alertView show];
-}
-
 #pragma mark Mapview delegate Functions
 - (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated
 {
@@ -268,27 +192,9 @@
         }
         
         return annotationView;
-    } else if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
-		MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:routeId];
-		if(!pinAnnotation) {
-			pinAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:routeId];
-		}
-		
-		if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeStart) {
-			pinAnnotation.pinColor = MKPinAnnotationColorGreen;
-		} else if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeEnd) {
-			pinAnnotation.pinColor = MKPinAnnotationColorRed;
-		} else {
-			pinAnnotation.pinColor = MKPinAnnotationColorPurple;
-		}
-		
-		pinAnnotation.animatesDrop = YES;
-		pinAnnotation.enabled = YES;
-		pinAnnotation.canShowCallout = YES;
-		return pinAnnotation;
     }
     
-    return nil;    
+    return nil;
 }
 
 // catch annotation view to make our own callout
