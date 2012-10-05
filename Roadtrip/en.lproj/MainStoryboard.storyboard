@@ -119,19 +119,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" id="hyt-0x-h25">
+                            <view contentMode="scaleToFill" id="Ovo-Nn-lfR">
                                 <rect key="frame" x="0.0" y="0.0" width="768" height="1004"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="QUO-ib-4VZ" id="6uO-9F-dtU"/>
-                                </connections>
-                            </mapView>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems/>
                     <connections>
-                        <outlet property="mapView" destination="hyt-0x-h25" id="6vP-eg-DOf"/>
+                        <outlet property="contentView" destination="Ovo-Nn-lfR" id="O3K-QM-8aq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kar-Ae-zDA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -206,7 +204,7 @@
         <class className="DetailMapViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailMapViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="contentView" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="LocationTableCell" superclassName="UITableViewCell">

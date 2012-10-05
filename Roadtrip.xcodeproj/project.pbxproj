@@ -43,6 +43,8 @@
 		637F445D161F626B001CAB44 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4457161F626B001CAB44 /* SBJsonWriter.m */; };
 		637F4463161F6286001CAB44 /* UICRouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4460161F6286001CAB44 /* UICRouteAnnotation.m */; };
 		637F4464161F6286001CAB44 /* UICRouteOverlayMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */; };
+		637F4468161F79C1001CAB44 /* api.html in Resources */ = {isa = PBXBuildFile; fileRef = 637F4466161F79C1001CAB44 /* api.html */; };
+		637F4469161F79C1001CAB44 /* json2.js in Sources */ = {isa = PBXBuildFile; fileRef = 637F4467161F79C1001CAB44 /* json2.js */; };
 		63A79F13161D7EDF00E62E5B /* RoadtripLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */; };
 		63A79F15161D890E00E62E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A79F14161D890E00E62E5B /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
@@ -114,6 +116,8 @@
 		637F4460161F6286001CAB44 /* UICRouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICRouteAnnotation.m; path = "Library/Mapkit Extension/UICRouteAnnotation.m"; sourceTree = "<group>"; };
 		637F4461161F6286001CAB44 /* UICRouteOverlayMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICRouteOverlayMapView.h; path = "Library/Mapkit Extension/UICRouteOverlayMapView.h"; sourceTree = "<group>"; };
 		637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICRouteOverlayMapView.m; path = "Library/Mapkit Extension/UICRouteOverlayMapView.m"; sourceTree = "<group>"; };
+		637F4466161F79C1001CAB44 /* api.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = api.html; path = Library/Resources/api.html; sourceTree = "<group>"; };
+		637F4467161F79C1001CAB44 /* json2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = json2.js; path = Library/Resources/json2.js; sourceTree = "<group>"; };
 		63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripLocation.h; path = Models/RoadtripLocation.h; sourceTree = "<group>"; };
 		63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripLocation.m; path = Models/RoadtripLocation.m; sourceTree = "<group>"; };
 		63A79F14161D890E00E62E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -231,6 +235,7 @@
 		637F4431161F622D001CAB44 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				637F4465161F79B5001CAB44 /* Resources */,
 				637F445E161F6277001CAB44 /* Mapkit Extension */,
 				637F444A161F6262001CAB44 /* JSON */,
 				637F4434161F6250001CAB44 /* Google Maps */,
@@ -288,6 +293,15 @@
 				637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */,
 			);
 			name = "Mapkit Extension";
+			sourceTree = "<group>";
+		};
+		637F4465161F79B5001CAB44 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				637F4466161F79C1001CAB44 /* api.html */,
+				637F4467161F79C1001CAB44 /* json2.js */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -349,6 +363,7 @@
 				635EE843161D183200E2635F /* MainStoryboard.storyboard in Resources */,
 				637D1CBC161E583F00BDF6F4 /* MapPopoverViewController.xib in Resources */,
 				637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */,
+				637F4468161F79C1001CAB44 /* api.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +400,7 @@
 				637F445D161F626B001CAB44 /* SBJsonWriter.m in Sources */,
 				637F4463161F6286001CAB44 /* UICRouteAnnotation.m in Sources */,
 				637F4464161F6286001CAB44 /* UICRouteOverlayMapView.m in Sources */,
+				637F4469161F79C1001CAB44 /* json2.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -23,15 +23,11 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        popoverNeedsDisplay = false;
-        regionHasNotMovedSinceCentering = true;
-        
         // stores if we're currently momentum scrolling on the map
         momentumScrolling = false;
-        // if we want to jump to a location, we need to wait for momentum scrolling to finish first
-        // this flag sets that we're waiting for momentum to finish
-        waitForMomentumFinish = false;
+        startPoint = @"New York City";
+        endPoint = @"Boston";
+        travelMode = UICGTravelModeDriving;
     }
     return self;
 }
@@ -39,7 +35,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+    // initialize mapview
+    mapView = [[MKMapView alloc] initWithFrame:self.contentView.frame];
+    mapView.delegate = self;
+    mapView.showsUserLocation = NO;
+    [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [self.contentView addSubview:mapView];
+    
+    routeOverlayView = [[UICRouteOverlayMapView alloc] initWithMapView:mapView];
+    
+    directions = [UICGDirections sharedDirections];
+    directions.delegate = self;
+    
+    if (directions.isInitialized) {
+		[self update];
+	}
 }
 
 - (void)didReceiveMemoryWarning
@@ -50,13 +61,26 @@
 
 - (void)update
 {
+    [self removeDirectionLocations];
+    
     // update the map with all the current locations
     NSArray* locations = self.roadtripModel.locationArray;
     
     for(RoadtripLocation* loc in locations) {
         [loc setSearch:false];
-        [self.mapView addAnnotation:loc];
+        [mapView addAnnotation:loc];
     }
+    
+    UICGDirectionsOptions *options = [[UICGDirectionsOptions alloc] init];
+	options.travelMode = travelMode;
+	if ([wayPoints count] > 0) {
+		NSArray *routePoints = [NSArray arrayWithObject:startPoint];
+		routePoints = [routePoints arrayByAddingObjectsFromArray:wayPoints];
+		routePoints = [routePoints arrayByAddingObject:endPoint];
+		[directions loadFromWaypoints:routePoints options:options];
+	} else {
+		[directions loadWithStartPoint:startPoint endPoint:endPoint options:options];
+	}
 }
 
 - (void)updateSearchLocations
@@ -77,39 +101,48 @@
     for(RoadtripLocation* loc in locations) {
         // set the locations as search locations
         [loc setSearch:true];
-        [self.mapView addAnnotation:loc];
+        [mapView addAnnotation:loc];
     }
 }
 
 - (void)centerMapOnLocation:(RoadtripLocation*)location
 {
     MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance([location coordinate], MAP_ZOOM, MAP_ZOOM);
-    [self.mapView setRegion:newRegion animated:NO];
-    [self.mapView selectAnnotation:location animated:YES];
+    [mapView setRegion:newRegion animated:NO];
+    [mapView selectAnnotation:location animated:YES];
     NSLog(@"%d", location.search);
+}
+
+- (void)removeDirectionLocations
+{
+    // first remove all original direction annotations
+    for (id<MKAnnotation> annotation in mapView.annotations) {
+        if([annotation isKindOfClass:[RoadtripLocation class]] && ![(RoadtripLocation*)annotation search])
+            [mapView removeAnnotation:annotation];
+    }
 }
 
 - (void)removeSearchLocations
 {
     // first remove all original search annotations
-    for (id<MKAnnotation> annotation in self.mapView.annotations) {
+    for (id<MKAnnotation> annotation in mapView.annotations) {
         if([annotation isKindOfClass:[RoadtripLocation class]] && [(RoadtripLocation*)annotation search])
-            [self.mapView removeAnnotation:annotation];
+            [mapView removeAnnotation:annotation];
     }
 }
 
 - (void)removeSearchLocation:(RoadtripLocation*)location
 {
     // remove the pin
-    [self.mapView removeAnnotation:location];
+    [mapView removeAnnotation:location];
     // also remove popover box
     [self.mapPopover dismissPopoverAnimated:YES];
 }
 
 - (void)deselectAnnotation
 {
-    for(id<MKAnnotation> annotation in [self.mapView selectedAnnotations]) {
-        [self.mapView deselectAnnotation:annotation animated:YES];
+    for(id<MKAnnotation> annotation in [mapView selectedAnnotations]) {
+        [mapView deselectAnnotation:annotation animated:YES];
     }
 }
 
@@ -118,7 +151,7 @@
 {
     RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:index];
     [loc setSearch:false];
-    [self.mapView addAnnotation:loc];
+    [mapView addAnnotation:loc];
 }
 
 // send out notification to add this location to current list of locations
@@ -138,28 +171,87 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
-#pragma mark Delegate Functions
-- (void)mapView:(MKMapView*)mapView regionWillChangeAnimated:(BOOL)animated
+#pragma mark UICGDirections Delegate Methods
+
+- (void)directionsDidFinishInitialize:(UICGDirections *)directions {
+	[self update];
+}
+
+- (void)directions:(UICGDirections *)directions didFailInitializeWithError:(NSError *)error {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+}
+
+- (void)directionsDidUpdateDirections:(UICGDirections *)dir {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	
+	// Overlay polylines
+	UICGPolyline *polyline = [dir polyline];
+	NSArray *routePoints = [polyline routePoints];
+	[routeOverlayView setRoutes:routePoints];
+	
+	// Add annotations
+	UICRouteAnnotation *startAnnotation = [[UICRouteAnnotation alloc]
+                                           initWithCoordinate:[[routePoints objectAtIndex:0] coordinate]
+                                                        title:startPoint
+                                              annotationType:UICRouteAnnotationTypeStart];
+    
+	UICRouteAnnotation *endAnnotation = [[UICRouteAnnotation alloc]
+                                         initWithCoordinate:[[routePoints lastObject] coordinate]
+                                                      title:endPoint
+                                            annotationType:UICRouteAnnotationTypeEnd];
+    
+	if ([wayPoints count] > 0) {
+		NSInteger numberOfRoutes = [dir numberOfRoutes];
+		for (NSInteger index = 0; index < numberOfRoutes; index++) {
+			UICGRoute *route = [dir routeAtIndex:index];
+			CLLocation *location = [route endLocation];
+			UICRouteAnnotation *annotation = [[UICRouteAnnotation alloc]
+                                              initWithCoordinate:[location coordinate]
+                                                           title:[[route endGeocode] objectForKey:@"address"]
+                                                 annotationType:UICRouteAnnotationTypeWayPoint];
+            
+			[mapView addAnnotation:annotation];
+		}
+	}
+    
+	[mapView addAnnotations:[NSArray arrayWithObjects:startAnnotation, endAnnotation, nil]];
+}
+
+- (void)directions:(UICGDirections *)directions didFailWithMessage:(NSString *)message {
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Map Directions" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+	[alertView show];
+}
+
+#pragma mark Mapview delegate Functions
+- (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated
 {
+	routeOverlayView.hidden = YES;
     // we're going to move, so set the flag
     momentumScrolling = true;
 }
 
-- (void)mapView:(MKMapView*)mapView regionDidChangeAnimated:(BOOL)animated
+- (void)mapView:(MKMapView*)mv regionDidChangeAnimated:(BOOL)animated
 {
+    routeOverlayView.hidden = NO;
+	[routeOverlayView setNeedsDisplay];
     // we might want to center again, just incase
     momentumScrolling = false;
 }
 
 // show annotations on each placemarks
-- (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
+- (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation
 {
-    static NSString *identifier = @"MapViewAnnotation";
+    static NSString *mapviewId = @"MapViewAnnotation";
+    static NSString *routeId = @"RouteAnnotation";
     if ([annotation isKindOfClass:[RoadtripLocation class]]) {
         
-        MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:identifier];
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:mapviewId];
         if (annotationView == nil) {
-            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:identifier];
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:mapviewId];
         } else {
             annotationView.annotation = annotation;
         }
@@ -176,13 +268,31 @@
         }
         
         return annotationView;
+    } else if ([annotation isKindOfClass:[UICRouteAnnotation class]]) {
+		MKPinAnnotationView *pinAnnotation = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:routeId];
+		if(!pinAnnotation) {
+			pinAnnotation = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:routeId];
+		}
+		
+		if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeStart) {
+			pinAnnotation.pinColor = MKPinAnnotationColorGreen;
+		} else if ([(UICRouteAnnotation *)annotation annotationType] == UICRouteAnnotationTypeEnd) {
+			pinAnnotation.pinColor = MKPinAnnotationColorRed;
+		} else {
+			pinAnnotation.pinColor = MKPinAnnotationColorPurple;
+		}
+		
+		pinAnnotation.animatesDrop = YES;
+		pinAnnotation.enabled = YES;
+		pinAnnotation.canShowCallout = YES;
+		return pinAnnotation;
     }
     
     return nil;    
 }
 
 // catch annotation view to make our own callout
--(void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+-(void)mapView:(MKMapView *)mv didSelectAnnotationView:(MKAnnotationView *)view
 {
     // if it's a search annotation, open popover by default
     RoadtripLocation* annotation = (RoadtripLocation*)(view.annotation);
@@ -220,7 +330,7 @@
     }
 }
 
-// popover delegate functions
+#pragma mark Popover delegate functions
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
     [self deselectAnnotation];

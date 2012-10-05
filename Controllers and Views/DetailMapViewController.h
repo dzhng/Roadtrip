@@ -12,24 +12,34 @@
 #import "RoadtripModel.h"
 #import "MapPopoverViewController.h"
 #import "SelectedPopoverViewController.h"
+#import "UICGDirections.h"
+#import "UICRouteAnnotation.h"
+#import "UICRouteOverlayMapView.h"
 
-@interface DetailMapViewController : UIViewController <UIPopoverControllerDelegate>
+@interface DetailMapViewController : UIViewController <UIPopoverControllerDelegate, MKMapViewDelegate, UICGDirectionsDelegate>
 {
-    bool popoverNeedsDisplay;
-    bool regionHasNotMovedSinceCentering;
     bool momentumScrolling;
-    bool waitForMomentumFinish;
+    
+    // mapview variables
+    MKMapView *mapView;
+    UICRouteOverlayMapView *routeOverlayView;
+    UICGDirections *directions;
+    NSString *startPoint;
+    NSString *endPoint;
+    NSArray *wayPoints;
+    UICGTravelModes travelMode;
 }
 
 // model object
 @property (retain, nonatomic) RoadtripModel* roadtripModel;
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (retain, nonatomic) UIPopoverController *mapPopover;
 
 - (void)update;
 - (void)updateSearchLocations;
 - (void)centerMapOnLocation:(RoadtripLocation*)location;
+- (void)removeDirectionLocations;
 - (void)removeSearchLocations;
 - (void)removeSearchLocation:(RoadtripLocation*)location;
 - (void)deselectAnnotation;
