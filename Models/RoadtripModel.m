@@ -97,7 +97,7 @@
 
 #pragma mark Routing functions
 
-/* This will get the route coordinates from the google api. */
+// get route coordinates from google API, should return array of RoadtripRoute
 - (NSArray*)calculateRoutes
 {
     if ([self.locationArray count] > 1) {
@@ -120,23 +120,21 @@
         NSDictionary* route = [routes objectAtIndex:0];
         NSArray* legs = [route objectForKey:@"legs"];
         
-        NSArray* decodedRoutes = [[NSMutableArray alloc] init];
+        NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
         for(NSDictionary* leg in legs) {
             NSArray* steps = [leg objectForKey:@"steps"];
             for(NSDictionary* step in steps) {
                 NSDictionary* polyline = [step objectForKey:@"polyline"];
                 NSString* points = [polyline objectForKey:@"points"];
-                decodedRoutes = [decodedRoutes arrayByAddingObjectsFromArray:[self decodePolyLine:points]];
+                [roadtripRoutes addObject: [[RoadtripRoute alloc] initWithPoints:[self decodePolyLine:points]]];
             }
         }
-        
-        self.routePoints = decodedRoutes;
-        return decodedRoutes;
+        return roadtripRoutes;
     } else {
         return nil;
     }
 }
-
+                 
 // decode the polyline binary data from GMaps API into an array of CLLocations
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedString
 {
@@ -173,7 +171,7 @@
     }
     return array;
 }
-
+                 
 #pragma mark Notification Handlers
 - (void)locationSelectedNotification:(NSNotification*)notification
 {
@@ -209,6 +207,7 @@
     
     // after adding location, we should recalculate all routes
     NSArray* routes = [self calculateRoutes];
+    [self setRouteArray:[NSMutableArray arrayWithArray:routes]];
     
     // tell our delegate to display routes
     [self.delegate displayRoutes:routes];

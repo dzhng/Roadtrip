@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <MapKit/MapKit.h>
 #import "RoadtripLocation.h"
+#import "RoadtripRoute.h"
 #import "RoadtripModel.h"
 #import "MapPopoverViewController.h"
 #import "SelectedPopoverViewController.h"
@@ -19,9 +20,6 @@
     
     // mapview variables
     MKMapView *mapView;
-    
-    // array of MKPolyline storing all the overlays used for routing
-    NSArray* routeOverlays;
 }
 
 // model object
@@ -40,7 +38,10 @@
 - (void)displayNewLocationAtIndex:(NSInteger)index;
 
 // routing methods
-- (void)drawRoute:(NSArray*)routePoints;
-- (void)centerMapOnRoute:(NSArray*)routePoints;
+// draw input routes on map, input is an array of RoadtripRoute
+- (void)drawRoutes:(NSArray*)routeArray;
+
+// center map on one specific route, input is an array of CLLocations
+- (void)centerMapOnRoutePoints:(NSArray*)routePoints;
 
 @end

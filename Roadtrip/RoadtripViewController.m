@@ -109,7 +109,7 @@
 - (void)displayRoutes:(NSArray *)routes
 {
     // tell the map controller to display
-    [mapController drawRoute:routes];
+    [mapController drawRoutes:routes];
 }
 
 @end

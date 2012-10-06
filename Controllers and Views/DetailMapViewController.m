@@ -60,10 +60,13 @@
         [mapView addAnnotation:loc];
     }
     
-    NSArray* routePoints = [self.roadtripModel calculateRoutes];
-    if(routePoints) {
-        [self drawRoute:routePoints];
-        [self centerMapOnRoute:routePoints];
+    NSArray* routes = [self.roadtripModel calculateRoutes];
+    if(routes) {
+        // draw all routes
+        [self drawRoutes:routes];
+        
+        // just center on the first route for now
+        [self centerMapOnRoutePoints:[[routes objectAtIndex:0] routePoints]];
     }
 }
 
@@ -154,7 +157,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
-- (void)centerMapOnRoute:(NSArray*)routePoints
+- (void)centerMapOnRoutePoints:(NSArray*)routePoints
 {
     MKCoordinateRegion region;
     
@@ -184,26 +187,16 @@
     [mapView setRegion:region animated:YES];
 }
 
-- (void)drawRoute:(NSArray*)routePoints
+- (void)drawRoutes:(NSArray*)routeArray
 {
-    [mapView removeOverlays:routeOverlays];
-    int numPoints = [routePoints count];
-    if (numPoints > 1)
-    {
-        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        for (int i = 0; i < numPoints; i++)
-        {
-            CLLocation* current = [routePoints objectAtIndex:i];
-            coords[i] = current.coordinate;
-        }
-        
-        MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-        free(coords);
-        
-        routeOverlays = [NSArray arrayWithObject:polyline];
-        [mapView addOverlays:routeOverlays];
-        [mapView setNeedsDisplay];
+    // just blanket remove all overlays
+    [mapView removeOverlays:mapView.overlays];
+    
+    // add all the overlays
+    for(RoadtripRoute* route in routeArray) {
+        [mapView addOverlays:route.routeOverlays];
     }
+    [mapView setNeedsDisplay];
 }
 
 #pragma mark Mapview delegate Functions

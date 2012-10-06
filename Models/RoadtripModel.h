@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "RoadtripLocation.h"
+#import "RoadtripRoute.h"
 #import "ModelNotifications.h"
 #import "JSONKit.h"
 
@@ -34,11 +35,11 @@
 @property (retain, nonatomic) NSMutableArray* locationArray;
 @property (retain, nonatomic) NSMutableArray* searchLocationArray;
 
+// data model of routes
+@property (retain, nonatomic) NSMutableArray* routeArray;
+
 // currently selected location
 @property (retain, nonatomic) RoadtripLocation* selectedLocation;
-
-// array of CLLocations that store points of route
-@property (retain, nonatomic) NSArray *routePoints;
 
 - (id)init;
 - (void)geocodeWithAddress:address;
