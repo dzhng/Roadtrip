@@ -67,7 +67,7 @@
 
 - (void)deselectAllRows
 {
-    for(int i = 0; i < [self.roadtripModel.locationArray count]; i++) {
+    for(int i = 0; i < [self.roadtripModel.locationArray count] + [self.roadtripModel.routeArray count]; i++) {
         [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES];
     }
 }
