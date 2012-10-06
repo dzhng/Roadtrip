@@ -20,11 +20,7 @@
     // mapview variables
     MKMapView *mapView;
     UIView *routeOverlayView;
-    NSString *startPoint;
-    NSString *endPoint;
-    NSArray *wayPoints;
     
-    NSArray *routePoints;
     MKPolyline *objPolyline;
 }
 
@@ -42,5 +38,9 @@
 - (void)removeSearchLocation:(RoadtripLocation*)location;
 - (void)deselectAnnotation;
 - (void)displayNewLocationAtIndex:(NSInteger)index;
+
+// routing methods
+- (void)drawRoute:(NSArray*)routePoints;
+- (void)centerMapOnRoute:(NSArray*)routePoints;
 
 @end

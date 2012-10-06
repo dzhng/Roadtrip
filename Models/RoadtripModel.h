@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "RoadtripLocation.h"
 #import "ModelNotifications.h"
+#import "JSONKit.h"
 
 @protocol RoadtripModelDelegate <NSObject>
 
@@ -24,6 +25,7 @@
 @interface RoadtripModel : NSObject
 {
     CLGeocoder* geocoder;        // stores geocoder used for location lookup
+    NSArray *routePoints;       // array of CLLocations that store points of route
 }
 
 @property (assign, nonatomic) id <RoadtripModelDelegate> delegate;
@@ -37,5 +39,10 @@
 
 - (id)init;
 - (void)geocodeWithAddress:address;
+- (void)addLocation:(RoadtripLocation*)location;
+
+// map routing functions
+- (NSArray*)calculateRoutes;
+- (NSMutableArray *)decodePolyLine:(NSString *)encodedString;
 
 @end

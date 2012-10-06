@@ -25,8 +25,6 @@
     if (self) {
         // stores if we're currently momentum scrolling on the map
         momentumScrolling = false;
-        startPoint = @"New York City";
-        endPoint = @"Boston";
     }
     return self;
 }
@@ -41,24 +39,6 @@
     mapView.showsUserLocation = NO;
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:mapView];
-    
-    // Origin Location.
-    CLLocationCoordinate2D loc1;
-    loc1.latitude = 29.0167;
-    loc1.longitude = 77.3833;
-    RoadtripLocation *origin = [[RoadtripLocation alloc] initWithTitle:@"loc1" subTitle:@"Home1" andCoordinate:loc1];
-    [mapView addAnnotation:origin];
-    
-    // Destination Location.
-    CLLocationCoordinate2D loc2;
-    loc2.latitude = 19.076000;
-    loc2.longitude = 72.877670;
-    RoadtripLocation *destination = [[RoadtripLocation alloc] initWithTitle:@"loc2" subTitle:@"Home2" andCoordinate:loc2];
-    [mapView addAnnotation:destination];
-    
-    routePoints = [self getRoutePointFrom:origin to:destination];
-    [self drawRoute];
-    [self centerMap];
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,6 +58,26 @@
         [loc setSearch:false];
         [mapView addAnnotation:loc];
     }
+    
+    // Origin Location.
+    CLLocationCoordinate2D loc1;
+    loc1.latitude = 29.0167;
+    loc1.longitude = 77.3833;
+    RoadtripLocation *origin = [[RoadtripLocation alloc] initWithTitle:@"loc1" subTitle:@"Home1" andCoordinate:loc1];
+    
+    // Destination Location.
+    CLLocationCoordinate2D loc2;
+    loc2.latitude = 19.076000;
+    loc2.longitude = 72.877670;
+    RoadtripLocation *destination = [[RoadtripLocation alloc] initWithTitle:@"loc2" subTitle:@"Home2" andCoordinate:loc2];
+    
+    // add the 2 example locations
+    [self.roadtripModel addLocation:origin];
+    [self.roadtripModel addLocation:destination];
+    
+    NSArray* routePoints = [self.roadtripModel calculateRoutes];
+    [self drawRoute:routePoints];
+    [self centerMapOnRoute:routePoints];
 }
 
 - (void)updateSearchLocations
@@ -107,7 +107,6 @@
     MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance([location coordinate], MAP_ZOOM, MAP_ZOOM);
     [mapView setRegion:newRegion animated:NO];
     [mapView selectAnnotation:location animated:YES];
-    NSLog(@"%d", location.search);
 }
 
 - (void)removeDirectionLocations
@@ -168,86 +167,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
-#pragma mark Routing functions
-/* This will get the route coordinates from the google api. */
-- (NSArray*)getRoutePointFrom:(RoadtripLocation *)origin to:(RoadtripLocation *)destination
-{
-    NSString* saddr = [NSString stringWithFormat:@"%f,%f", origin.coordinate.latitude, origin.coordinate.longitude];
-    NSString* daddr = [NSString stringWithFormat:@"%f,%f", destination.coordinate.latitude, destination.coordinate.longitude];
-    
-    NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.google.com/maps?output=dragdir&saddr=%@&daddr=%@", saddr, daddr];
-    NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
-    
-    NSError *error;
-    NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"points:\\\"([^\\\"]*)\\\"" options:0 error:NULL];
-    NSTextCheckingResult *match = [regex firstMatchInString:apiResponse options:0 range:NSMakeRange(0, [apiResponse length])];
-    NSString *encodedPoints = [apiResponse substringWithRange:[match rangeAtIndex:1]];
-    
-    return [self decodePolyLine:[encodedPoints mutableCopy]];
-}
-
-- (NSMutableArray *)decodePolyLine:(NSMutableString *)encodedString
-{
-    [encodedString replaceOccurrencesOfString:@"\\\\" withString:@"\\"
-                                      options:NSLiteralSearch
-                                        range:NSMakeRange(0, [encodedString length])];
-    NSInteger len = [encodedString length];
-    NSInteger index = 0;
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSInteger lat=0;
-    NSInteger lng=0;
-    while (index < len) {
-        NSInteger b;
-        NSInteger shift = 0;
-        NSInteger result = 0;
-        do {
-            b = [encodedString characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lat += dlat;
-        shift = 0;
-        result = 0;
-        do {
-            b = [encodedString characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lng += dlng;
-        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
-        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        printf("\n[%f,", [latitude doubleValue]);
-        printf("%f]", [longitude doubleValue]);
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
-        [array addObject:loc];
-    }
-    return array;
-}
-
-- (void)drawRoute
-{
-    int numPoints = [routePoints count];
-    if (numPoints > 1)
-    {
-        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        for (int i = 0; i < numPoints; i++)
-        {
-            CLLocation* current = [routePoints objectAtIndex:i];
-            coords[i] = current.coordinate;
-        }
-        
-        objPolyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-        free(coords);
-        
-        [mapView addOverlay:objPolyline];
-        [mapView setNeedsDisplay];
-    }
-}
-
-- (void)centerMap
+- (void)centerMapOnRoute:(NSArray*)routePoints
 {
     MKCoordinateRegion region;
     
@@ -275,6 +195,26 @@
     region.span.longitudeDelta = maxLon - minLon;
     
     [mapView setRegion:region animated:YES];
+}
+
+- (void)drawRoute:(NSArray*)routePoints
+{
+    int numPoints = [routePoints count];
+    if (numPoints > 1)
+    {
+        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
+        for (int i = 0; i < numPoints; i++)
+        {
+            CLLocation* current = [routePoints objectAtIndex:i];
+            coords[i] = current.coordinate;
+        }
+        
+        objPolyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
+        free(coords);
+        
+        [mapView addOverlay:objPolyline];
+        [mapView setNeedsDisplay];
+    }
 }
 
 #pragma mark Mapview delegate Functions
@@ -307,7 +247,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mv viewForAnnotation:(id <MKAnnotation>)annotation
 {
     static NSString *mapviewId = @"MapViewAnnotation";
-    static NSString *routeId = @"RouteAnnotation";
+    //static NSString *routeId = @"RouteAnnotation";
     if ([annotation isKindOfClass:[RoadtripLocation class]]) {
         
         MKPinAnnotationView *annotationView = (MKPinAnnotationView *) [mapView dequeueReusableAnnotationViewWithIdentifier:mapviewId];

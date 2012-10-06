@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
 		635EE82A161D183200E2635F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE829161D183200E2635F /* UIKit.framework */; };
 		635EE82C161D183200E2635F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82B161D183200E2635F /* Foundation.framework */; };
 		635EE82E161D183200E2635F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82D161D183200E2635F /* CoreGraphics.framework */; };
@@ -33,6 +34,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		630B2731161FC070004BAE04 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Libraries/JSONKit.h; sourceTree = "<group>"; };
+		630B2732161FC070004BAE04 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Libraries/JSONKit.m; sourceTree = "<group>"; };
 		635EE825161D183200E2635F /* Roadtrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roadtrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635EE829161D183200E2635F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		635EE82B161D183200E2635F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,9 +92,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630B272F161FC05A004BAE04 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				630B2731161FC070004BAE04 /* JSONKit.h */,
+				630B2732161FC070004BAE04 /* JSONKit.m */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		635EE81A161D183200E2635F = {
 			isa = PBXGroup;
 			children = (
+				630B272F161FC05A004BAE04 /* Libraries */,
 				6372C2D2161D1E7700AEE38A /* Models */,
 				6372C2D0161D1E6E00AEE38A /* Controllers and Views */,
 				635EE82F161D183200E2635F /* Roadtrip */,
@@ -261,6 +274,7 @@
 				637D1CBB161E583F00BDF6F4 /* MapPopoverViewController.m in Sources */,
 				637D1CC6161E7C6700BDF6F4 /* RoadtripModel.m in Sources */,
 				637F442A161ED410001CAB44 /* SelectedPopoverViewController.m in Sources */,
+				630B2733161FC070004BAE04 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
