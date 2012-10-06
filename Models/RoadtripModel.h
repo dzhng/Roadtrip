@@ -10,6 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "RoadtripLocation.h"
 #import "ModelNotifications.h"
+#import "JSONKit.h"
 
 @protocol RoadtripModelDelegate <NSObject>
 
@@ -18,6 +19,7 @@
 - (void)handleSelectedFromTable:(RoadtripLocation*)location;
 - (void)handleSelectedFromMap:(RoadtripLocation*)location;
 - (void)handleDeselect;
+- (void)displayRoutes:(NSArray*)routes;
 
 @end
 
@@ -35,7 +37,15 @@
 // currently selected location
 @property (retain, nonatomic) RoadtripLocation* selectedLocation;
 
+// array of CLLocations that store points of route
+@property (retain, nonatomic) NSArray *routePoints;
+
 - (id)init;
 - (void)geocodeWithAddress:address;
+- (void)addLocation:(RoadtripLocation*)location;
+
+// map routing functions
+- (NSArray*)calculateRoutes;
+- (NSMutableArray *)decodePolyLine:(NSString *)encodedString;
 
 @end

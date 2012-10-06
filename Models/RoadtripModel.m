@@ -86,6 +86,93 @@
                  }];
 }
 
+- (void)addLocation:(RoadtripLocation*)location
+{
+    // add to location array
+    [self.locationArray addObject:location];
+    
+    // tell our delegate to update their views
+    [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
+}
+
+#pragma mark Routing functions
+
+/* This will get the route coordinates from the google api. */
+- (NSArray*)calculateRoutes
+{
+    if ([self.locationArray count] > 1) {
+        // get points
+        RoadtripLocation* origin = [self.locationArray objectAtIndex:0];
+        RoadtripLocation* destination = [self.locationArray lastObject];
+        
+        NSString* saddr = [NSString stringWithFormat:@"%f,%f", origin.coordinate.latitude, origin.coordinate.longitude];
+        NSString* daddr = [NSString stringWithFormat:@"%f,%f", destination.coordinate.latitude, destination.coordinate.longitude];
+        
+        NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", saddr, daddr];
+        NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
+        
+        NSError *error;
+        NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
+        NSDictionary* parsed = [apiResponse objectFromJSONString];
+        NSArray* routes = [parsed objectForKey:@"routes"];
+       
+        // we only want the first route, for now..
+        NSDictionary* route = [routes objectAtIndex:0];
+        NSArray* legs = [route objectForKey:@"legs"];
+        
+        NSArray* decodedRoutes = [[NSMutableArray alloc] init];
+        for(NSDictionary* leg in legs) {
+            NSArray* steps = [leg objectForKey:@"steps"];
+            for(NSDictionary* step in steps) {
+                NSDictionary* polyline = [step objectForKey:@"polyline"];
+                NSString* points = [polyline objectForKey:@"points"];
+                decodedRoutes = [decodedRoutes arrayByAddingObjectsFromArray:[self decodePolyLine:points]];
+            }
+        }
+        
+        self.routePoints = decodedRoutes;
+        return decodedRoutes;
+    } else {
+        return nil;
+    }
+}
+
+- (NSMutableArray *)decodePolyLine:(NSString *)encodedString
+{
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    NSInteger len = [encodedString length];
+    NSInteger index = 0;
+    NSInteger lat=0;
+    NSInteger lng=0;
+    while (index < len) {
+        NSInteger b;
+        NSInteger shift = 0;
+        NSInteger result = 0;
+        do {
+            b = [encodedString characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        lat += ((result & 1) ? ~(result >> 1) : (result >> 1));
+        
+        shift = 0;
+        result = 0;
+        do {
+            b = [encodedString characterAtIndex:index++] - 63;
+            result |= (b & 0x1f) << shift;
+            shift += 5;
+        } while (b >= 0x20);
+        lng += ((result & 1) ? ~(result >> 1) : (result >> 1));
+        
+        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
+        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
+        
+        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
+        [array addObject:loc];
+    }
+    return array;
+}
+
 #pragma mark Notification Handlers
 - (void)locationSelectedNotification:(NSNotification*)notification
 {
@@ -116,11 +203,14 @@
     // grab the new location
     NSDictionary *dictionary = [notification userInfo];
     RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
-    // add to location array
-    [self.locationArray addObject:location];
+    // add to location array and redisplay
+    [self addLocation:location];
     
-    // tell our delegate to update their views
-    [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
+    // after adding location, we should recalculate all routes
+    NSArray* routes = [self calculateRoutes];
+    
+    // tell our delegate to display routes
+    [self.delegate displayRoutes:routes];
 }
 
 @end

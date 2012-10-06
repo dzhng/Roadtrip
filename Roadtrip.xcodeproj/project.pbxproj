@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
 		635EE82A161D183200E2635F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE829161D183200E2635F /* UIKit.framework */; };
 		635EE82C161D183200E2635F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82B161D183200E2635F /* Foundation.framework */; };
 		635EE82E161D183200E2635F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82D161D183200E2635F /* CoreGraphics.framework */; };
@@ -28,28 +29,13 @@
 		637D1CC6161E7C6700BDF6F4 /* RoadtripModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 637D1CC5161E7C6700BDF6F4 /* RoadtripModel.m */; };
 		637F442A161ED410001CAB44 /* SelectedPopoverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4428161ED410001CAB44 /* SelectedPopoverViewController.m */; };
 		637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */; };
-		637F4443161F625C001CAB44 /* UICGClientGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4436161F625C001CAB44 /* UICGClientGeocoder.m */; };
-		637F4444161F625C001CAB44 /* UICGDirections.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4438161F625C001CAB44 /* UICGDirections.m */; };
-		637F4445161F625C001CAB44 /* UICGDirectionsOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F443A161F625C001CAB44 /* UICGDirectionsOptions.m */; };
-		637F4446161F625C001CAB44 /* UICGoogleMapsAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F443C161F625C001CAB44 /* UICGoogleMapsAPI.m */; };
-		637F4447161F625C001CAB44 /* UICGPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F443E161F625C001CAB44 /* UICGPolyline.m */; };
-		637F4448161F625C001CAB44 /* UICGRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4440161F625C001CAB44 /* UICGRoute.m */; };
-		637F4449161F625C001CAB44 /* UICGStep.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4442161F625C001CAB44 /* UICGStep.m */; };
-		637F4458161F626B001CAB44 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F444D161F626B001CAB44 /* NSObject+SBJSON.m */; };
-		637F4459161F626B001CAB44 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F444F161F626B001CAB44 /* NSString+SBJSON.m */; };
-		637F445A161F626B001CAB44 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4451161F626B001CAB44 /* SBJSON.m */; };
-		637F445B161F626B001CAB44 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4453161F626B001CAB44 /* SBJsonBase.m */; };
-		637F445C161F626B001CAB44 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4455161F626B001CAB44 /* SBJsonParser.m */; };
-		637F445D161F626B001CAB44 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4457161F626B001CAB44 /* SBJsonWriter.m */; };
-		637F4463161F6286001CAB44 /* UICRouteAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4460161F6286001CAB44 /* UICRouteAnnotation.m */; };
-		637F4464161F6286001CAB44 /* UICRouteOverlayMapView.m in Sources */ = {isa = PBXBuildFile; fileRef = 637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */; };
-		637F4468161F79C1001CAB44 /* api.html in Resources */ = {isa = PBXBuildFile; fileRef = 637F4466161F79C1001CAB44 /* api.html */; };
-		637F4469161F79C1001CAB44 /* json2.js in Sources */ = {isa = PBXBuildFile; fileRef = 637F4467161F79C1001CAB44 /* json2.js */; };
 		63A79F13161D7EDF00E62E5B /* RoadtripLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */; };
 		63A79F15161D890E00E62E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A79F14161D890E00E62E5B /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		630B2731161FC070004BAE04 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Libraries/JSONKit.h; sourceTree = "<group>"; };
+		630B2732161FC070004BAE04 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Libraries/JSONKit.m; sourceTree = "<group>"; };
 		635EE825161D183200E2635F /* Roadtrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roadtrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635EE829161D183200E2635F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		635EE82B161D183200E2635F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -85,39 +71,6 @@
 		637F4427161ED410001CAB44 /* SelectedPopoverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SelectedPopoverViewController.h; path = "Controllers and Views/SelectedPopoverViewController.h"; sourceTree = "<group>"; };
 		637F4428161ED410001CAB44 /* SelectedPopoverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SelectedPopoverViewController.m; path = "Controllers and Views/SelectedPopoverViewController.m"; sourceTree = "<group>"; };
 		637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SelectedPopoverViewController.xib; path = "Controllers and Views/SelectedPopoverViewController.xib"; sourceTree = "<group>"; };
-		637F4435161F625C001CAB44 /* UICGClientGeocoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGClientGeocoder.h; path = "Library/Google Maps/UICGClientGeocoder.h"; sourceTree = "<group>"; };
-		637F4436161F625C001CAB44 /* UICGClientGeocoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGClientGeocoder.m; path = "Library/Google Maps/UICGClientGeocoder.m"; sourceTree = "<group>"; };
-		637F4437161F625C001CAB44 /* UICGDirections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGDirections.h; path = "Library/Google Maps/UICGDirections.h"; sourceTree = "<group>"; };
-		637F4438161F625C001CAB44 /* UICGDirections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGDirections.m; path = "Library/Google Maps/UICGDirections.m"; sourceTree = "<group>"; };
-		637F4439161F625C001CAB44 /* UICGDirectionsOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGDirectionsOptions.h; path = "Library/Google Maps/UICGDirectionsOptions.h"; sourceTree = "<group>"; };
-		637F443A161F625C001CAB44 /* UICGDirectionsOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGDirectionsOptions.m; path = "Library/Google Maps/UICGDirectionsOptions.m"; sourceTree = "<group>"; };
-		637F443B161F625C001CAB44 /* UICGoogleMapsAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGoogleMapsAPI.h; path = "Library/Google Maps/UICGoogleMapsAPI.h"; sourceTree = "<group>"; };
-		637F443C161F625C001CAB44 /* UICGoogleMapsAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGoogleMapsAPI.m; path = "Library/Google Maps/UICGoogleMapsAPI.m"; sourceTree = "<group>"; };
-		637F443D161F625C001CAB44 /* UICGPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGPolyline.h; path = "Library/Google Maps/UICGPolyline.h"; sourceTree = "<group>"; };
-		637F443E161F625C001CAB44 /* UICGPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGPolyline.m; path = "Library/Google Maps/UICGPolyline.m"; sourceTree = "<group>"; };
-		637F443F161F625C001CAB44 /* UICGRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGRoute.h; path = "Library/Google Maps/UICGRoute.h"; sourceTree = "<group>"; };
-		637F4440161F625C001CAB44 /* UICGRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGRoute.m; path = "Library/Google Maps/UICGRoute.m"; sourceTree = "<group>"; };
-		637F4441161F625C001CAB44 /* UICGStep.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICGStep.h; path = "Library/Google Maps/UICGStep.h"; sourceTree = "<group>"; };
-		637F4442161F625C001CAB44 /* UICGStep.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICGStep.m; path = "Library/Google Maps/UICGStep.m"; sourceTree = "<group>"; };
-		637F444B161F626B001CAB44 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSON.h; path = Library/JSON/JSON.h; sourceTree = "<group>"; };
-		637F444C161F626B001CAB44 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSObject+SBJSON.h"; path = "Library/JSON/NSObject+SBJSON.h"; sourceTree = "<group>"; };
-		637F444D161F626B001CAB44 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSObject+SBJSON.m"; path = "Library/JSON/NSObject+SBJSON.m"; sourceTree = "<group>"; };
-		637F444E161F626B001CAB44 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+SBJSON.h"; path = "Library/JSON/NSString+SBJSON.h"; sourceTree = "<group>"; };
-		637F444F161F626B001CAB44 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+SBJSON.m"; path = "Library/JSON/NSString+SBJSON.m"; sourceTree = "<group>"; };
-		637F4450161F626B001CAB44 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJSON.h; path = Library/JSON/SBJSON.h; sourceTree = "<group>"; };
-		637F4451161F626B001CAB44 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJSON.m; path = Library/JSON/SBJSON.m; sourceTree = "<group>"; };
-		637F4452161F626B001CAB44 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonBase.h; path = Library/JSON/SBJsonBase.h; sourceTree = "<group>"; };
-		637F4453161F626B001CAB44 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonBase.m; path = Library/JSON/SBJsonBase.m; sourceTree = "<group>"; };
-		637F4454161F626B001CAB44 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonParser.h; path = Library/JSON/SBJsonParser.h; sourceTree = "<group>"; };
-		637F4455161F626B001CAB44 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonParser.m; path = Library/JSON/SBJsonParser.m; sourceTree = "<group>"; };
-		637F4456161F626B001CAB44 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SBJsonWriter.h; path = Library/JSON/SBJsonWriter.h; sourceTree = "<group>"; };
-		637F4457161F626B001CAB44 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SBJsonWriter.m; path = Library/JSON/SBJsonWriter.m; sourceTree = "<group>"; };
-		637F445F161F6286001CAB44 /* UICRouteAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICRouteAnnotation.h; path = "Library/Mapkit Extension/UICRouteAnnotation.h"; sourceTree = "<group>"; };
-		637F4460161F6286001CAB44 /* UICRouteAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICRouteAnnotation.m; path = "Library/Mapkit Extension/UICRouteAnnotation.m"; sourceTree = "<group>"; };
-		637F4461161F6286001CAB44 /* UICRouteOverlayMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UICRouteOverlayMapView.h; path = "Library/Mapkit Extension/UICRouteOverlayMapView.h"; sourceTree = "<group>"; };
-		637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UICRouteOverlayMapView.m; path = "Library/Mapkit Extension/UICRouteOverlayMapView.m"; sourceTree = "<group>"; };
-		637F4466161F79C1001CAB44 /* api.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = api.html; path = Library/Resources/api.html; sourceTree = "<group>"; };
-		637F4467161F79C1001CAB44 /* json2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = json2.js; path = Library/Resources/json2.js; sourceTree = "<group>"; };
 		63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripLocation.h; path = Models/RoadtripLocation.h; sourceTree = "<group>"; };
 		63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripLocation.m; path = Models/RoadtripLocation.m; sourceTree = "<group>"; };
 		63A79F14161D890E00E62E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -139,10 +92,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		630B272F161FC05A004BAE04 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				630B2731161FC070004BAE04 /* JSONKit.h */,
+				630B2732161FC070004BAE04 /* JSONKit.m */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		635EE81A161D183200E2635F = {
 			isa = PBXGroup;
 			children = (
-				637F4431161F622D001CAB44 /* Library */,
+				630B272F161FC05A004BAE04 /* Libraries */,
 				6372C2D2161D1E7700AEE38A /* Models */,
 				6372C2D0161D1E6E00AEE38A /* Controllers and Views */,
 				635EE82F161D183200E2635F /* Roadtrip */,
@@ -232,78 +194,6 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
-		637F4431161F622D001CAB44 /* Library */ = {
-			isa = PBXGroup;
-			children = (
-				637F4465161F79B5001CAB44 /* Resources */,
-				637F445E161F6277001CAB44 /* Mapkit Extension */,
-				637F444A161F6262001CAB44 /* JSON */,
-				637F4434161F6250001CAB44 /* Google Maps */,
-			);
-			name = Library;
-			sourceTree = "<group>";
-		};
-		637F4434161F6250001CAB44 /* Google Maps */ = {
-			isa = PBXGroup;
-			children = (
-				637F4435161F625C001CAB44 /* UICGClientGeocoder.h */,
-				637F4436161F625C001CAB44 /* UICGClientGeocoder.m */,
-				637F4437161F625C001CAB44 /* UICGDirections.h */,
-				637F4438161F625C001CAB44 /* UICGDirections.m */,
-				637F4439161F625C001CAB44 /* UICGDirectionsOptions.h */,
-				637F443A161F625C001CAB44 /* UICGDirectionsOptions.m */,
-				637F443B161F625C001CAB44 /* UICGoogleMapsAPI.h */,
-				637F443C161F625C001CAB44 /* UICGoogleMapsAPI.m */,
-				637F443D161F625C001CAB44 /* UICGPolyline.h */,
-				637F443E161F625C001CAB44 /* UICGPolyline.m */,
-				637F443F161F625C001CAB44 /* UICGRoute.h */,
-				637F4440161F625C001CAB44 /* UICGRoute.m */,
-				637F4441161F625C001CAB44 /* UICGStep.h */,
-				637F4442161F625C001CAB44 /* UICGStep.m */,
-			);
-			name = "Google Maps";
-			sourceTree = "<group>";
-		};
-		637F444A161F6262001CAB44 /* JSON */ = {
-			isa = PBXGroup;
-			children = (
-				637F444B161F626B001CAB44 /* JSON.h */,
-				637F444C161F626B001CAB44 /* NSObject+SBJSON.h */,
-				637F444D161F626B001CAB44 /* NSObject+SBJSON.m */,
-				637F444E161F626B001CAB44 /* NSString+SBJSON.h */,
-				637F444F161F626B001CAB44 /* NSString+SBJSON.m */,
-				637F4450161F626B001CAB44 /* SBJSON.h */,
-				637F4451161F626B001CAB44 /* SBJSON.m */,
-				637F4452161F626B001CAB44 /* SBJsonBase.h */,
-				637F4453161F626B001CAB44 /* SBJsonBase.m */,
-				637F4454161F626B001CAB44 /* SBJsonParser.h */,
-				637F4455161F626B001CAB44 /* SBJsonParser.m */,
-				637F4456161F626B001CAB44 /* SBJsonWriter.h */,
-				637F4457161F626B001CAB44 /* SBJsonWriter.m */,
-			);
-			name = JSON;
-			sourceTree = "<group>";
-		};
-		637F445E161F6277001CAB44 /* Mapkit Extension */ = {
-			isa = PBXGroup;
-			children = (
-				637F445F161F6286001CAB44 /* UICRouteAnnotation.h */,
-				637F4460161F6286001CAB44 /* UICRouteAnnotation.m */,
-				637F4461161F6286001CAB44 /* UICRouteOverlayMapView.h */,
-				637F4462161F6286001CAB44 /* UICRouteOverlayMapView.m */,
-			);
-			name = "Mapkit Extension";
-			sourceTree = "<group>";
-		};
-		637F4465161F79B5001CAB44 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				637F4466161F79C1001CAB44 /* api.html */,
-				637F4467161F79C1001CAB44 /* json2.js */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -363,7 +253,6 @@
 				635EE843161D183200E2635F /* MainStoryboard.storyboard in Resources */,
 				637D1CBC161E583F00BDF6F4 /* MapPopoverViewController.xib in Resources */,
 				637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */,
-				637F4468161F79C1001CAB44 /* api.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,22 +274,7 @@
 				637D1CBB161E583F00BDF6F4 /* MapPopoverViewController.m in Sources */,
 				637D1CC6161E7C6700BDF6F4 /* RoadtripModel.m in Sources */,
 				637F442A161ED410001CAB44 /* SelectedPopoverViewController.m in Sources */,
-				637F4443161F625C001CAB44 /* UICGClientGeocoder.m in Sources */,
-				637F4444161F625C001CAB44 /* UICGDirections.m in Sources */,
-				637F4445161F625C001CAB44 /* UICGDirectionsOptions.m in Sources */,
-				637F4446161F625C001CAB44 /* UICGoogleMapsAPI.m in Sources */,
-				637F4447161F625C001CAB44 /* UICGPolyline.m in Sources */,
-				637F4448161F625C001CAB44 /* UICGRoute.m in Sources */,
-				637F4449161F625C001CAB44 /* UICGStep.m in Sources */,
-				637F4458161F626B001CAB44 /* NSObject+SBJSON.m in Sources */,
-				637F4459161F626B001CAB44 /* NSString+SBJSON.m in Sources */,
-				637F445A161F626B001CAB44 /* SBJSON.m in Sources */,
-				637F445B161F626B001CAB44 /* SBJsonBase.m in Sources */,
-				637F445C161F626B001CAB44 /* SBJsonParser.m in Sources */,
-				637F445D161F626B001CAB44 /* SBJsonWriter.m in Sources */,
-				637F4463161F6286001CAB44 /* UICRouteAnnotation.m in Sources */,
-				637F4464161F6286001CAB44 /* UICRouteOverlayMapView.m in Sources */,
-				637F4469161F79C1001CAB44 /* json2.js in Sources */,
+				630B2733161FC070004BAE04 /* JSONKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -12,22 +12,16 @@
 #import "RoadtripModel.h"
 #import "MapPopoverViewController.h"
 #import "SelectedPopoverViewController.h"
-#import "UICGDirections.h"
-#import "UICRouteAnnotation.h"
-#import "UICRouteOverlayMapView.h"
 
-@interface DetailMapViewController : UIViewController <UIPopoverControllerDelegate, MKMapViewDelegate, UICGDirectionsDelegate>
+@interface DetailMapViewController : UIViewController <UIPopoverControllerDelegate, MKMapViewDelegate>
 {
     bool momentumScrolling;
     
     // mapview variables
     MKMapView *mapView;
-    UICRouteOverlayMapView *routeOverlayView;
-    UICGDirections *directions;
-    NSString *startPoint;
-    NSString *endPoint;
-    NSArray *wayPoints;
-    UICGTravelModes travelMode;
+    UIView *routeOverlayView;
+    
+    MKPolyline *objPolyline;
 }
 
 // model object
@@ -44,5 +38,9 @@
 - (void)removeSearchLocation:(RoadtripLocation*)location;
 - (void)deselectAnnotation;
 - (void)displayNewLocationAtIndex:(NSInteger)index;
+
+// routing methods
+- (void)drawRoute:(NSArray*)routePoints;
+- (void)centerMapOnRoute:(NSArray*)routePoints;
 
 @end
