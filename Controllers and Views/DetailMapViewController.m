@@ -186,6 +186,7 @@
 
 - (void)drawRoute:(NSArray*)routePoints
 {
+    [mapView removeOverlays:routeOverlays];
     int numPoints = [routePoints count];
     if (numPoints > 1)
     {
@@ -196,10 +197,11 @@
             coords[i] = current.coordinate;
         }
         
-        objPolyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
+        MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
         free(coords);
         
-        [mapView addOverlay:objPolyline];
+        routeOverlays = [NSArray arrayWithObject:polyline];
+        [mapView addOverlays:routeOverlays];
         [mapView setNeedsDisplay];
     }
 }
@@ -207,15 +209,12 @@
 #pragma mark Mapview delegate Functions
 - (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated
 {
-	routeOverlayView.hidden = YES;
     // we're going to move, so set the flag
     momentumScrolling = true;
 }
 
 - (void)mapView:(MKMapView*)mv regionDidChangeAnimated:(BOOL)animated
 {
-    routeOverlayView.hidden = NO;
-	[routeOverlayView setNeedsDisplay];
     // we might want to center again, just incase
     momentumScrolling = false;
 }
@@ -223,10 +222,11 @@
 // show navigation overlay
 - (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
 {
-    MKPolylineView *view = [[MKPolylineView alloc] initWithPolyline:objPolyline];
+    MKPolylineView *view = [[MKPolylineView alloc] initWithOverlay:overlay];
     view.fillColor = [UIColor blueColor];
     view.strokeColor = [UIColor blueColor];
     view.lineWidth = 6;
+    view.alpha = 0.5;
     return view;
 }
 

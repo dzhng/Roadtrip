@@ -18,6 +18,11 @@
 @property (retain, nonatomic) RoadtripModel* roadtripModel;
 
 @property (strong, nonatomic) IBOutlet LocationTableView *tableView;
+@property (weak, nonatomic) IBOutlet UIView *footerView;
+@property (weak, nonatomic) IBOutlet UILabel *stopsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *costLabel;
 
 - (void)update;
 - (void)displayNewLocationAtIndex:(NSInteger)index;

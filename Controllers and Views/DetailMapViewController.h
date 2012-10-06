@@ -19,9 +19,9 @@
     
     // mapview variables
     MKMapView *mapView;
-    UIView *routeOverlayView;
     
-    MKPolyline *objPolyline;
+    // array of MKPolyline storing all the overlays used for routing
+    NSArray* routeOverlays;
 }
 
 // model object

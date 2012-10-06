@@ -137,6 +137,7 @@
     }
 }
 
+// decode the polyline binary data from GMaps API into an array of CLLocations
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedString
 {
     NSMutableArray *array = [[NSMutableArray alloc] init];

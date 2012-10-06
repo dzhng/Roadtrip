@@ -31,6 +31,8 @@
 		637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */; };
 		63A79F13161D7EDF00E62E5B /* RoadtripLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */; };
 		63A79F15161D890E00E62E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A79F14161D890E00E62E5B /* CoreLocation.framework */; };
+		63F91AA9161FF0B100056149 /* RouteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AA8161FF0B100056149 /* RouteTableCell.m */; };
+		63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AAB161FF6AE00056149 /* RoadtripRoute.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,10 @@
 		63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripLocation.h; path = Models/RoadtripLocation.h; sourceTree = "<group>"; };
 		63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripLocation.m; path = Models/RoadtripLocation.m; sourceTree = "<group>"; };
 		63A79F14161D890E00E62E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		63F91AA7161FF0B100056149 /* RouteTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteTableCell.h; path = "Controllers and Views/RouteTableCell.h"; sourceTree = "<group>"; };
+		63F91AA8161FF0B100056149 /* RouteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteTableCell.m; path = "Controllers and Views/RouteTableCell.m"; sourceTree = "<group>"; };
+		63F91AAA161FF6AE00056149 /* RoadtripRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripRoute.h; path = Models/RoadtripRoute.h; sourceTree = "<group>"; };
+		63F91AAB161FF6AE00056149 /* RoadtripRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripRoute.m; path = Models/RoadtripRoute.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +171,8 @@
 				6372C2F1161D243100AEE38A /* LocationTableView.m */,
 				6372C2F3161D249400AEE38A /* LocationTableCell.h */,
 				6372C2F4161D249400AEE38A /* LocationTableCell.m */,
+				63F91AA7161FF0B100056149 /* RouteTableCell.h */,
+				63F91AA8161FF0B100056149 /* RouteTableCell.m */,
 				637F4427161ED410001CAB44 /* SelectedPopoverViewController.h */,
 				637F4428161ED410001CAB44 /* SelectedPopoverViewController.m */,
 				637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */,
@@ -188,6 +196,8 @@
 				637D1CC3161E79E300BDF6F4 /* ModelNotifications.h */,
 				63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */,
 				63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */,
+				63F91AAA161FF6AE00056149 /* RoadtripRoute.h */,
+				63F91AAB161FF6AE00056149 /* RoadtripRoute.m */,
 				637D1CC4161E7C6700BDF6F4 /* RoadtripModel.h */,
 				637D1CC5161E7C6700BDF6F4 /* RoadtripModel.m */,
 			);
@@ -275,6 +285,8 @@
 				637D1CC6161E7C6700BDF6F4 /* RoadtripModel.m in Sources */,
 				637F442A161ED410001CAB44 /* SelectedPopoverViewController.m in Sources */,
 				630B2733161FC070004BAE04 /* JSONKit.m in Sources */,
+				63F91AA9161FF0B100056149 /* RouteTableCell.m in Sources */,
+				63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
