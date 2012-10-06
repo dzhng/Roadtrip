@@ -88,7 +88,8 @@
 - (NSInteger)tableView:(LocationTableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [self.roadtripModel.locationArray count];
+    // the table is both location and route arrays
+    return [self.roadtripModel.locationArray count] + [self.roadtripModel.routeArray count];
 }
 
 - (LocationTableCell *)tableView:(LocationTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

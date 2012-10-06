@@ -16,31 +16,8 @@
     self = [super init];
     if(self) {
         self.routePoints = points;
-        self.routeOverlays = [self getOverlaysFromPoints:points];
     }
     return self;
 }
-
-// convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points
-{
-    int numPoints;
-    if ((numPoints = [self.routePoints count]) > 1)
-    {
-        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        for (int i = 0; i < numPoints; i++)
-        {
-            CLLocation* current = [self.routePoints objectAtIndex:i];
-            coords[i] = current.coordinate;
-        }
-        
-        MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-        free(coords);
-        
-        return [NSArray arrayWithObject:polyline];
-    }
-    return nil;
-}
-
 
 @end

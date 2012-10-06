@@ -28,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (retain, nonatomic) UIPopoverController *mapPopover;
 
+// array of MKPolyline that stores the actual route drawn
+@property (retain, nonatomic) NSArray* routeOverlays;
+
 - (void)update;
 - (void)updateSearchLocations;
 - (void)centerMapOnLocation:(RoadtripLocation*)location;
@@ -43,5 +46,8 @@
 
 // center map on one specific route, input is an array of CLLocations
 - (void)centerMapOnRoutePoints:(NSArray*)routePoints;
+
+// convert input points into overlays
+- (NSArray*)getOverlaysFromPoints:(NSArray*)points;
 
 @end

@@ -192,11 +192,36 @@
     // just blanket remove all overlays
     [mapView removeOverlays:mapView.overlays];
     
-    // add all the overlays
+    // get all points
+    NSMutableArray* points = [[NSMutableArray alloc] init];
     for(RoadtripRoute* route in routeArray) {
-        [mapView addOverlays:route.routeOverlays];
+        [points addObjectsFromArray:[route routePoints]];
     }
+    // add all the overlays
+    NSArray* overlays = [self getOverlaysFromPoints:points];
+    [mapView addOverlays:overlays];
     [mapView setNeedsDisplay];
+}
+
+// convert input points into overlays
+- (NSArray*)getOverlaysFromPoints:(NSArray*)points
+{
+    int numPoints;
+    if ((numPoints = [points count]) > 1)
+    {
+        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
+        for (int i = 0; i < numPoints; i++)
+        {
+            CLLocation* current = [points objectAtIndex:i];
+            coords[i] = current.coordinate;
+        }
+        
+        MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
+        free(coords);
+        
+        return [NSArray arrayWithObject:polyline];
+    }
+    return nil;
 }
 
 #pragma mark Mapview delegate Functions

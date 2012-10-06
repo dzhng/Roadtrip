@@ -19,13 +19,7 @@
 // array of CLLocations that store points of route
 @property (retain, nonatomic) NSArray* routePoints;
 
-// array of MKPolyline that stores the actual route drawn
-@property (retain, nonatomic) NSArray* routeOverlays;
-
 // initialize with array of CLLocations
 - (id)initWithPoints:(NSArray*)points;
-
-// convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points;
 
 @end
