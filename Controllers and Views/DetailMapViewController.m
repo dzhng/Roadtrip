@@ -47,6 +47,7 @@
     // Dispose of any resources that can be recreated.
 }
 
+// first initialization function
 - (void)update
 {
     [self removeDirectionLocations];
@@ -59,25 +60,11 @@
         [mapView addAnnotation:loc];
     }
     
-    // Origin Location.
-    CLLocationCoordinate2D loc1;
-    loc1.latitude = 29.0167;
-    loc1.longitude = 77.3833;
-    RoadtripLocation *origin = [[RoadtripLocation alloc] initWithTitle:@"loc1" subTitle:@"Home1" andCoordinate:loc1];
-    
-    // Destination Location.
-    CLLocationCoordinate2D loc2;
-    loc2.latitude = 19.076000;
-    loc2.longitude = 72.877670;
-    RoadtripLocation *destination = [[RoadtripLocation alloc] initWithTitle:@"loc2" subTitle:@"Home2" andCoordinate:loc2];
-    
-    // add the 2 example locations
-    [self.roadtripModel addLocation:origin];
-    [self.roadtripModel addLocation:destination];
-    
     NSArray* routePoints = [self.roadtripModel calculateRoutes];
-    [self drawRoute:routePoints];
-    [self centerMapOnRoute:routePoints];
+    if(routePoints) {
+        [self drawRoute:routePoints];
+        [self centerMapOnRoute:routePoints];
+    }
 }
 
 - (void)updateSearchLocations
@@ -191,8 +178,8 @@
     
     region.center.latitude     = (maxLat + minLat) / 2;
     region.center.longitude    = (maxLon + minLon) / 2;
-    region.span.latitudeDelta  = maxLat - minLat;
-    region.span.longitudeDelta = maxLon - minLon;
+    region.span.latitudeDelta  = ROUTE_ZOOM*(maxLat - minLat);
+    region.span.longitudeDelta = ROUTE_ZOOM*(maxLon - minLon);
     
     [mapView setRegion:region animated:YES];
 }
@@ -233,13 +220,13 @@
     momentumScrolling = false;
 }
 
-/* MKMapViewDelegate Meth0d -- for viewForOverlay*/
+// show navigation overlay
 - (MKOverlayView*)mapView:(MKMapView*)theMapView viewForOverlay:(id <MKOverlay>)overlay
 {
     MKPolylineView *view = [[MKPolylineView alloc] initWithPolyline:objPolyline];
-    view.fillColor = [UIColor blackColor];
-    view.strokeColor = [UIColor blackColor];
-    view.lineWidth = 4;
+    view.fillColor = [UIColor blueColor];
+    view.strokeColor = [UIColor blueColor];
+    view.lineWidth = 6;
     return view;
 }
 

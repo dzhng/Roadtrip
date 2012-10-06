@@ -19,13 +19,13 @@
 - (void)handleSelectedFromTable:(RoadtripLocation*)location;
 - (void)handleSelectedFromMap:(RoadtripLocation*)location;
 - (void)handleDeselect;
+- (void)displayRoutes:(NSArray*)routes;
 
 @end
 
 @interface RoadtripModel : NSObject
 {
     CLGeocoder* geocoder;        // stores geocoder used for location lookup
-    NSArray *routePoints;       // array of CLLocations that store points of route
 }
 
 @property (assign, nonatomic) id <RoadtripModelDelegate> delegate;
@@ -36,6 +36,9 @@
 
 // currently selected location
 @property (retain, nonatomic) RoadtripLocation* selectedLocation;
+
+// array of CLLocations that store points of route
+@property (retain, nonatomic) NSArray *routePoints;
 
 - (id)init;
 - (void)geocodeWithAddress:address;

@@ -130,6 +130,7 @@
             }
         }
         
+        self.routePoints = decodedRoutes;
         return decodedRoutes;
     } else {
         return nil;
@@ -152,8 +153,7 @@
             result |= (b & 0x1f) << shift;
             shift += 5;
         } while (b >= 0x20);
-        NSInteger dlat = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lat += dlat;
+        lat += ((result & 1) ? ~(result >> 1) : (result >> 1));
         
         shift = 0;
         result = 0;
@@ -162,12 +162,11 @@
             result |= (b & 0x1f) << shift;
             shift += 5;
         } while (b >= 0x20);
-        NSInteger dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
-        lng += dlng;
+        lng += ((result & 1) ? ~(result >> 1) : (result >> 1));
+        
         NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
         NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        printf("\n[%f,", [latitude doubleValue]);
-        printf("%f]", [longitude doubleValue]);
+        
         CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
         [array addObject:loc];
     }
@@ -206,6 +205,12 @@
     RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
     // add to location array and redisplay
     [self addLocation:location];
+    
+    // after adding location, we should recalculate all routes
+    NSArray* routes = [self calculateRoutes];
+    
+    // tell our delegate to display routes
+    [self.delegate displayRoutes:routes];
 }
 
 @end
