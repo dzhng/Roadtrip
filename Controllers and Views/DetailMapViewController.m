@@ -47,8 +47,8 @@
     // Dispose of any resources that can be recreated.
 }
 
-// first initialization function
-- (void)update
+// redraw everything
+- (void)resetLocationsAndRoutes
 {
     [self removeDirectionLocations];
     
@@ -192,37 +192,15 @@
     // just blanket remove all overlays
     [mapView removeOverlays:mapView.overlays];
     
-    // get all points
-    NSMutableArray* points = [[NSMutableArray alloc] init];
+    // get all overlays
+    NSMutableArray* overlays = [[NSMutableArray alloc] init];
     for(RoadtripRoute* route in routeArray) {
-        [points addObjectsFromArray:[route routePoints]];
+        [overlays addObjectsFromArray:[route routeOverlays]];
     }
-    // add all the overlays
-    NSArray* overlays = [self getOverlaysFromPoints:points];
     [mapView addOverlays:overlays];
     [mapView setNeedsDisplay];
 }
 
-// convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points
-{
-    int numPoints;
-    if ((numPoints = [points count]) > 1)
-    {
-        CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-        for (int i = 0; i < numPoints; i++)
-        {
-            CLLocation* current = [points objectAtIndex:i];
-            coords[i] = current.coordinate;
-        }
-        
-        MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-        free(coords);
-        
-        return [NSArray arrayWithObject:polyline];
-    }
-    return nil;
-}
 
 #pragma mark Mapview delegate Functions
 - (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated

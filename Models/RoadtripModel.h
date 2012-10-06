@@ -43,7 +43,6 @@
 
 - (id)init;
 - (void)geocodeWithAddress:address;
-- (void)addLocation:(RoadtripLocation*)location;
 
 // map routing functions
 - (NSArray*)calculateRoutes;

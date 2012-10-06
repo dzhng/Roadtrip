@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoadtripRoute.h"
 
 @interface RouteTableCell : UITableViewCell
+{
+    bool cellSelected;  // prevent double selecting (when figer enter / leaves)
+}
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
+
+- (void)updateRoute:(RoadtripRoute *)route;
 
 @end

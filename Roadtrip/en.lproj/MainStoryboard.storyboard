@@ -184,7 +184,7 @@
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                         <prototypes>
-                            <tableViewCell opaque="NO" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationCell" id="klO-P8-fz4" customClass="LocationTableCell">
+                            <tableViewCell opaque="NO" contentMode="scaleToFill" restorationIdentifier="LocationCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationCell" rowHeight="100" id="klO-P8-fz4" customClass="LocationTableCell">
                                 <rect key="frame" x="0.0" y="22" width="300" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -214,7 +214,7 @@
                                     <outlet property="titleLabel" destination="TFv-IS-JAk" id="fJu-Qx-7cD"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" indentationWidth="10" reuseIdentifier="RouteCell" rowHeight="40" id="pE9-0Q-tVG" customClass="RouteTableCell">
+                            <tableViewCell opaque="NO" contentMode="scaleToFill" restorationIdentifier="RouteCell" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="40" id="pE9-0Q-tVG" customClass="RouteTableCell">
                                 <rect key="frame" x="0.0" y="122" width="300" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -245,6 +245,7 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <color key="backgroundColor" red="0.92348931760204078" green="0.92348931760204078" blue="0.92348931760204078" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <outlet property="costLabel" destination="mrc-W6-Sw8" id="d3d-zd-DzY"/>
                                     <outlet property="distanceLabel" destination="E5R-Ki-COK" id="S9I-sg-I4z"/>

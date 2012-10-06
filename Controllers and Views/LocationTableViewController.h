@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "LocationTableView.h"
 #import "LocationTableCell.h"
+#import "RouteTableCell.h"
 #import "RoadtripLocation.h"
 #import "RoadtripModel.h"
 
@@ -24,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
 
-- (void)update;
 - (void)displayNewLocationAtIndex:(NSInteger)index;
 - (void)selectLocation:(RoadtripLocation*)location;
 - (void)deselectAllRows;

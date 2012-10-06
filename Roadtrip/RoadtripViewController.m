@@ -34,7 +34,6 @@
     // pass location array to table and map view for display
     for(id vc in self.childViewControllers) {
         [vc setRoadtripModel:self.roadtripModel];
-        [vc update];
         if([vc isKindOfClass:[DetailMapViewController class]]) {
             mapController = vc;
         } else if([vc isKindOfClass:[LocationTableViewController class]]) {

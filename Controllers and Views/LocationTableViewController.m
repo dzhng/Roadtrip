@@ -38,24 +38,19 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)insertLocation:(NSInteger)index
-{
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index-1 inSection:0]]
-                  withRowAnimation:UITableViewRowAnimationTop];
-}
-
-- (void)update
-{
-    for(int i = 0; i < [self.roadtripModel.locationArray count]; i++) {
-        [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:0]]
-                  withRowAnimation:UITableViewRowAnimationTop];
-    }
-}
-
 - (void)displayNewLocationAtIndex:(NSInteger)index
 {
-    [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]]
+    // if it's not the first location, we need another row for the route
+    if(index > 0) {
+        [self.tableView insertRowsAtIndexPaths:
+             [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:index inSection:0],
+                    [NSIndexPath indexPathForRow:index+1 inSection:0], nil]
+                    withRowAnimation:UITableViewRowAnimationTop];
+    } else {    // first locaiton, just insert one row
+        [self.tableView insertRowsAtIndexPaths:
+             [NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]]
                    withRowAnimation:UITableViewRowAnimationTop];
+    }
 }
 
 - (void)selectLocation:(RoadtripLocation*)location
@@ -63,7 +58,7 @@
     for(int i = 0; i < [self.roadtripModel.locationArray count]; i++) {
         RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:i];
         if(loc == location) {
-            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]
+            [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i*2 inSection:0]
                                         animated:YES scrollPosition:UITableViewScrollPositionMiddle];
             break;
         }
@@ -92,17 +87,48 @@
     return [self.roadtripModel.locationArray count] + [self.roadtripModel.routeArray count];
 }
 
-- (LocationTableCell *)tableView:(LocationTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell *)tableView:(LocationTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"LocationCell";
-    LocationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    if (cell == nil) {
-        cell = [[LocationTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-    }
-    RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:[indexPath row]];
-    [cell updateLocation:loc];
+    static NSString *locationId = @"LocationCell";
+    static NSString *routeId = @"RouteCell";
+    int row = [indexPath row];
     
-    return cell;
+    // location cell
+    if(row == 0 || row % 2 == 0) {
+        LocationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:locationId];
+        if (cell == nil) {
+            cell = [[LocationTableCell alloc]
+                    initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationId];
+        }
+        int modelRow = row / 2;
+        RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
+        [cell updateLocation:loc];
+        return cell;
+        
+    } else {    // route cell
+        RouteTableCell *cell = [tableView dequeueReusableCellWithIdentifier:routeId];
+        if (cell == nil) {
+            cell = [[RouteTableCell alloc]
+                    initWithStyle:UITableViewCellStyleDefault reuseIdentifier:routeId];
+        }
+        int modelRow = (row-1) / 2;
+        RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
+        [cell updateRoute:loc];
+        return cell;
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    
+    // location cell
+    if(row == 0 || row % 2 == 0) {
+        return 100;
+    } else {
+        return 40;
+    }
 }
 
 /*

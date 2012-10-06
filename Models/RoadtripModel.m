@@ -86,15 +86,6 @@
                  }];
 }
 
-- (void)addLocation:(RoadtripLocation*)location
-{
-    // add to location array
-    [self.locationArray addObject:location];
-    
-    // tell our delegate to update their views
-    [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
-}
-
 #pragma mark Routing functions
 
 // get route coordinates from google API, should return array of RoadtripRoute
@@ -117,18 +108,20 @@
         NSArray* routes = [parsed objectForKey:@"routes"];
        
         // we only want the first route, for now..
-        NSDictionary* route = [routes objectAtIndex:0];
-        NSArray* legs = [route objectForKey:@"legs"];
-        
         NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
+        NSDictionary* route = [routes objectAtIndex:0];
+        
+        NSArray* legs = [route objectForKey:@"legs"];
+        NSMutableArray* routePoints = [[NSMutableArray alloc] init];
         for(NSDictionary* leg in legs) {
             NSArray* steps = [leg objectForKey:@"steps"];
             for(NSDictionary* step in steps) {
                 NSDictionary* polyline = [step objectForKey:@"polyline"];
                 NSString* points = [polyline objectForKey:@"points"];
-                [roadtripRoutes addObject: [[RoadtripRoute alloc] initWithPoints:[self decodePolyLine:points]]];
+                [routePoints addObjectsFromArray:[self decodePolyLine:points]];
             }
         }
+        [roadtripRoutes addObject:[[RoadtripRoute alloc] initWithPoints:routePoints]];
         return roadtripRoutes;
     } else {
         return nil;
@@ -202,15 +195,19 @@
     // grab the new location
     NSDictionary *dictionary = [notification userInfo];
     RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
-    // add to location array and redisplay
-    [self addLocation:location];
+    // add to location array
+    [self.locationArray addObject:location];
     
     // after adding location, we should recalculate all routes
     NSArray* routes = [self calculateRoutes];
-    [self setRouteArray:[NSMutableArray arrayWithArray:routes]];
+    [self setRouteArray:[routes mutableCopy]];
+    
+    // tell our delegate to update their views
+    [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
     
     // tell our delegate to display routes
     [self.delegate displayRoutes:routes];
+    
 }
 
 @end

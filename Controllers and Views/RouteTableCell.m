@@ -15,15 +15,45 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        cellSelected = false;
     }
     return self;
+}
+
+- (void)updateRoute:(RoadtripRoute *)route
+{
+    self.timeLabel.text = route.time;
+    self.distanceLabel.text = route.distance;
+    self.costLabel.text = route.cost;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
+    // draw table based on state
+    if(selected) {
+        if(!cellSelected) {
+            cellSelected = true;
+            // Configure the view for the selected state
+            UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
+            bgView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.7];
+            self.backgroundView = bgView;
+            
+            // we only send out the notification if the user clicked on the table
+            // don't want to be sending double notification for when the user clicked on the map
+            if(!animated) {
+                // send notification out to model so it knows location has been selected
+                NSLog(@"Route cell selected notification sent");
+                //[self postLocationSelectedNotification];
+            }
+        }
+    } else {
+        UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
+        bgView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.7];
+        self.backgroundView = bgView;
+        cellSelected = false;
+    }
 }
 
 @end
