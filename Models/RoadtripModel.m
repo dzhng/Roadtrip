@@ -13,6 +13,7 @@
 - (void)locationAddedNotification:(NSNotification*)notification;
 - (void)locationSelectedNotification:(NSNotification*)notification;
 - (void)locationDeselectedNotification:(NSNotification*)notification;
+- (void)routeSelectedNotification:(NSNotification*)notification;
 
 @end
 
@@ -45,6 +46,12 @@
             addObserver:self
             selector:@selector(locationDeselectedNotification:)
             name:LOCATION_DESELECTED_NOTIFICATION
+            object:nil];
+        
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+            selector:@selector(routeSelectedNotification:)
+            name:ROUTE_SELECTED_NOTIFICATION
             object:nil];
     }
     return self;
@@ -121,7 +128,6 @@
                 }
             }
         }
-        NSLog(apiUrlStr);
         NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
         
         NSError *error;
@@ -228,7 +234,7 @@
     NSString* source = [dictionary valueForKey:NOTIFICATION_SELECTED_SOURCE];
     
     // set selected data
-    [self setSelectedLocation:location];
+    [self setSelected:location];
     
     if(source == NOTIFICATION_TABLE_SOURCE) {
         [self.delegate handleSelectedFromTable:location];
@@ -240,7 +246,7 @@
 - (void)locationDeselectedNotification:(NSNotification*)notification
 {
     // deselect data
-    [self setSelectedLocation:nil];
+    [self setSelected:nil];
     [self.delegate handleDeselect];
 }
 
@@ -262,6 +268,22 @@
     // tell our delegate to display routes
     [self.delegate displayRoutes:routes];
     
+}
+
+- (void)routeSelectedNotification:(NSNotification *)notification
+{
+    // grab the new route
+    NSDictionary *dictionary = [notification userInfo];
+    RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
+    NSString* source = [dictionary valueForKey:NOTIFICATION_SELECTED_SOURCE];
+    
+    // set selected data
+    [self setSelected:route];
+    
+    // can only select route from table
+    if(source == NOTIFICATION_TABLE_SOURCE) {
+        [self.delegate handleSelectedFromTable:route];
+    }
 }
 
 @end

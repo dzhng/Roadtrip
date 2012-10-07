@@ -7,6 +7,13 @@
 //
 
 #import "RouteTableCell.h"
+#import "ModelNotifications.h"
+
+@interface RouteTableCell()
+
+- (void)postRouteSelectedNotification;
+
+@end
 
 @implementation RouteTableCell
 
@@ -22,6 +29,7 @@
 
 - (void)updateRoute:(RoadtripRoute *)route
 {
+    self.route = route;
     self.timeLabel.text = route.timeText;
     self.distanceLabel.text = route.distanceText;
     self.costLabel.text = route.costText;
@@ -45,7 +53,7 @@
             if(!animated) {
                 // send notification out to model so it knows location has been selected
                 NSLog(@"Route cell selected notification sent");
-                //[self postLocationSelectedNotification];
+                [self postRouteSelectedNotification];
             }
         }
     } else {
@@ -54,6 +62,15 @@
         self.backgroundView = bgView;
         cellSelected = false;
     }
+}
+
+// send out notification to add this location to current list of locations
+- (void)postRouteSelectedNotification
+{
+    NSString *notificationName = ROUTE_SELECTED_NOTIFICATION;
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.route, NOTIFICATION_ROUTE_KEY,
+                                NOTIFICATION_TABLE_SOURCE, NOTIFICATION_SELECTED_SOURCE, nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 @end

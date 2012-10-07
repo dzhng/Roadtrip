@@ -66,7 +66,7 @@
         [self drawRoutes:routes];
         
         // just center on the first route for now
-        [self centerMapOnRoutePoints:[[routes objectAtIndex:0] routePoints]];
+        [self centerMapOnRoute:[routes objectAtIndex:0]];
     }
 }
 
@@ -82,7 +82,7 @@
     RoadtripLocation* center = [locations objectAtIndex:0];
     [center setSearch:true];
     [self centerMapOnLocation:center];
-    self.roadtripModel.selectedLocation = center;
+    self.roadtripModel.selected = center;
     
     // update map with annotations of search locations
     for(RoadtripLocation* loc in locations) {
@@ -157,8 +157,10 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
-- (void)centerMapOnRoutePoints:(NSArray*)routePoints
+- (void)centerMapOnRoute:(RoadtripRoute*)route
 {
+    NSArray* routePoints = route.routePoints;
+    
     MKCoordinateRegion region;
     
     CLLocationDegrees maxLat = -90;
@@ -179,10 +181,10 @@
             minLon = currentLocation.coordinate.longitude;
     }
     
-    region.center.latitude     = (maxLat + minLat) / 2;
-    region.center.longitude    = (maxLon + minLon) / 2;
     region.span.latitudeDelta  = ROUTE_ZOOM*(maxLat - minLat);
     region.span.longitudeDelta = ROUTE_ZOOM*(maxLon - minLon);
+    region.center.latitude     = (maxLat + minLat) / 2;
+    region.center.longitude    = ((maxLon + minLon) / 2) - 0.3*(maxLon - minLon);
     
     [mapView setRegion:region animated:YES];
 }

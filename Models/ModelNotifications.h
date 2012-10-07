@@ -12,9 +12,12 @@
 #define ADD_LOCATIONS_NOTIFICATION      @"AddLocations"
 #define LOCATION_SELECTED_NOTIFICATION  @"LocationSelected"
 #define LOCATION_DESELECTED_NOTIFICATION  @"LocationDeselected"
+#define ROUTE_SELECTED_NOTIFICATION     @"RouteSelected"
+#define ROUTE_DESELECTED_NOTIFICATION   @"RouteDeselected"
 
 #define NOTIFICATION_SELECTED_SOURCE    @"LocationSelectedSource"
 #define NOTIFICATION_LOCATION_KEY       @"Location"
+#define NOTIFICATION_ROUTE_KEY          @"Route"
 
 #define NOTIFICATION_TABLE_SOURCE       @"TableSource"
 #define NOTIFICATION_MAP_SOURCE         @"MapSource"

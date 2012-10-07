@@ -86,16 +86,22 @@
     [tableController displayNewLocationAtIndex:index];
 }
 
-- (void)handleSelectedFromTable:(RoadtripLocation *)location
+- (void)handleSelectedFromTable:(id)selected
 {
-    // since we pressed on it from the table, we should center the map view to the pin
-    [mapController centerMapOnLocation:location];
+    if ([selected isKindOfClass:[RoadtripLocation class]]) {
+        // since we pressed on it from the table, we should center the map view to the pin
+        [mapController centerMapOnLocation:selected];
+    } else if([selected isKindOfClass:[RoadtripRoute class]]) {
+        [mapController centerMapOnRoute:selected];
+    }
 }
 
-- (void)handleSelectedFromMap:(RoadtripLocation *)location
+- (void)handleSelectedFromMap:(id)selected
 {
-    // select row on table
-    [tableController selectLocation:location];
+    if ([selected isKindOfClass:[RoadtripLocation class]]) {
+        // select row on table
+        [tableController selectLocation:selected];
+    }
 }
 
 - (void)handleDeselect

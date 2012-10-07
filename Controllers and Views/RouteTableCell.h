@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
 @property (weak, nonatomic) IBOutlet UILabel *costLabel;
 
+@property (retain, nonatomic) RoadtripRoute* route;
+
 - (void)updateRoute:(RoadtripRoute *)route;
 
 @end

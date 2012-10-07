@@ -17,8 +17,8 @@
 
 - (void)searchDone:(NSArray*)locationObjects;
 - (void)locationInserted:(RoadtripLocation*)location AtIndex:(NSInteger)index;
-- (void)handleSelectedFromTable:(RoadtripLocation*)location;
-- (void)handleSelectedFromMap:(RoadtripLocation*)location;
+- (void)handleSelectedFromTable:(id) selected;
+- (void)handleSelectedFromMap:(id)selected;
 - (void)handleDeselect;
 - (void)displayRoutes:(NSArray*)routes;
 
@@ -39,7 +39,7 @@
 @property (retain, nonatomic) NSMutableArray* routeArray;
 
 // currently selected location
-@property (retain, nonatomic) RoadtripLocation* selectedLocation;
+@property (retain, nonatomic) id selected;
 
 - (id)init;
 - (void)geocodeWithAddress:address;

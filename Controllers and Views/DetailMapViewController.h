@@ -42,6 +42,6 @@
 - (void)drawRoutes:(NSArray*)routeArray;
 
 // center map on one specific route, input is an array of CLLocations
-- (void)centerMapOnRoutePoints:(NSArray*)routePoints;
+- (void)centerMapOnRoute:(RoadtripRoute*)route;
 
 @end
