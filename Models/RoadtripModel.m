@@ -128,7 +128,8 @@
                 }
             }
         }
-        NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
+        NSURL* apiUrl = [NSURL URLWithString:
+                     [apiUrlStr stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
         
         NSError *error;
         NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];

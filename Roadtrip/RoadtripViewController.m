@@ -81,6 +81,9 @@
     // remove this search location from annotation
     [mapController removeSearchLocation:location];
     
+    // clear search bar
+    self.searchBarView.text = @"";
+    
     // add new annotation to map and table
     [mapController displayNewLocationAtIndex:index];
     [tableController displayNewLocationAtIndex:index];
