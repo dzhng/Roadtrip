@@ -12,9 +12,13 @@
 
 @interface RoadtripRoute : NSObject
 
-@property (copy, nonatomic) NSString* distance;
-@property (copy, nonatomic) NSString* time;
-@property (copy, nonatomic) NSString* cost;
+@property (copy, nonatomic) NSString* distanceText;
+@property (copy, nonatomic) NSString* timeText;
+@property (copy, nonatomic) NSString* costText;
+
+@property (assign, nonatomic) NSInteger distance;
+@property (assign, nonatomic) NSInteger time;
+@property (assign, nonatomic) NSInteger cost;
 
 // array of CLLocations that store points of route
 @property (retain, nonatomic) NSArray* routePoints;

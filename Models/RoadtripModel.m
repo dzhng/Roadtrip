@@ -106,23 +106,47 @@
         NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
         NSDictionary* parsed = [apiResponse objectFromJSONString];
         NSArray* routes = [parsed objectForKey:@"routes"];
-       
-        // we only want the first route, for now..
-        NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
-        NSDictionary* route = [routes objectAtIndex:0];
+        if ([routes count] <= 0) {
+            NSLog(@"No roadtrip routes found");
+            return nil;
+        }
         
+        // we only want the first route, for now.. maybe enable different route planning later
+        NSDictionary* route = [routes objectAtIndex:0];
+        NSArray* warnings = [route objectForKey:@"warnings"];
+        if ([warnings count] > 0) {
+            NSLog(@"Warnings: %@", [warnings objectAtIndex:0]);
+        }
+        
+        NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
         NSArray* legs = [route objectForKey:@"legs"];
-        NSMutableArray* routePoints = [[NSMutableArray alloc] init];
         for(NSDictionary* leg in legs) {
+            NSMutableArray* routePoints = [[NSMutableArray alloc] init];
             NSArray* steps = [leg objectForKey:@"steps"];
             for(NSDictionary* step in steps) {
                 NSDictionary* polyline = [step objectForKey:@"polyline"];
                 NSString* points = [polyline objectForKey:@"points"];
                 [routePoints addObjectsFromArray:[self decodePolyLine:points]];
             }
+            
+            RoadtripRoute* roadtripRoute = [[RoadtripRoute alloc] initWithPoints:routePoints];
+            
+            // grab leg values
+            NSDictionary* dist = [leg objectForKey:@"distance"];
+            NSString* distanceText = [dist objectForKey:@"text"];
+            NSInteger distance = [[dist objectForKey:@"value"] integerValue];
+           
+            NSDictionary* dur = [leg objectForKey:@"duration"];
+            NSString* durationText = [dur objectForKey:@"text"];
+            NSInteger duration = [[dur objectForKey:@"value"] integerValue];
+            
+            roadtripRoute.timeText = durationText;
+            roadtripRoute.time = duration;
+            roadtripRoute.distanceText = distanceText;
+            roadtripRoute.distance = distance;
+            
+            [roadtripRoutes addObject:roadtripRoute];
         }
-        [roadtripRoutes addObject:[[RoadtripRoute alloc] initWithPoints:routePoints]];
-        
         
         // check if correct amount of routes is inserted, insert blank routes to fill up space
         while ([roadtripRoutes count] < [self.locationArray count] -1) {

@@ -103,7 +103,6 @@
         int modelRow = row / 2;
         RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
         [cell updateLocation:loc];
-        NSLog(@"Row %d, %@", row, loc.title);
         return cell;
         
     } else {    // route cell
@@ -115,7 +114,6 @@
         int modelRow = (row-1) / 2;
         RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
         [cell updateRoute:loc];
-        NSLog(@"Row %d, %@", row, loc.distance);
         return cell;
     }
     return nil;

@@ -22,9 +22,9 @@
 
 - (void)updateRoute:(RoadtripRoute *)route
 {
-    self.timeLabel.text = route.time;
-    self.distanceLabel.text = route.distance;
-    self.costLabel.text = route.cost;
+    self.timeLabel.text = route.timeText;
+    self.distanceLabel.text = route.distanceText;
+    self.costLabel.text = route.costText;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
