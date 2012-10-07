@@ -91,15 +91,37 @@
 // get route coordinates from google API, should return array of RoadtripRoute
 - (NSArray*)calculateRoutes
 {
-    if ([self.locationArray count] > 1) {
+    int locations = [self.locationArray count];
+    if (locations > 1) {
         // get points
         RoadtripLocation* origin = [self.locationArray objectAtIndex:0];
         RoadtripLocation* destination = [self.locationArray lastObject];
         
-        NSString* saddr = [NSString stringWithFormat:@"%f,%f", origin.coordinate.latitude, origin.coordinate.longitude];
-        NSString* daddr = [NSString stringWithFormat:@"%f,%f", destination.coordinate.latitude, destination.coordinate.longitude];
+        NSString* oaddr = [NSString stringWithFormat:@"%f,%f",
+                           origin.coordinate.latitude, origin.coordinate.longitude];
+        NSString* daddr = [NSString stringWithFormat:@"%f,%f",
+                           destination.coordinate.latitude, destination.coordinate.longitude];
         
-        NSString* apiUrlStr = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/directions/json?origin=%@&destination=%@&sensor=false", saddr, daddr];
+        // build base query URL
+        NSMutableString* apiUrlStr = [NSMutableString
+                               stringWithFormat:@"http://maps.googleapis.com/maps"
+                               "/api/directions/json?"
+                               "origin=%@"
+                               "&destination=%@"
+                               "&sensor=false", oaddr, daddr];
+        // append waypoint sections
+        if(locations > 2) {
+            [apiUrlStr appendString:@"&waypoints="];
+            for (int i = 1; i < locations-1; i++) {
+                RoadtripLocation* waypoint = [self.locationArray objectAtIndex:i];
+                [apiUrlStr appendFormat:@"%f,%f",
+                     waypoint.coordinate.latitude, waypoint.coordinate.longitude];
+                if(i < locations-2) {
+                    [apiUrlStr appendString:@"|"];
+                }
+            }
+        }
+        NSLog(apiUrlStr);
         NSURL* apiUrl = [NSURL URLWithString:apiUrlStr];
         
         NSError *error;
@@ -120,7 +142,8 @@
         
         NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
         NSArray* legs = [route objectForKey:@"legs"];
-        for(NSDictionary* leg in legs) {
+        for(NSDictionary* leg in legs)
+        {
             NSMutableArray* routePoints = [[NSMutableArray alloc] init];
             NSArray* steps = [leg objectForKey:@"steps"];
             for(NSDictionary* step in steps) {
