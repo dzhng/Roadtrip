@@ -122,6 +122,13 @@
             }
         }
         [roadtripRoutes addObject:[[RoadtripRoute alloc] initWithPoints:routePoints]];
+        
+        
+        // check if correct amount of routes is inserted, insert blank routes to fill up space
+        while ([roadtripRoutes count] < [self.locationArray count] -1) {
+            [roadtripRoutes addObject: [[RoadtripRoute alloc] init]];
+        }
+        
         return roadtripRoutes;
     } else {
         return nil;

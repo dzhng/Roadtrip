@@ -84,7 +84,6 @@
     // add new annotation to map and table
     [mapController displayNewLocationAtIndex:index];
     [tableController displayNewLocationAtIndex:index];
-    
 }
 
 - (void)handleSelectedFromTable:(RoadtripLocation *)location

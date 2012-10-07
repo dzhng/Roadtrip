@@ -43,8 +43,8 @@
     // if it's not the first location, we need another row for the route
     if(index > 0) {
         [self.tableView insertRowsAtIndexPaths:
-             [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:index inSection:0],
-                    [NSIndexPath indexPathForRow:index+1 inSection:0], nil]
+             [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:2*index-1 inSection:0],
+                    [NSIndexPath indexPathForRow:2*index inSection:0], nil]
                     withRowAnimation:UITableViewRowAnimationTop];
     } else {    // first locaiton, just insert one row
         [self.tableView insertRowsAtIndexPaths:
@@ -84,7 +84,7 @@
 {
     // Return the number of rows in the section.
     // the table is both location and route arrays
-    return [self.roadtripModel.locationArray count] + [self.roadtripModel.routeArray count];
+    return 2*[self.roadtripModel.locationArray count]-1;
 }
 
 - (UITableViewCell *)tableView:(LocationTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,6 +103,7 @@
         int modelRow = row / 2;
         RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
         [cell updateLocation:loc];
+        NSLog(@"Row %d, %@", row, loc.title);
         return cell;
         
     } else {    // route cell
@@ -114,6 +115,7 @@
         int modelRow = (row-1) / 2;
         RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
         [cell updateRoute:loc];
+        NSLog(@"Row %d, %@", row, loc.distance);
         return cell;
     }
     return nil;
