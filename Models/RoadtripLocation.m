@@ -43,7 +43,8 @@
 - (id)initWithPlacemark:(CLPlacemark*)placemark
 {
     if (self = [super init]) {
-       // initialize
+        // initialize
+        self.addressDictionary = placemark.addressDictionary;
         self.name = placemark.name;
         NSArray* addr = [placemark.addressDictionary objectForKey:@"FormattedAddressLines"];
         NSMutableString* fullAddr = [[NSMutableString alloc] init];

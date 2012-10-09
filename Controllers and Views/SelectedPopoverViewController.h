@@ -21,6 +21,6 @@
 - (id)initWithLocation:(RoadtripLocation*)location;
 
 - (IBAction)navigateButtonPressed:(id)sender;
-- (IBAction)deleteButtonPressed:(id)sender;
+- (IBAction)searchButtonPressed:(id)sender;
 
 @end

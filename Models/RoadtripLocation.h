@@ -15,6 +15,7 @@
     MKCoordinateRegion region;  // stores region to be used for map placements
 }
 
+@property (retain, nonatomic) NSDictionary* addressDictionary;  // dictionary form of address
 @property (copy, nonatomic) NSString* address;
 @property (copy, nonatomic) NSString* name;
 @property (retain, nonatomic) NSArray* formattedAddress;  // lines of address stored in an array

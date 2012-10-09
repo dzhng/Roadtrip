@@ -49,9 +49,20 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)navigateButtonPressed:(id)sender {
+- (IBAction)navigateButtonPressed:(id)sender
+{
+    // start the maps app navigating to this location
+    MKMapItem* mapItem = [[MKMapItem alloc] initWithPlacemark:
+                          [[MKPlacemark alloc] initWithCoordinate:self.location.coordinate
+                                                addressDictionary:self.location.addressDictionary]];
+    NSDictionary* launchKeys = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsDirectionsModeKey,
+                                    nil];
+    [mapItem openInMapsWithLaunchOptions:launchKeys];
 }
 
-- (IBAction)deleteButtonPressed:(id)sender {
+- (IBAction)searchButtonPressed:(id)sender
+{
 }
+
 @end
