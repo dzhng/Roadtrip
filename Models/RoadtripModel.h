@@ -11,7 +11,6 @@
 #import "RoadtripLocation.h"
 #import "RoadtripRoute.h"
 #import "ModelNotifications.h"
-#import "JSONKit.h"
 
 @protocol RoadtripModelDelegate <NSObject>
 
@@ -43,9 +42,5 @@
 
 - (id)init;
 - (void)geocodeWithAddress:address;
-
-// map routing functions
-- (NSArray*)calculateRoutes;
-- (NSMutableArray *)decodePolyLine:(NSString *)encodedString;
 
 @end

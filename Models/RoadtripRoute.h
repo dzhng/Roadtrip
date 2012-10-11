@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
+#import "RoadtripLocation.h"
+#import "JSONKit.h"
 
 @interface RoadtripRoute : NSObject
 
@@ -26,10 +28,11 @@
 // array of MKPolyline that stores the actual route drawn
 @property (retain, nonatomic) NSArray* routeOverlays;
 
-// initialize with array of CLLocations
-- (id)initWithPoints:(NSArray*)points;
+// store the 2 destinations this route is connected to
+@property (retain, nonatomic) RoadtripLocation* start;
+@property (retain, nonatomic) RoadtripLocation* end;
 
-// convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points;
+// initialize with array of CLLocations
+- (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end;
 
 @end

@@ -60,7 +60,7 @@
         [mapView addAnnotation:loc];
     }
     
-    NSArray* routes = [self.roadtripModel calculateRoutes];
+    NSArray* routes = self.roadtripModel.routeArray;
     if(routes) {
         // draw all routes
         [self drawRoutes:routes];
@@ -94,7 +94,7 @@
 
 - (void)centerMapOnLocation:(RoadtripLocation*)location
 {
-    MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance([location coordinate], MAP_ZOOM, MAP_ZOOM);
+    MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance(location.coordinate, MAP_ZOOM, MAP_ZOOM);
     [mapView setRegion:newRegion animated:NO];
     [mapView selectAnnotation:location animated:YES];
 }

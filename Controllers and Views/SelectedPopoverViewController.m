@@ -39,7 +39,7 @@
     // set coordinate and label text
     self.locationTitle.text = self.location.title;
     self.locationSubtitle.text = self.location.subtitle;
-    [self.miniMap setRegion:MKCoordinateRegionMakeWithDistance([self.location coordinate],
+    [self.miniMap setRegion:MKCoordinateRegionMakeWithDistance(self.location.coordinate,
                                                                MAP_POPOVER_ZOOM, MAP_POPOVER_ZOOM) animated:NO];
 }
 

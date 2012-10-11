@@ -22,12 +22,12 @@
     return self;
 }
 
-- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocationCoordinate2D)loc
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocation*)loc
 {
     if (self = [super init]) {
         [self setTitle:title];
         [self setSubtitle:subtitle];
-        [self setCoordinate:loc];
+        [self setCoordinate:loc.coordinate];
     }
     return self;
 }

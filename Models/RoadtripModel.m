@@ -29,6 +29,9 @@
         // initialize the current location array
         self.locationArray = [[NSMutableArray alloc] init];
         
+        // initialize route array
+        self.routeArray = [[NSMutableArray alloc] init];
+        
         // setup model to receive notifications
         [[NSNotificationCenter defaultCenter]
             addObserver:self
@@ -93,140 +96,8 @@
                  }];
 }
 
-#pragma mark Routing functions
-
-// get route coordinates from google API, should return array of RoadtripRoute
-- (NSArray*)calculateRoutes
-{
-    int locations = [self.locationArray count];
-    if (locations > 1) {
-        // get points
-        RoadtripLocation* origin = [self.locationArray objectAtIndex:0];
-        RoadtripLocation* destination = [self.locationArray lastObject];
-        
-        NSString* oaddr = [NSString stringWithFormat:@"%f,%f",
-                           origin.coordinate.latitude, origin.coordinate.longitude];
-        NSString* daddr = [NSString stringWithFormat:@"%f,%f",
-                           destination.coordinate.latitude, destination.coordinate.longitude];
-        
-        // build base query URL
-        NSMutableString* apiUrlStr = [NSMutableString
-                               stringWithFormat:@"http://maps.googleapis.com/maps"
-                               "/api/directions/json?"
-                               "origin=%@"
-                               "&destination=%@"
-                               "&sensor=false", oaddr, daddr];
-        // append waypoint sections
-        if(locations > 2) {
-            [apiUrlStr appendString:@"&waypoints="];
-            for (int i = 1; i < locations-1; i++) {
-                RoadtripLocation* waypoint = [self.locationArray objectAtIndex:i];
-                [apiUrlStr appendFormat:@"%f,%f",
-                     waypoint.coordinate.latitude, waypoint.coordinate.longitude];
-                if(i < locations-2) {
-                    [apiUrlStr appendString:@"|"];
-                }
-            }
-        }
-        NSURL* apiUrl = [NSURL URLWithString:
-                     [apiUrlStr stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding]];
-        
-        NSError *error;
-        NSString* apiResponse = [NSString stringWithContentsOfURL:apiUrl encoding:NSUTF8StringEncoding error:&error];
-        NSDictionary* parsed = [apiResponse objectFromJSONString];
-        NSArray* routes = [parsed objectForKey:@"routes"];
-        if ([routes count] <= 0) {
-            NSLog(@"No roadtrip routes found");
-            return nil;
-        }
-        
-        // we only want the first route, for now.. maybe enable different route planning later
-        NSDictionary* route = [routes objectAtIndex:0];
-        NSArray* warnings = [route objectForKey:@"warnings"];
-        if ([warnings count] > 0) {
-            NSLog(@"Warnings: %@", [warnings objectAtIndex:0]);
-        }
-        
-        NSMutableArray* roadtripRoutes = [[NSMutableArray alloc] init];
-        NSArray* legs = [route objectForKey:@"legs"];
-        for(NSDictionary* leg in legs)
-        {
-            NSMutableArray* routePoints = [[NSMutableArray alloc] init];
-            NSArray* steps = [leg objectForKey:@"steps"];
-            for(NSDictionary* step in steps) {
-                NSDictionary* polyline = [step objectForKey:@"polyline"];
-                NSString* points = [polyline objectForKey:@"points"];
-                [routePoints addObjectsFromArray:[self decodePolyLine:points]];
-            }
-            
-            RoadtripRoute* roadtripRoute = [[RoadtripRoute alloc] initWithPoints:routePoints];
-            
-            // grab leg values
-            NSDictionary* dist = [leg objectForKey:@"distance"];
-            NSString* distanceText = [dist objectForKey:@"text"];
-            NSInteger distance = [[dist objectForKey:@"value"] integerValue];
-           
-            NSDictionary* dur = [leg objectForKey:@"duration"];
-            NSString* durationText = [dur objectForKey:@"text"];
-            NSInteger duration = [[dur objectForKey:@"value"] integerValue];
-            
-            roadtripRoute.timeText = durationText;
-            roadtripRoute.time = duration;
-            roadtripRoute.distanceText = distanceText;
-            roadtripRoute.distance = distance;
-            
-            [roadtripRoutes addObject:roadtripRoute];
-        }
-        
-        // check if correct amount of routes is inserted, insert blank routes to fill up space
-        while ([roadtripRoutes count] < [self.locationArray count] -1) {
-            [roadtripRoutes addObject: [[RoadtripRoute alloc] init]];
-        }
-        
-        return roadtripRoutes;
-    } else {
-        return nil;
-    }
-}
-                 
-// decode the polyline binary data from GMaps API into an array of CLLocations
-- (NSMutableArray *)decodePolyLine:(NSString *)encodedString
-{
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    NSInteger len = [encodedString length];
-    NSInteger index = 0;
-    NSInteger lat=0;
-    NSInteger lng=0;
-    while (index < len) {
-        NSInteger b;
-        NSInteger shift = 0;
-        NSInteger result = 0;
-        do {
-            b = [encodedString characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        lat += ((result & 1) ? ~(result >> 1) : (result >> 1));
-        
-        shift = 0;
-        result = 0;
-        do {
-            b = [encodedString characterAtIndex:index++] - 63;
-            result |= (b & 0x1f) << shift;
-            shift += 5;
-        } while (b >= 0x20);
-        lng += ((result & 1) ? ~(result >> 1) : (result >> 1));
-        
-        NSNumber *latitude = [[NSNumber alloc] initWithFloat:lat * 1e-5];
-        NSNumber *longitude = [[NSNumber alloc] initWithFloat:lng * 1e-5];
-        
-        CLLocation *loc = [[CLLocation alloc] initWithLatitude:[latitude floatValue] longitude:[longitude floatValue]];
-        [array addObject:loc];
-    }
-    return array;
-}
-                 
 #pragma mark Notification Handlers
+
 - (void)locationSelectedNotification:(NSNotification*)notification
 {
     // grab the new location
@@ -256,19 +127,20 @@
     // grab the new location
     NSDictionary *dictionary = [notification userInfo];
     RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
+    
+    // if this isn't the first location, we should add a new route
+    if([self.locationArray count] > 0) {
+        [self.routeArray addObject:[[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location]];
+    }
+    
     // add to location array
     [self.locationArray addObject:location];
-    
-    // after adding location, we should recalculate all routes
-    NSArray* routes = [self calculateRoutes];
-    [self setRouteArray:[routes mutableCopy]];
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
     
     // tell our delegate to display routes
-    [self.delegate displayRoutes:routes];
-    
+    [self.delegate displayRoutes:self.routeArray];
 }
 
 - (void)routeSelectedNotification:(NSNotification *)notification
