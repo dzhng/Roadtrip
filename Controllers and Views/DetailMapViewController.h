@@ -17,6 +17,7 @@
 @interface DetailMapViewController : UIViewController <UIPopoverControllerDelegate, MKMapViewDelegate>
 {
     bool momentumScrolling;
+    bool manualSelect;  // stores if we're manually selecting a location via table cell
     
     // mapview variables
     MKMapView *mapView;

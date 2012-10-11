@@ -26,6 +26,8 @@
     if (self) {
         // stores if we're currently momentum scrolling on the map
         momentumScrolling = false;
+        // stores if we manually selected a location via table cell
+        manualSelect = false;
     }
     return self;
 }
@@ -97,6 +99,9 @@
 {
     MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance(location.coordinate, MAP_ZOOM, MAP_ZOOM);
     [mapView setRegion:newRegion animated:NO];
+    
+    // set the flag that this is a manual select, so we don't send any notifications
+    manualSelect = true;
     [mapView selectAnnotation:location animated:YES];
 }
 
@@ -279,8 +284,11 @@
         [self.mapPopover presentPopoverFromRect:view.bounds inView:view
             permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     } else {
-        // tell model that the user has selected something from the map
-        [self postLocationSelectedNotificationWithLocation:annotation];
+        if(!manualSelect) {
+            // tell model that the user has selected something from the map
+            [self postLocationSelectedNotificationWithLocation:annotation];
+        }
+        manualSelect = false;
         
         // make the selected popover
         SelectedPopoverViewController *vc = [[SelectedPopoverViewController alloc] initWithLocation:view.annotation];

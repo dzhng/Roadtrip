@@ -18,7 +18,8 @@
 {
     self = [super initWithStyle:style];
     if (self) {
-        // Custom initialization
+        // dont go into edit mode by default
+        editMode = false;
     }
     return self;
 }
@@ -53,8 +54,11 @@
     }
 }
 
+// called by the map view to manually select table cells
+// this class shouldn't need to call this, since when the user touches cell, they're auto selected
 - (void)selectLocation:(RoadtripLocation*)location
 {
+    // should only be able to select in editmode
     for(int i = 0; i < [self.roadtripModel.locationArray count]; i++) {
         RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:i];
         if(loc == location) {
@@ -72,6 +76,22 @@
     }
 }
 
+- (void)enableLocationRearrange
+{
+    if([self.roadtripModel.locationArray count] > 1) {
+        // first set flag to only show location cells
+        editMode = true;
+        // then delete the routing cells
+        NSMutableArray* indexPath = [[NSMutableArray alloc] init];
+        for (int i = 0; i < [self.roadtripModel.routeArray count]; i++) {
+            [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
+        }
+        [self.tableView deleteRowsAtIndexPaths:indexPath withRowAnimation:YES];
+        [self.tableView reloadData];
+        // TODO: gray out map view so there's no interactions there
+    }
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(LocationTableView *)tableView
@@ -84,7 +104,11 @@
 {
     // Return the number of rows in the section.
     // the table is both location and route arrays
-    return 2*[self.roadtripModel.locationArray count]-1;
+    if(editMode) {
+        return [self.roadtripModel.locationArray count];
+    } else {
+        return 2*[self.roadtripModel.locationArray count]-1;
+    }
 }
 
 - (UITableViewCell *)tableView:(LocationTableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -93,28 +117,39 @@
     static NSString *routeId = @"RouteCell";
     int row = [indexPath row];
     
-    // location cell
-    if(row == 0 || row % 2 == 0) {
+    if(editMode) {
         LocationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:locationId];
         if (cell == nil) {
             cell = [[LocationTableCell alloc]
                     initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationId];
         }
-        int modelRow = row / 2;
-        RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
+        RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:row];
         [cell updateLocation:loc];
         return cell;
-        
-    } else {    // route cell
-        RouteTableCell *cell = [tableView dequeueReusableCellWithIdentifier:routeId];
-        if (cell == nil) {
-            cell = [[RouteTableCell alloc]
-                    initWithStyle:UITableViewCellStyleDefault reuseIdentifier:routeId];
+    } else {
+        // location cell
+        if(row == 0 || row % 2 == 0) {
+            LocationTableCell *cell = [tableView dequeueReusableCellWithIdentifier:locationId];
+            if (cell == nil) {
+                cell = [[LocationTableCell alloc]
+                        initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationId];
+            }
+            int modelRow = row / 2;
+            RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
+            [cell updateLocation:loc];
+            return cell;
+            
+        } else {    // route cell
+            RouteTableCell *cell = [tableView dequeueReusableCellWithIdentifier:routeId];
+            if (cell == nil) {
+                cell = [[RouteTableCell alloc]
+                        initWithStyle:UITableViewCellStyleDefault reuseIdentifier:routeId];
+            }
+            int modelRow = (row-1) / 2;
+            RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
+            [cell updateRoute:loc];
+            return cell;
         }
-        int modelRow = (row-1) / 2;
-        RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
-        [cell updateRoute:loc];
-        return cell;
     }
     return nil;
 }
@@ -123,11 +158,15 @@
 {
     int row = [indexPath row];
     
-    // location cell
-    if(row == 0 || row % 2 == 0) {
+    if (editMode) {
         return 100;
     } else {
-        return 40;
+        // location cell
+        if(row == 0 || row % 2 == 0) {
+            return 100;
+        } else {
+            return 40;
+        }
     }
 }
 

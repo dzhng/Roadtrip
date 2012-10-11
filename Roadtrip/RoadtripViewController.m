@@ -56,6 +56,8 @@
 
 - (IBAction)rearrangePressed:(id)sender
 {
+    // tell table view to hide all route cells
+    [tableController enableLocationRearrange];
 }
 
 - (IBAction)startTripPressed:(id)sender

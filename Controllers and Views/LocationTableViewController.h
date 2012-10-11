@@ -14,6 +14,9 @@
 #import "RoadtripModel.h"
 
 @interface LocationTableViewController : UITableViewController
+{
+    bool editMode;
+}
 
 // model object
 @property (retain, nonatomic) RoadtripModel* roadtripModel;
@@ -28,5 +31,6 @@
 - (void)displayNewLocationAtIndex:(NSInteger)index;
 - (void)selectLocation:(RoadtripLocation*)location;
 - (void)deselectAllRows;
+- (void)enableLocationRearrange;
 
 @end
