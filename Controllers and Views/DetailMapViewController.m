@@ -7,6 +7,7 @@
 //
 
 #import "DetailMapViewController.h"
+#import "RoadtripViewController.h"
 #import "ModelNotifications.h"
 #import "MapConstants.h"
 
@@ -268,10 +269,9 @@
         // the annotation is actually just the roadtrip location class acting as delegate
         MapPopoverViewController *vc = [[MapPopoverViewController alloc] initWithLocation:view.annotation];
         
-        
         self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
         self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
-
+        
         //size as needed
         self.mapPopover.popoverContentSize = CGSizeMake(240, 250);
 
@@ -285,9 +285,12 @@
         // make the selected popover
         SelectedPopoverViewController *vc = [[SelectedPopoverViewController alloc] initWithLocation:view.annotation];
         
-        
         self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
         self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
+
+        // tableviews should ignore popover dismiss actions
+        RoadtripViewController* parent = (RoadtripViewController*)self.parentViewController;
+        self.mapPopover.passthroughViews = [[NSArray alloc] initWithObjects:parent.tableContainer, nil];
 
         //size as needed
         self.mapPopover.popoverContentSize = CGSizeMake(240, 300);

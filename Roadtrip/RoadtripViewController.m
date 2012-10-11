@@ -67,7 +67,6 @@
 {
     // resize table view
     CGSize size = tableController.tableView.contentSize;
-    NSLog(@"new height: %f", size.height);
     self.tableContainer.frame = CGRectMake(0, 0, size.width, size.height + TABLE_MIN_HEIGHT);
     
     // redraw background
@@ -113,6 +112,9 @@
 {
     // hide the keyboard
     [self.searchBarView resignFirstResponder];
+    
+    // dismiss popover
+    [mapController.mapPopover dismissPopoverAnimated:true];
     
     if ([selected isKindOfClass:[RoadtripLocation class]]) {
         // since we pressed on it from the table, we should center the map view to the pin
