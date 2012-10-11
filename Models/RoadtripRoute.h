@@ -35,4 +35,7 @@
 // initialize with array of CLLocations
 - (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end;
 
+// update the start and end destination and recalculate overlays
+- (void)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
+
 @end

@@ -29,6 +29,17 @@
 {
     self = [super init];
     if(self) {
+        self.start = nil;
+        self.end = nil;
+        [self updateStart:start andEnd:end];
+    }
+    return self;
+}
+
+- (void)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end
+{
+    // if the start and end destinations have changed, calculate route and overlay
+    if(self.start != start || self.end != end) {
         self.start = start;
         self.end = end;
         
@@ -36,7 +47,6 @@
         self.routePoints = [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
         self.routeOverlays = [self getOverlaysFromPoints:self.routePoints];
     }
-    return self;
 }
 
 // convert input points into overlays

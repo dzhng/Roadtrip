@@ -105,8 +105,14 @@
     
     // add routing cells back in
     NSMutableArray* indexPath = [[NSMutableArray alloc] init];
-    for(int i = 0; i < [self.roadtripModel.routeArray count]; i++) {
+    NSArray* routes = self.roadtripModel.routeArray;
+    NSArray* locations = self.roadtripModel.locationArray;
+    for(int i = 0; i < [routes count]; i++) {
         [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
+        
+        // reset route start and destinations and recalculate route
+        RoadtripRoute* route = [routes objectAtIndex:i];
+        [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
     }
     [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
 }
