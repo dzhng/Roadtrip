@@ -16,6 +16,9 @@
     // store controllers
     DetailMapViewController* mapController;
     LocationTableViewController* tableController;
+    
+    // store if we're currently in table rearrange mode
+    bool editMode;
 }
 
 // model
@@ -24,6 +27,7 @@
 // view data
 @property (weak, nonatomic) IBOutlet UIView *tableContainer;
 @property (weak, nonatomic) IBOutlet UIView *mapContainer;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (weak, nonatomic) IBOutlet UISearchBar *searchBarView;
 @property (weak, nonatomic) IBOutlet UIView *settingsView;

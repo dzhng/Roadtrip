@@ -87,9 +87,28 @@
             [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
         }
         [self.tableView deleteRowsAtIndexPaths:indexPath withRowAnimation:YES];
-        [self.tableView reloadData];
+        
+        // set table to edit mode
+        [self.tableView setEditing:true animated:true];
+        
         // TODO: gray out map view so there's no interactions there
     }
+}
+
+- (void)doneLocationRearrange
+{
+    // unset edit mode flag
+    editMode = false;
+    
+    // set table to non-edit mode
+    [self.tableView setEditing:false animated:true];
+    
+    // add routing cells back in
+    NSMutableArray* indexPath = [[NSMutableArray alloc] init];
+    for(int i = 0; i < [self.roadtripModel.routeArray count]; i++) {
+        [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
+    }
+    [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
 }
 
 #pragma mark - Table view data source
@@ -170,43 +189,28 @@
     }
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+// we only want to rearrange, not delete
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+    return UITableViewCellEditingStyleNone;
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
+    int from = [fromIndexPath row];
+    int to = [toIndexPath row];
+    
+    // rearrange the location array
+    NSMutableArray* ar = self.roadtripModel.locationArray;
+    
+    id obj = [ar objectAtIndex:from];
+    [ar removeObjectAtIndex:from];
+    if (to >= [ar count]) {
+        [ar addObject:obj];
+    } else {
+        [ar insertObject:obj atIndex:to];
+    }
 }
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 @end

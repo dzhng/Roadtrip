@@ -44,8 +44,14 @@
         }
     }
     
+    // dont start in table edit mode
+    editMode = false;
+    // change edit button
+    [self.editButton setTitle:@"Done" forState:UIControlStateSelected];
+    
     // resize content table to fit
     [self resizeTable];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -56,8 +62,23 @@
 
 - (IBAction)rearrangePressed:(id)sender
 {
-    // tell table view to hide all route cells
-    [tableController enableLocationRearrange];
+    if(editMode) {
+        editMode = false;
+        
+        // tell table view to show routing cells again
+        [tableController doneLocationRearrange];
+        
+        // set button
+        [self.editButton setSelected:NO];
+    } else {
+        editMode = true;
+        
+        // tell table view to hide all route cells
+        [tableController enableLocationRearrange];
+        
+        // set button
+        [self.editButton setSelected:YES];
+    }
 }
 
 - (IBAction)startTripPressed:(id)sender

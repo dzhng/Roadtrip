@@ -32,5 +32,6 @@
 - (void)selectLocation:(RoadtripLocation*)location;
 - (void)deselectAllRows;
 - (void)enableLocationRearrange;
+- (void)doneLocationRearrange;
 
 @end
