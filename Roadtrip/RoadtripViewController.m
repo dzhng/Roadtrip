@@ -8,6 +8,9 @@
 
 #import "RoadtripViewController.h"
 
+// minimum height for the size of table interaction space in pixels
+#define TABLE_MIN_HEIGHT        200
+
 @interface RoadtripViewController ()
 
 @end
@@ -40,6 +43,9 @@
             tableController = vc;
         }
     }
+    
+    // resize content table to fit
+    [self resizeTable];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,6 +60,18 @@
 
 - (IBAction)startTripPressed:(id)sender
 {
+}
+
+// resize the table container to fit cells
+- (void)resizeTable
+{
+    // resize table view
+    CGSize size = tableController.tableView.contentSize;
+    NSLog(@"new height: %f", size.height);
+    self.tableContainer.frame = CGRectMake(0, 0, size.width, size.height + TABLE_MIN_HEIGHT);
+    
+    // redraw background
+    [tableController.tableView setNeedsDisplay];
 }
 
 #pragma mark Search Bar delegate methods
@@ -87,10 +105,15 @@
     // add new annotation to map and table
     [mapController displayNewLocationAtIndex:index];
     [tableController displayNewLocationAtIndex:index];
+   
+    [self resizeTable];
 }
 
 - (void)handleSelectedFromTable:(id)selected
 {
+    // hide the keyboard
+    [self.searchBarView resignFirstResponder];
+    
     if ([selected isKindOfClass:[RoadtripLocation class]]) {
         // since we pressed on it from the table, we should center the map view to the pin
         [mapController centerMapOnLocation:selected];
@@ -101,6 +124,9 @@
 
 - (void)handleSelectedFromMap:(id)selected
 {
+    // hide the keyboard
+    [self.searchBarView resignFirstResponder];
+    
     if ([selected isKindOfClass:[RoadtripLocation class]]) {
         // select row on table
         [tableController selectLocation:selected];

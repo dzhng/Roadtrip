@@ -14,7 +14,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        // no scrollbars
+        self.showsVerticalScrollIndicator = FALSE;
     }
     return self;
 }
@@ -62,6 +63,11 @@
     CGContextRestoreGState(context);
     
     // draw the text on top
+}
+
+- (CGSize)sizeThatFits:(CGSize)size
+{
+    return self.contentSize;
 }
 
 @end
