@@ -15,6 +15,8 @@
 #define ROUTE_SELECTED_NOTIFICATION     @"RouteSelected"
 #define ROUTE_DESELECTED_NOTIFICATION   @"RouteDeselected"
 
+#define ROUTE_UPDATED_NOTIFICATION      @"RouteUpdated"
+
 #define NOTIFICATION_SELECTED_SOURCE    @"LocationSelectedSource"
 #define NOTIFICATION_LOCATION_KEY       @"Location"
 #define NOTIFICATION_ROUTE_KEY          @"Route"

@@ -27,6 +27,8 @@
 
 // array of MKPolyline that stores the actual route drawn
 @property (retain, nonatomic) NSArray* routeOverlays;
+// old overlay before the change
+@property (retain, nonatomic) NSArray* oldRouteOverlays;
 
 // store the 2 destinations this route is connected to
 @property (retain, nonatomic) RoadtripLocation* start;
@@ -35,7 +37,7 @@
 // initialize with array of CLLocations
 - (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end;
 
-// update the start and end destination and recalculate overlays
-- (void)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
+// update the start and end destination and recalculate overlays, returns true if everything was recalculated
+- (bool)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
 
 @end

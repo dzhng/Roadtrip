@@ -7,6 +7,7 @@
 //
 
 #import "RoadtripRoute.h"
+#import "ModelNotifications.h"
 
 @interface RoadtripRoute()
 
@@ -19,6 +20,10 @@
 
 // convert input points into overlays
 - (NSArray*)getOverlaysFromPoints:(NSArray*)points;
+
+// send notification to other controllers informing that the route data and overlays has been updated.
+// Old overlays also attached so they can also be removed
+- (void)postRouteUpdateNotificationWithRoute:(RoadtripRoute*)route;
 
 @end
 
@@ -36,17 +41,32 @@
     return self;
 }
 
-- (void)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end
+- (bool)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end
 {
     // if the start and end destinations have changed, calculate route and overlay
     if(self.start != start || self.end != end) {
         self.start = start;
         self.end = end;
+        self.oldRouteOverlays = self.routeOverlays;
         
         // calculate route and polyline
         self.routePoints = [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
+        // reassign routeOverlays
         self.routeOverlays = [self getOverlaysFromPoints:self.routePoints];
+        
+        // tell views that our route was updated
+        [self postRouteUpdateNotificationWithRoute:self];
+        
+        return true;
     }
+    return false;
+}
+
+- (void)postRouteUpdateNotificationWithRoute:(RoadtripRoute *)route
+{
+    NSString *notificationName = ROUTE_UPDATED_NOTIFICATION;
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:route, NOTIFICATION_ROUTE_KEY, nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 // convert input points into overlays

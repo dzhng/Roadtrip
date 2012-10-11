@@ -15,6 +15,7 @@
 
 - (void)postLocationSelectedNotificationWithLocation:(RoadtripLocation*)location;
 - (void)postDeselectNotification;
+- (void)routeUpdatedNotification:(NSNotification*)notification;
 
 @end
 
@@ -42,6 +43,13 @@
     mapView.showsUserLocation = NO;
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:mapView];
+        
+    // watch route updated notification
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(routeUpdatedNotification:)
+        name:ROUTE_UPDATED_NOTIFICATION
+        object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -209,6 +217,20 @@
     [mapView setNeedsDisplay];
 }
 
+- (void)routeUpdatedNotification:(NSNotification *)notification
+{
+    NSLog(@"Notification Received");
+    // grab the the route
+    NSDictionary *dictionary = [notification userInfo];
+    RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
+    
+    // remove old overlays from map
+    [mapView removeOverlays:route.oldRouteOverlays];
+    
+    // add new overlays to map
+    [mapView addOverlays:route.routeOverlays];
+    [mapView setNeedsDisplay];
+}
 
 #pragma mark Mapview delegate Functions
 - (void)mapView:(MKMapView*)mv regionWillChangeAnimated:(BOOL)animated
