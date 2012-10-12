@@ -138,9 +138,6 @@
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
-    
-    // tell our delegate to display routes
-    [self.delegate displayRoutes:self.routeArray];
 }
 
 - (void)routeSelectedNotification:(NSNotification *)notification

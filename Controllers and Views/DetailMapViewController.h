@@ -29,13 +29,29 @@
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (retain, nonatomic) UIPopoverController *mapPopover;
 
+// reset everything. use this when loading a roadtrip
 - (void)resetLocationsAndRoutes;
+
+// called when the model found some search locations
 - (void)updateSearchLocations;
+
+// move map to the input location and select the location to show popover
 - (void)centerMapOnLocation:(RoadtripLocation*)location;
+
+// remove all the destination locations on the map
 - (void)removeDirectionLocations;
+
+// remove all the search locations on the map
 - (void)removeSearchLocations;
+
+// remove the indicated search location on the map and disable popover
 - (void)removeSearchLocation:(RoadtripLocation*)location;
+
+// deselect all annotations on the map.
+// Called when popover is dismissed, we just want to dismiss annotation with it
 - (void)deselectAnnotation;
+
+// called when a new location is added. make a new destination annotation
 - (void)displayNewLocationAtIndex:(NSInteger)index;
 
 // routing methods

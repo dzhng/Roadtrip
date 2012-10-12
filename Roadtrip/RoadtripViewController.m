@@ -164,10 +164,4 @@
     [tableController deselectAllRows];
 }
 
-- (void)displayRoutes:(NSArray *)routes
-{
-    // tell the map controller to display
-    [mapController drawRoutes:routes];
-}
-
 @end

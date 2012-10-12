@@ -21,21 +21,13 @@
 
 @implementation DetailMapViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // stores if we're currently momentum scrolling on the map
-        momentumScrolling = false;
-        // stores if we manually selected a location via table cell
-        manualSelect = false;
-    }
-    return self;
-}
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    // stores if we're currently momentum scrolling on the map
+    momentumScrolling = false;
+    // stores if we manually selected a location via table cell
+    manualSelect = false;
     
     // initialize mapview
     mapView = [[MKMapView alloc] initWithFrame:self.contentView.frame];
@@ -58,7 +50,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-// redraw everything
+// redraw everything, use this when loading up the map
 - (void)resetLocationsAndRoutes
 {
     [self removeDirectionLocations];
@@ -203,6 +195,7 @@
     [mapView setRegion:region animated:YES];
 }
 
+// reset all the routes on the map
 - (void)drawRoutes:(NSArray*)routeArray
 {
     // just blanket remove all overlays
@@ -219,7 +212,6 @@
 
 - (void)routeUpdatedNotification:(NSNotification *)notification
 {
-    NSLog(@"Notification Received");
     // grab the the route
     NSDictionary *dictionary = [notification userInfo];
     RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];

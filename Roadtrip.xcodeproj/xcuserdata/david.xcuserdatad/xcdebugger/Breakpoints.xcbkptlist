@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Controllers and Views/DetailMapViewController.m"
-         timestampString = "371691315.218013"
+         timestampString = "371693608.182646"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "228"
-         endingLineNumber = "228"
+         startingLineNumber = "220"
+         endingLineNumber = "220"
          landmarkName = "-routeUpdatedNotification:"
          landmarkType = "5">
       </FileBreakpoint>

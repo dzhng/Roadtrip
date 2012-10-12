@@ -19,7 +19,6 @@
 - (void)handleSelectedFromTable:(id) selected;
 - (void)handleSelectedFromMap:(id)selected;
 - (void)handleDeselect;
-- (void)displayRoutes:(NSArray*)routes;
 
 @end
 

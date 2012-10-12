@@ -14,19 +14,10 @@
 
 @implementation LocationTableViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (void)viewWillAppear:(BOOL)animated
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // dont go into edit mode by default
-        editMode = false;
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+    // dont go into edit mode by default
+    editMode = false;
     
     // hide the table by default, we only want to see the cells
     self.tableView.backgroundColor = [UIColor clearColor];
