@@ -35,6 +35,7 @@
         
         
     }
+    
     //landscape
     if (UIInterfaceOrientationIsLandscape(orientation)) {
         NSLog(@"view is landscape");
