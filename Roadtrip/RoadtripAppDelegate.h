@@ -7,16 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "RoadtripViewController.h"
-#import "RoadtripLocation.h"
-#import "RoadtripModel.h"
+#import "AppModel.h"
 
 @interface RoadtripAppDelegate : UIResponder <UIApplicationDelegate>
 {
     UINavigationController* navigationController;
+    AppModel* model;
 }
-
-@property (retain, nonatomic) RoadtripModel* model;
 
 @property (strong, nonatomic) UIWindow *window;
 
