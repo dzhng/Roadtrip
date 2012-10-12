@@ -34,7 +34,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fQR-Py-xwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-8611" y="-1717"/>
+            <point key="canvasLocation" x="-9405" y="-2073"/>
         </scene>
         <!--Roadtrip View Controller-->
         <scene sceneID="4">
@@ -143,7 +143,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="-7647" y="-1717"/>
+            <point key="canvasLocation" x="-8441" y="-2073"/>
         </scene>
         <!--Detail Map View Controller-->
         <scene sceneID="3Bh-sZ-Dfo">
@@ -168,7 +168,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kar-Ae-zDA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6650" y="-1707"/>
+            <point key="canvasLocation" x="-7444" y="-2063"/>
         </scene>
         <!--Location Table View Controller-->
         <scene sceneID="ZbW-He-5B3">
@@ -304,7 +304,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMT-Vb-CwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-6650" y="-542"/>
+            <point key="canvasLocation" x="-7444" y="-898"/>
         </scene>
     </scenes>
     <classes>
