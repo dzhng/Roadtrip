@@ -10,7 +10,6 @@
 #import "RoadtripViewController.h"
 #import "RoadtripLocation.h"
 #import "RoadtripModel.h"
-#import <FacebookSDK/FacebookSDK.h>
 #import "AppModel.h"
 
 @interface RoadtripAppDelegate : UIResponder <UIApplicationDelegate>

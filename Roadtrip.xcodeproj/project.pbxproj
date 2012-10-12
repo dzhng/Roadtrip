@@ -32,7 +32,6 @@
 		637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */; };
 		63A79F13161D7EDF00E62E5B /* RoadtripLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */; };
 		63A79F15161D890E00E62E5B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A79F14161D890E00E62E5B /* CoreLocation.framework */; };
-		63B86FE01628B18B001B0EAD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FDF1628B18B001B0EAD /* Parse.framework */; };
 		63B86FE31628B20A001B0EAD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FE21628B20A001B0EAD /* AudioToolbox.framework */; };
 		63B86FE51628B227001B0EAD /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FE41628B227001B0EAD /* CFNetwork.framework */; };
 		63B86FE71628B243001B0EAD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FE61628B243001B0EAD /* libsqlite3.dylib */; };
@@ -42,6 +41,7 @@
 		63B86FEF1628B263001B0EAD /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FEE1628B263001B0EAD /* Security.framework */; };
 		63B86FF11628B275001B0EAD /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FF01628B275001B0EAD /* StoreKit.framework */; };
 		63B86FF31628B27C001B0EAD /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FF21628B27C001B0EAD /* SystemConfiguration.framework */; };
+		63B86FF71628B33E001B0EAD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B86FF61628B33E001B0EAD /* Parse.framework */; };
 		63F91AA9161FF0B100056149 /* RouteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AA8161FF0B100056149 /* RouteTableCell.m */; };
 		63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AAB161FF6AE00056149 /* RoadtripRoute.m */; };
 		9315F9E11627A08B0060C146 /* bg1-nonretina.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DD1627A08B0060C146 /* bg1-nonretina.png */; };
@@ -99,7 +99,6 @@
 		63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripLocation.h; path = Models/RoadtripLocation.h; sourceTree = "<group>"; };
 		63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripLocation.m; path = Models/RoadtripLocation.m; sourceTree = "<group>"; };
 		63A79F14161D890E00E62E5B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		63B86FDF1628B18B001B0EAD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		63B86FE21628B20A001B0EAD /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		63B86FE41628B227001B0EAD /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		63B86FE61628B243001B0EAD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -109,6 +108,7 @@
 		63B86FEE1628B263001B0EAD /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		63B86FF01628B275001B0EAD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		63B86FF21628B27C001B0EAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		63B86FF61628B33E001B0EAD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Libraries/Parse.framework; sourceTree = "<group>"; };
 		63F91AA7161FF0B100056149 /* RouteTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteTableCell.h; path = "Controllers and Views/RouteTableCell.h"; sourceTree = "<group>"; };
 		63F91AA8161FF0B100056149 /* RouteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteTableCell.m; path = "Controllers and Views/RouteTableCell.m"; sourceTree = "<group>"; };
 		63F91AAA161FF6AE00056149 /* RoadtripRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripRoute.h; path = Models/RoadtripRoute.h; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				635EE855161D1BB200E2635F /* MapKit.framework in Frameworks */,
 				635EE82A161D183200E2635F /* UIKit.framework in Frameworks */,
 				635EE82C161D183200E2635F /* Foundation.framework in Frameworks */,
-				63B86FE01628B18B001B0EAD /* Parse.framework in Frameworks */,
+				63B86FF71628B33E001B0EAD /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +187,7 @@
 		635EE828161D183200E2635F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63B86FF61628B33E001B0EAD /* Parse.framework */,
 				63B86FF21628B27C001B0EAD /* SystemConfiguration.framework */,
 				63B86FF01628B275001B0EAD /* StoreKit.framework */,
 				63B86FEE1628B263001B0EAD /* Security.framework */,
@@ -196,7 +197,6 @@
 				63B86FE61628B243001B0EAD /* libsqlite3.dylib */,
 				63B86FE41628B227001B0EAD /* CFNetwork.framework */,
 				63B86FE21628B20A001B0EAD /* AudioToolbox.framework */,
-				63B86FDF1628B18B001B0EAD /* Parse.framework */,
 				93268241162888CD00DFF7EA /* Accounts.framework */,
 				93268242162888CD00DFF7EA /* AdSupport.framework */,
 				93268243162888CD00DFF7EA /* Social.framework */,
@@ -459,6 +459,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Roadtrip/Roadtrip-Prefix.pch";
@@ -475,6 +476,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/Libraries\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Roadtrip/Roadtrip-Prefix.pch";

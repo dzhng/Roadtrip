@@ -7,11 +7,15 @@
 //
 
 #import "RoadtripAppDelegate.h"
+#import "Parse/Parse.h"
 
 @implementation RoadtripAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Parse setApplicationId:@"M5xCrPtj9DwJC0RThSMAXn1fgRzH64W341eoOQkz"
+                  clientKey:@"pXGmJDkclvhaghWEOdz8kIo2ajJyZddeKLcVxIXl"];
+    
     // make app model
     model = [[AppModel alloc] init];
     
