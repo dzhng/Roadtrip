@@ -91,7 +91,18 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)signInButtonPressed:(id)sender {
+// prepare for segue to roadtrip view controller
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    RoadtripViewController* rvc = (RoadtripViewController*)segue.destinationViewController;
     
+    // initialize model
+    RoadtripModel* roadtripModel = [[RoadtripModel alloc] init];
+    
+    // set model delegate is this
+    roadtripModel.delegate = rvc;
+    
+    [rvc setRoadtripModel:roadtripModel];
 }
+
 @end

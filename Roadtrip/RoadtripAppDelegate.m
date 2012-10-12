@@ -12,17 +12,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // initialize model
-    self.model = [[RoadtripModel alloc] init];
-    
-    // push root controller to nav stack
-    RoadtripViewController* rootController = (RoadtripViewController*)self.window.rootViewController;
-    /*navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];*/
-    
-    // set model
-    //rootController.roadtripModel = self.model;
-    //self.model.delegate = rootController;
-    
     return YES;
 }
 

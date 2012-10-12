@@ -19,9 +19,9 @@
 
 @implementation RoadtripViewController
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:animated];
     
 	// Get rid of ugly gradient on search bar
     for (UIView *searchSubview in self.searchBarView.subviews) {

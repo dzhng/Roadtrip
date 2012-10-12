@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoadtripViewController.h"
+#import "RoadtripModel.h"
 
 @interface SignInViewController : UIViewController
-- (IBAction)signInButtonPressed:(id)sender;
 
 @end

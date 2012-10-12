@@ -192,8 +192,6 @@
 				637F4428161ED410001CAB44 /* SelectedPopoverViewController.m */,
 				637F4429161ED410001CAB44 /* SelectedPopoverViewController.xib */,
 				637D1CB8161E583F00BDF6F4 /* MapPopoverViewController.h */,
-				9315F9E61627A6620060C146 /* SignInViewController.h */,
-				9315F9E71627A6620060C146 /* SignInViewController.m */,
 				637D1CB9161E583F00BDF6F4 /* MapPopoverViewController.m */,
 				637D1CBA161E583F00BDF6F4 /* MapPopoverViewController.xib */,
 				6372C2D6161D1E8B00AEE38A /* DetailMapViewController.h */,
@@ -202,6 +200,8 @@
 				6372C2D9161D1E8B00AEE38A /* LocationTableViewController.m */,
 				635EE844161D183200E2635F /* RoadtripViewController.h */,
 				635EE845161D183200E2635F /* RoadtripViewController.m */,
+				9315F9E61627A6620060C146 /* SignInViewController.h */,
+				9315F9E71627A6620060C146 /* SignInViewController.m */,
 			);
 			name = "Controllers and Views";
 			sourceTree = "<group>";
