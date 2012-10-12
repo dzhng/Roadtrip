@@ -144,9 +144,6 @@
 		635EE81A161D183200E2635F = {
 			isa = PBXGroup;
 			children = (
-				93268241162888CD00DFF7EA /* Accounts.framework */,
-				93268242162888CD00DFF7EA /* AdSupport.framework */,
-				93268243162888CD00DFF7EA /* Social.framework */,
 				630B272F161FC05A004BAE04 /* Libraries */,
 				6372C2D2161D1E7700AEE38A /* Models */,
 				6372C2D0161D1E6E00AEE38A /* Controllers and Views */,
@@ -167,6 +164,9 @@
 		635EE828161D183200E2635F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93268241162888CD00DFF7EA /* Accounts.framework */,
+				93268242162888CD00DFF7EA /* AdSupport.framework */,
+				93268243162888CD00DFF7EA /* Social.framework */,
 				9326823F1628884300DFF7EA /* FBUserSettingsViewResources.bundle */,
 				9326823D1628882C00DFF7EA /* FacebookSDKResources.bundle */,
 				9326823A162887B700DFF7EA /* FacebookSDK.framework */,
