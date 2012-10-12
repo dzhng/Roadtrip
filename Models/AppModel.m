@@ -10,4 +10,15 @@
 
 @implementation AppModel
 
+// singleton instance
+static AppModel* model = nil;
+
++ (AppModel*)model
+{
+    if(model == nil) {
+        model = [[super alloc] init];
+    }
+    return model;
+}
+
 @end
