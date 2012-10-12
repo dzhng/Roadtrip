@@ -12,17 +12,25 @@
 @interface RouteTableCell()
 
 - (void)postRouteSelectedNotification;
+- (void)routeUpdatedNotification:(NSNotification*)notification;
 
 @end
 
 @implementation RouteTableCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         // Initialization code
         cellSelected = false;
+        
+        // watch route updated notification
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+            selector:@selector(routeUpdatedNotification:)
+            name:ROUTE_UPDATED_NOTIFICATION
+            object:nil];
     }
     return self;
 }
@@ -61,6 +69,20 @@
         bgView.backgroundColor = [UIColor colorWithWhite:1 alpha:0.7];
         self.backgroundView = bgView;
         cellSelected = false;
+    }
+}
+
+- (void)routeUpdatedNotification:(NSNotification *)notification
+{
+    // grab the the route
+    NSDictionary *dictionary = [notification userInfo];
+    RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
+    
+    // check is the route updated is this route
+    if(route == self.route) {
+        NSLog(@"Route cell updated");
+        // update current route
+        [self updateRoute:route];
     }
 }
 
