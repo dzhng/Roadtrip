@@ -20,8 +20,8 @@
     /*navigationController = [[UINavigationController alloc] initWithRootViewController:rootController];*/
     
     // set model
-    rootController.roadtripModel = self.model;
-    self.model.delegate = rootController;
+    //rootController.roadtripModel = self.model;
+    //self.model.delegate = rootController;
     
     return YES;
 }
