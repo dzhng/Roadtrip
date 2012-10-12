@@ -44,6 +44,9 @@
              [NSArray arrayWithObject:[NSIndexPath indexPathForRow:index inSection:0]]
                    withRowAnimation:UITableViewRowAnimationTop];
     }
+    // scroll to last view
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:2*index inSection:0]
+                          atScrollPosition:UITableViewScrollPositionBottom animated:YES];
 }
 
 // called by the map view to manually select table cells

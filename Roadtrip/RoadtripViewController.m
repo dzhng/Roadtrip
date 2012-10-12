@@ -100,7 +100,6 @@
         windowHeight = windowSize.size.width;
     }
 
-    NSLog(@"window height: %f", windowHeight);
     windowHeight -= TABLE_HEIGHT_PADDING;
     self.tableContainer.frame = CGRectMake(0, 0, size.width,
            ((size.height + TABLE_MIN_HEIGHT > windowHeight) ? windowHeight : size.height + TABLE_MIN_HEIGHT));
