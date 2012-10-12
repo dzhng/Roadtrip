@@ -166,34 +166,7 @@
 
 - (void)centerMapOnRoute:(RoadtripRoute*)route
 {
-    NSArray* routePoints = route.routePoints;
-    
-    MKCoordinateRegion region;
-    
-    CLLocationDegrees maxLat = -90;
-    CLLocationDegrees maxLon = -180;
-    CLLocationDegrees minLat = 90;
-    CLLocationDegrees minLon = 180;
-    
-    for(int idx = 0; idx < routePoints.count; idx++)
-    {
-        CLLocation* currentLocation = [routePoints objectAtIndex:idx];
-        if(currentLocation.coordinate.latitude > maxLat)
-            maxLat = currentLocation.coordinate.latitude;
-        if(currentLocation.coordinate.latitude < minLat)
-            minLat = currentLocation.coordinate.latitude;
-        if(currentLocation.coordinate.longitude > maxLon)
-            maxLon = currentLocation.coordinate.longitude;
-        if(currentLocation.coordinate.longitude < minLon)
-            minLon = currentLocation.coordinate.longitude;
-    }
-    
-    region.span.latitudeDelta  = ROUTE_ZOOM*(maxLat - minLat);
-    region.span.longitudeDelta = ROUTE_ZOOM*(maxLon - minLon);
-    region.center.latitude     = (maxLat + minLat) / 2;
-    region.center.longitude    = ((maxLon + minLon) / 2) - 0.3*(maxLon - minLon);
-    
-    [mapView setRegion:region animated:YES];
+    [mapView setRegion:[route centerRegion] animated:YES];
 }
 
 // reset all the routes on the map
