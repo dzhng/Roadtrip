@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
+		6353F54E1627D78100525EF8 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353F54D1627D78100525EF8 /* AppModel.m */; };
 		635EE82A161D183200E2635F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE829161D183200E2635F /* UIKit.framework */; };
 		635EE82C161D183200E2635F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82B161D183200E2635F /* Foundation.framework */; };
 		635EE82E161D183200E2635F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82D161D183200E2635F /* CoreGraphics.framework */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		630B2731161FC070004BAE04 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Libraries/JSONKit.h; sourceTree = "<group>"; };
 		630B2732161FC070004BAE04 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Libraries/JSONKit.m; sourceTree = "<group>"; };
+		6353F54C1627D78100525EF8 /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModel.h; path = Models/AppModel.h; sourceTree = "<group>"; };
+		6353F54D1627D78100525EF8 /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppModel.m; path = Models/AppModel.m; sourceTree = "<group>"; };
 		635EE825161D183200E2635F /* Roadtrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roadtrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		635EE829161D183200E2635F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		635EE82B161D183200E2635F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -217,6 +220,8 @@
 				63F91AAB161FF6AE00056149 /* RoadtripRoute.m */,
 				637D1CC4161E7C6700BDF6F4 /* RoadtripModel.h */,
 				637D1CC5161E7C6700BDF6F4 /* RoadtripModel.m */,
+				6353F54C1627D78100525EF8 /* AppModel.h */,
+				6353F54D1627D78100525EF8 /* AppModel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -309,6 +314,7 @@
 				63F91AA9161FF0B100056149 /* RouteTableCell.m in Sources */,
 				63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */,
 				9315F9E81627A6620060C146 /* SignInViewController.m in Sources */,
+				6353F54E1627D78100525EF8 /* AppModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
