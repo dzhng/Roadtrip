@@ -40,7 +40,7 @@
 		9315F9E41627A08B0060C146 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9E01627A08B0060C146 /* bg2.png */; };
 		9315F9E81627A6620060C146 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9315F9E71627A6620060C146 /* SignInViewController.m */; };
 		932AD4631627F98F00F9775B /* facebook-login-retina.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD4611627F98F00F9775B /* facebook-login-retina.png */; };
-		932AD4641627F98F00F9775B /* facebook-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD4621627F98F00F9775B /* facebook-login.png */; };
+		932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD46B1627F9FF00F9775B /* facebook-login.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,7 +97,7 @@
 		9315F9E61627A6620060C146 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = "Controllers and Views/SignInViewController.h"; sourceTree = "<group>"; };
 		9315F9E71627A6620060C146 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = "Controllers and Views/SignInViewController.m"; sourceTree = "<group>"; };
 		932AD4611627F98F00F9775B /* facebook-login-retina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login-retina.png"; sourceTree = "<group>"; };
-		932AD4621627F98F00F9775B /* facebook-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login.png"; sourceTree = "<group>"; };
+		932AD46B1627F9FF00F9775B /* facebook-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,8 +171,8 @@
 		635EE830161D183200E2635F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				932AD46B1627F9FF00F9775B /* facebook-login.png */,
 				932AD4611627F98F00F9775B /* facebook-login-retina.png */,
-				932AD4621627F98F00F9775B /* facebook-login.png */,
 				9315F9DD1627A08B0060C146 /* bg1-nonretina.png */,
 				9315F9DE1627A08B0060C146 /* bg1.png */,
 				9315F9DF1627A08B0060C146 /* bg2-nonretina.png */,
@@ -296,7 +296,7 @@
 				9315F9E31627A08B0060C146 /* bg2-nonretina.png in Resources */,
 				9315F9E41627A08B0060C146 /* bg2.png in Resources */,
 				932AD4631627F98F00F9775B /* facebook-login-retina.png in Resources */,
-				932AD4641627F98F00F9775B /* facebook-login.png in Resources */,
+				932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
