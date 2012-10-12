@@ -26,11 +26,11 @@
         NSLog(@"view is portrait");
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
             && [[UIScreen mainScreen] scale] == 2.0) {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2.png"]];
-            NSLog(@"Retina");
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1.png"]];
+            NSLog(@"Retina - background bg1.png");
         } else {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2-nonretina.png"]];
-            NSLog(@"Not Retina");
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1-nonretina.png"]];
+            NSLog(@"Not Retina - background bg1-nonretina.png");
         }
         
         
@@ -41,11 +41,11 @@
         NSLog(@"view is landscape");
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
             && [[UIScreen mainScreen] scale] == 2.0) {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1.png"]];
-            NSLog(@"Retina");
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2.png"]];
+            NSLog(@"Retina - background bg2.png");
         } else {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1-nonretina.png"]];
-            NSLog(@"Not Retina");
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2-nonretina.png"]];
+            NSLog(@"Not Retina - background bg2-nonretina.png");
         }
         
     }
@@ -57,30 +57,41 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 }
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
+    //need to fade out the back ground and then make sure the new one fades in on rotation.
+
+}
 
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
-    if ((fromInterfaceOrientation == UIInterfaceOrientationPortrait) || (fromInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
-        
+    NSLog(@"view didRotateFromInterfaceOrientation called");
+    //get the device orientation
+    UIInterfaceOrientation orientation = self.interfaceOrientation;
+    
+    //portrait
+    if (UIInterfaceOrientationIsPortrait(orientation)) {
+        NSLog(@"view is portrait");
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
             && [[UIScreen mainScreen] scale] == 2.0) {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2.png"]];
-            // Retina
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1.png"]];
+            NSLog(@"Retina - background bg1.png");
         } else {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2-nonretina.png"]];
-            // Not Retina
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1-nonretina.png"]];
+            NSLog(@"Not Retina - background bg1-nonretina.png");
         }
         
         
     }
-    if ((fromInterfaceOrientation == UIInterfaceOrientationLandscapeRight) || (fromInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)) {
-        
+    
+    //landscape
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        NSLog(@"view is landscape");
         if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)]
             && [[UIScreen mainScreen] scale] == 2.0) {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1.png"]];
-            // Retina
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2.png"]];
+            NSLog(@"Retina - background bg2.png");
         } else {
-            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1-nonretina.png"]];
-            // Not Retina
+            self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg2-nonretina.png"]];
+            NSLog(@"Not Retina - background bg2-nonretina.png");
         }
         
     }
