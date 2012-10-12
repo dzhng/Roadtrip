@@ -12,6 +12,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // make app model
+    model = [[AppModel alloc] init];
+    
     return YES;
 }
 

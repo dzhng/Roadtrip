@@ -16,9 +16,6 @@
 }
 
 @property (retain, nonatomic) NSDictionary* addressDictionary;  // dictionary form of address
-@property (copy, nonatomic) NSString* address;
-@property (copy, nonatomic) NSString* name;
-@property (retain, nonatomic) NSArray* formattedAddress;  // lines of address stored in an array
 @property (assign, nonatomic) bool search;      // stores if this is a search location
 
 // MKAnnotation properties
@@ -28,9 +25,6 @@
 
 // just initialize with the raw data needed for display
 - (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocation*)loc;
-
-// save the streetname and perform forward Geocoding to convert to coordinate
-- (id)initWithAddress:(NSString*)address;
 
 // save coordinate and perform reverse Geocoding to convert to streetname
 - (id)initWithLatitude:(float)latitude andLongitude:(float)longitude;

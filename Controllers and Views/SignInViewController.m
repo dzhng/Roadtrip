@@ -52,16 +52,6 @@
     
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-	// Do any additional setup after loading the view.
-}
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration{
-    //need to fade out the back ground and then make sure the new one fades in on rotation.
-
-}
-
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     NSLog(@"view didRotateFromInterfaceOrientation called");
     //get the device orientation
