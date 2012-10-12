@@ -28,6 +28,7 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    NSLog(@"Location table received memory warning");
 }
 
 - (void)displayNewLocationAtIndex:(NSInteger)index

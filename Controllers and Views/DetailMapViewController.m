@@ -48,6 +48,7 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    NSLog(@"Detail map received memory warning");
 }
 
 // redraw everything, use this when loading up the map
