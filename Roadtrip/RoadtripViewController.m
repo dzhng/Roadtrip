@@ -10,6 +10,8 @@
 
 // minimum height for the size of table interaction space in pixels
 #define TABLE_MIN_HEIGHT        200
+// extra height to leave off of table height on bottom
+#define TABLE_HEIGHT_PADDING    100
 
 @interface RoadtripViewController ()
 
@@ -90,7 +92,18 @@
 {
     // resize table view
     CGSize size = tableController.tableView.contentSize;
-    self.tableContainer.frame = CGRectMake(0, 0, size.width, size.height + TABLE_MIN_HEIGHT);
+    CGRect windowSize = [[UIScreen mainScreen] bounds];
+    CGFloat windowHeight = windowSize.size.height;
+    
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if(orientation == UIInterfaceOrientationLandscapeRight || orientation ==  UIInterfaceOrientationLandscapeLeft){
+        windowHeight = windowSize.size.width;
+    }
+
+    NSLog(@"window height: %f", windowHeight);
+    windowHeight -= TABLE_HEIGHT_PADDING;
+    self.tableContainer.frame = CGRectMake(0, 0, size.width,
+           ((size.height + TABLE_MIN_HEIGHT > windowHeight) ? windowHeight : size.height + TABLE_MIN_HEIGHT));
     
     // redraw background
     [tableController.tableView setNeedsDisplay];
