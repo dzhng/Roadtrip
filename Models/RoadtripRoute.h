@@ -23,9 +23,9 @@
 @property (assign, nonatomic) NSInteger cost;
 
 // array of MKPolyline that stores the actual route drawn
-@property (retain, nonatomic) NSArray* routeOverlays;
+@property (retain, nonatomic) MKPolyline* routeOverlay;
 // old overlay before the change
-@property (retain, nonatomic) NSArray* oldRouteOverlays;
+@property (retain, nonatomic) MKPolyline* oldRouteOverlay;
 
 // center region of the route
 @property (assign, nonatomic) MKCoordinateRegion centerRegion;

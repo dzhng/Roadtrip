@@ -178,7 +178,7 @@
     // get all overlays
     NSMutableArray* overlays = [[NSMutableArray alloc] init];
     for(RoadtripRoute* route in routeArray) {
-        [overlays addObjectsFromArray:[route routeOverlays]];
+        [overlays addObject:[route routeOverlay]];
     }
     [mapView addOverlays:overlays];
     [mapView setNeedsDisplay];
@@ -191,10 +191,10 @@
     RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
     
     // remove old overlays from map
-    [mapView removeOverlays:route.oldRouteOverlays];
+    [mapView removeOverlay:route.oldRouteOverlay];
     
     // add new overlays to map
-    [mapView addOverlays:route.routeOverlays];
+    [mapView addOverlay:route.routeOverlay];
     [mapView setNeedsDisplay];
 }
 

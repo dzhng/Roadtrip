@@ -20,7 +20,7 @@
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedString;
 
 // convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points;
+- (MKPolyline*)getOverlayFromPoints:(NSArray*)points;
 
 // get the region to zoom the map to display the entire route
 - (MKCoordinateRegion)getCenterRegionFromPoints:(NSArray*)points;
@@ -51,7 +51,7 @@
     if(self.start != start || self.end != end) {
         self.start = start;
         self.end = end;
-        self.oldRouteOverlays = self.routeOverlays;
+        self.oldRouteOverlay = self.routeOverlay;
         
         // calculate route and polyline
         [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
@@ -69,7 +69,7 @@
 }
 
 // convert input points into overlays
-- (NSArray*)getOverlaysFromPoints:(NSArray*)points
+- (MKPolyline*)getOverlayFromPoints:(NSArray*)points
 {
     int numPoints;
     if ((numPoints = [points count]) > 1)
@@ -84,7 +84,7 @@
         MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
         free(coords);
         
-        return [NSArray arrayWithObject:polyline];
+        return polyline;
     }
     return nil;
 }
@@ -167,7 +167,7 @@
                     self.time = [[dur objectForKey:@"value"] integerValue];
                     
                     // reassign routeOverlays
-                    self.routeOverlays = [self getOverlaysFromPoints:routePoints];
+                    self.routeOverlay = [self getOverlayFromPoints:routePoints];
                     
                     // get center region
                     self.centerRegion = [self getCenterRegionFromPoints:routePoints];
