@@ -99,12 +99,10 @@
     RoadtripViewController* rvc = (RoadtripViewController*)segue.destinationViewController;
     
     // initialize model
-    RoadtripModel* roadtripModel = [[RoadtripModel alloc] init];
+    RoadtripModel* roadtripModel = [[AppModel model] newRoadtrip];
     
     // set model delegate is this
     roadtripModel.delegate = rvc;
-    
-    [rvc setRoadtripModel:roadtripModel];
 }
 
 @end

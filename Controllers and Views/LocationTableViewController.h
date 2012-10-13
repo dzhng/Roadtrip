@@ -12,14 +12,13 @@
 #import "RouteTableCell.h"
 #import "RoadtripLocation.h"
 #import "RoadtripModel.h"
+#import "AppModel.h"
 
 @interface LocationTableViewController : UITableViewController
 {
     bool editMode;
+    RoadtripModel* model;
 }
-
-// model object
-@property (retain, nonatomic) RoadtripModel* roadtripModel;
 
 @property (strong, nonatomic) IBOutlet LocationTableView *tableView;
 @property (weak, nonatomic) IBOutlet UIView *footerView;

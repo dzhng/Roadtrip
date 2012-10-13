@@ -109,6 +109,7 @@
 		63B86FF01628B275001B0EAD /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		63B86FF21628B27C001B0EAD /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63B86FF61628B33E001B0EAD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Libraries/Parse.framework; sourceTree = "<group>"; };
+		63B86FFC1628D962001B0EAD /* Database.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Database.h; path = Models/Database.h; sourceTree = "<group>"; };
 		63F91AA7161FF0B100056149 /* RouteTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RouteTableCell.h; path = "Controllers and Views/RouteTableCell.h"; sourceTree = "<group>"; };
 		63F91AA8161FF0B100056149 /* RouteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteTableCell.m; path = "Controllers and Views/RouteTableCell.m"; sourceTree = "<group>"; };
 		63F91AAA161FF6AE00056149 /* RoadtripRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripRoute.h; path = Models/RoadtripRoute.h; sourceTree = "<group>"; };
@@ -272,6 +273,7 @@
 			children = (
 				637D1CCC161E9AE200BDF6F4 /* MapConstants.h */,
 				637D1CC3161E79E300BDF6F4 /* ModelNotifications.h */,
+				63B86FFC1628D962001B0EAD /* Database.h */,
 				63A79F11161D7EDF00E62E5B /* RoadtripLocation.h */,
 				63A79F12161D7EDF00E62E5B /* RoadtripLocation.m */,
 				63F91AAA161FF6AE00056149 /* RoadtripRoute.h */,

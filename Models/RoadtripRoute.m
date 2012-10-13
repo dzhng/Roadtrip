@@ -9,6 +9,7 @@
 #import "RoadtripRoute.h"
 #import "ModelNotifications.h"
 #import "MapConstants.h"
+#import "Database.h"
 
 @interface RoadtripRoute()
 
@@ -18,9 +19,6 @@
 
 // decode the polyline binary data from GMaps API into an array of CLLocations
 - (NSMutableArray *)decodePolyLine:(NSString *)encodedString;
-
-// convert input points into overlays
-- (MKPolyline*)getOverlayFromPoints:(NSArray*)points;
 
 // get the region to zoom the map to display the entire route
 - (MKCoordinateRegion)getCenterRegionFromPoints:(NSArray*)points;
@@ -40,6 +38,27 @@
     if(self) {
         self.start = nil;
         self.end = nil;
+        
+        // set database object
+        PFObject* routeObject = [PFObject objectWithClassName:ROUTE_CLASS];
+        self.dbObject = routeObject;
+        
+        // set user and save
+        [routeObject setObject:[PFUser currentUser] forKey:@"user"];
+        [routeObject saveEventually];
+        
+        [self updateStart:start andEnd:end];
+    }
+    return self;
+}
+
+- (id)initFromDB:(PFObject *)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end
+{
+    self = [super init];
+    if(self) {
+        self.dbObject = dbObject;
+        // grab data from db
+            
         [self updateStart:start andEnd:end];
     }
     return self;
@@ -51,26 +70,53 @@
     if(self.start != start || self.end != end) {
         self.start = start;
         self.end = end;
-        self.oldRouteOverlay = self.routeOverlay;
         
-        // calculate route and polyline
+        // calculate route and polyline, this function will also update the db when it's done
         [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
-
+        
         return true;
     }
     return false;
 }
 
-- (void)postRouteUpdateNotificationWithRoute:(RoadtripRoute *)route
+- (void)sync
 {
-    NSString *notificationName = ROUTE_UPDATED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:route, NOTIFICATION_ROUTE_KEY, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
+    // code up route points
+    NSMutableArray* points = [[NSMutableArray alloc] init];
+    for(int i = 0; i < [self.routePoints count]; i++) {
+        CLLocation* point = [self.routePoints objectAtIndex:i];
+        NSDictionary* p = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSNumber numberWithDouble:point.coordinate.latitude], @"latitude",
+                           [NSNumber numberWithDouble:point.coordinate.longitude], @"longitude", nil];
+        [points addObject:p];
+    }
+    
+    NSData* pointsData = [NSKeyedArchiver archivedDataWithRootObject:points];
+    
+    PFFile* pointsFile = [PFFile fileWithData:pointsData];
+    [pointsFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        // save the rest of data if file upload succeeded
+        if(succeeded) {
+            // sync update with database
+            PFObject* db = self.dbObject;
+            [db setObject:pointsFile forKey:@"points"];
+            [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
+            [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
+            [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
+            [db saveEventually];
+        } else {
+            // print out error
+            NSLog(@"Route Save Error: %@", error.debugDescription);
+        }
+    }];
 }
 
 // convert input points into overlays
-- (MKPolyline*)getOverlayFromPoints:(NSArray*)points
+- (MKPolyline*)routeOverlay
 {
+    NSArray* points = self.routePoints;
+    self.currentRouteOverlay = nil;
+    
     int numPoints;
     if ((numPoints = [points count]) > 1)
     {
@@ -84,9 +130,17 @@
         MKPolyline* polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
         free(coords);
         
+        self.currentRouteOverlay = polyline;
         return polyline;
     }
     return nil;
+}
+
+- (void)postRouteUpdateNotificationWithRoute:(RoadtripRoute *)route
+{
+    NSString *notificationName = ROUTE_UPDATED_NOTIFICATION;
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:route, NOTIFICATION_ROUTE_KEY, nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 #pragma mark Routing functions
@@ -166,14 +220,17 @@
                     self.timeText = [dur objectForKey:@"text"];
                     self.time = [[dur objectForKey:@"value"] integerValue];
                     
-                    // reassign routeOverlays
-                    self.routeOverlay = [self getOverlayFromPoints:routePoints];
+                    // set points
+                    self.routePoints = routePoints;
                     
                     // get center region
                     self.centerRegion = [self getCenterRegionFromPoints:routePoints];
                     
                     // tell views that our route was updated
                     [self postRouteUpdateNotificationWithRoute:self];
+                    
+                    // sync with database
+                    [self sync];
                 }];
 }
 

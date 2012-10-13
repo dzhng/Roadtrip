@@ -7,6 +7,7 @@
 //
 
 #import "RoadtripModel.h"
+#import "Database.h"
 
 @interface RoadtripModel ()
 
@@ -31,7 +32,7 @@
         
         // initialize route array
         self.routeArray = [[NSMutableArray alloc] init];
-        
+
         // setup model to receive notifications
         [[NSNotificationCenter defaultCenter]
             addObserver:self
@@ -60,6 +61,26 @@
     return self;
 }
 
+- (id)initNewObject
+{
+    // set database object
+    PFObject* roadtripObject = [PFObject objectWithClassName:ROADTRIP_CLASS];
+    self.dbObject = roadtripObject;
+    
+    // set user and save
+    [roadtripObject setObject:[PFUser currentUser] forKey:@"user"];
+    [roadtripObject saveEventually];
+    
+    return [self init];
+}
+
+- (id)initFromDB:(PFObject*)dbObject
+{
+    self.dbObject = dbObject;
+    // grab data from db
+    return [self init];
+}
+
 - (void)dealloc
 {
     // make sure to cleanup the notifications
@@ -67,7 +88,7 @@
 }
 
 // run geocoding with given input address
-- (void)geocodeWithAddress:address
+- (void)geocodeWithAddress:(NSString*)address
 {
     // start geocoding process
     [geocoder geocodeAddressString:address
@@ -94,6 +115,36 @@
                         [alert show];
                     }
                  }];
+}
+
+- (void)getAllLocationsAndRoutes
+{
+    
+}
+
+- (RoadtripLocation*)newLocationFromLocation:(RoadtripLocation*)location
+{
+    // copy the location data and make a new location object
+    RoadtripLocation* newLocation = [[RoadtripLocation alloc] initWithTitle:location.title
+                                       subTitle:location.subtitle andCoordinate:location.coordinate];
+    return newLocation;
+}
+
+- (void)newRoute
+{
+    
+}
+
+- (void)sync
+{
+    PFObject* db = self.dbObject;
+
+    // set class properties
+    [db setObject:self.name forKey:@"name"];
+    [db setObject:self.distance forKey:@"distance"];
+    [db setObject:self.time forKey:@"time"];
+    [db setObject:self.stops forKey:@"stops"];
+    [db saveEventually];
 }
 
 #pragma mark Notification Handlers
@@ -126,7 +177,7 @@
 {
     // grab the new location
     NSDictionary *dictionary = [notification userInfo];
-    RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
+    RoadtripLocation* location = [self newLocationFromLocation:[dictionary valueForKey:NOTIFICATION_LOCATION_KEY]];
     
     // if this isn't the first location, we should add a new route
     if([self.locationArray count] > 0) {

@@ -12,12 +12,19 @@
 // singleton class for the app model
 @interface AppModel : NSObject
 
-@property (retain, nonatomic) NSArray* roadtripModels;
+// list of all roadtrip models
+@property (retain, nonatomic) NSMutableArray* roadtripModels;
+
+// store the current ongoing roadtrip
+@property (retain, nonatomic) RoadtripModel* currentRoadtrip;
 
 // get shared singleton class
 + (id)model;
 
-// get current roadtrip model
-- (RoadtripModel*)currentRoadtrip;
+// get list of all roadtrips belonging to user and store in roadtripModels array
+- (void)getAllRoadtrips;
+
+// insert a new roadtrip model
+- (RoadtripModel*)newRoadtrip;
 
 @end

@@ -16,6 +16,24 @@
     [Parse setApplicationId:@"M5xCrPtj9DwJC0RThSMAXn1fgRzH64W341eoOQkz"
                   clientKey:@"pXGmJDkclvhaghWEOdz8kIo2ajJyZddeKLcVxIXl"];
     
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        // do stuff with the user
+    } else {
+        // show the signup or login screen
+        
+        // auto login for now
+        [PFUser logInWithUsernameInBackground:@"dzz0615" password:@"zhang1234"
+                    block:^(PFUser *user, NSError *error) {
+                        if (user) {
+                            // Do stuff after successful login.
+                        } else {
+                            // The login failed. Check error to see why.
+                            NSLog(@"Login failed");
+                        }
+                    }];
+    }
+    
     // make app model
     model = [[AppModel alloc] init];
     
