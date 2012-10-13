@@ -19,12 +19,12 @@
     bool momentumScrolling;
     bool manualSelect;  // stores if we're manually selecting a location via table cell
     
+    // model object
+    RoadtripModel* model;
+
     // mapview variables
     MKMapView *mapView;
 }
-
-// model object
-@property (retain, nonatomic) RoadtripModel* roadtripModel;
 
 @property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (retain, nonatomic) UIPopoverController *mapPopover;

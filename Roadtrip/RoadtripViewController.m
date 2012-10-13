@@ -23,6 +23,9 @@
 {
     [super viewWillAppear:animated];
     
+    // set model
+    model = [[AppModel model] currentRoadtrip];
+    
 	// Get rid of ugly gradient on search bar
     for (UIView *searchSubview in self.searchBarView.subviews) {
         if (![searchSubview isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
@@ -38,7 +41,6 @@
     
     // pass location array to table and map view for display
     for(id vc in self.childViewControllers) {
-        [vc setRoadtripModel:self.roadtripModel];
         if([vc isKindOfClass:[DetailMapViewController class]]) {
             mapController = vc;
         } else if([vc isKindOfClass:[LocationTableViewController class]]) {
@@ -50,10 +52,6 @@
     editMode = false;
     // change edit button
     [self.editButton setTitle:@"Done" forState:UIControlStateSelected];
-    
-    // resize content table to fit
-    [self resizeTable];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -113,7 +111,7 @@
 {
     // grab address text
     NSString* address = [self.searchBarView text];
-    [self.roadtripModel geocodeWithAddress: address];
+    [model geocodeWithAddress: address];
 }
 
 #pragma mark model delegate methods
@@ -174,6 +172,19 @@
 {
     // deselect from table row
     [tableController deselectAllRows];
+}
+
+- (void)reloadLocationsAndRoutes
+{
+    // deselect any popovers
+    [mapController deselectAnnotation];
+    
+    // call reset functions
+    [mapController resetLocationsAndRoutes];
+    [tableController resetLocationsAndRoutes];
+    
+    // resize table view to fit
+    [self resizeTable];
 }
 
 @end

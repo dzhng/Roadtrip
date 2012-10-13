@@ -17,12 +17,12 @@
     DetailMapViewController* mapController;
     LocationTableViewController* tableController;
     
+    // model object for this roadtrip
+    RoadtripModel* model;
+    
     // store if we're currently in table rearrange mode
     bool editMode;
 }
-
-// model
-@property (retain, nonatomic) RoadtripModel *roadtripModel;
 
 // view data
 @property (weak, nonatomic) IBOutlet UIView *tableContainer;

@@ -7,59 +7,111 @@
 //
 
 #import "RoadtripLocation.h"
+#import "Database.h"
+
+@interface RoadtripLocation()
+
+// get text form of coordinate
+- (NSString*)coordinateTextWithLatitude:(float)latitude andLongitude:(float)longitude;
+
+@end
 
 @implementation RoadtripLocation
 
-- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocation*)loc
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocationCoordinate2D)loc
 {
     if (self = [super init]) {
+        // set database object
+        PFObject* locationObject = [PFObject objectWithClassName:LOCATION_CLASS];
+        self.dbObject = locationObject;
+        
+        // set user and save
+        [locationObject setObject:[PFUser currentUser] forKey:@"user"];
+        [locationObject saveEventually];
+        
         [self setTitle:title];
         [self setSubtitle:subtitle];
-        [self setCoordinate:loc.coordinate];
+        [self setCoordinate:loc];
+        
+        // sync to database
+        [self sync];
     }
     return self;
 }
 
 - (id)initWithLatitude:(float)latitude andLongitude:(float)longitude
 {
-    if (self = [super init]) {
-        // initialize
-    }
-    return self;
+    return [self initWithTitle:[self coordinateTextWithLatitude:latitude andLongitude:longitude]
+                      subTitle:nil andCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];
 }
 
 - (id)initWithPlacemark:(CLPlacemark*)placemark
 {
-    if (self = [super init]) {
-        // initialize
+    // initialize
+    self = [super init];
+    if(self) {
         self.addressDictionary = placemark.addressDictionary;
         NSString* name = placemark.name;
         NSArray* addr = [placemark.addressDictionary objectForKey:@"FormattedAddressLines"];
         NSArray* formattedAddress = addr;
         
+        NSString* title;
+        NSString* subtitle;
+        CLLocationCoordinate2D coordinate;
+        
         // if this location have a name, return the name, else return street address
         if(name) {
-            self.title = name;
-            self.subtitle = [formattedAddress objectAtIndex:0];
+            title = name;
+            subtitle = [formattedAddress objectAtIndex:0];
         } else {
-            self.title = [formattedAddress objectAtIndex:0];
+            title = [formattedAddress objectAtIndex:0];
             if([formattedAddress count] > 1) {
-                self.subtitle = [formattedAddress objectAtIndex:1];
+                subtitle = [formattedAddress objectAtIndex:1];
             } else {
-                self.subtitle = nil;
+                subtitle = nil;
             }
         }
         
         // extract full coordinates
-        self.coordinate = [[placemark location] coordinate];
+        coordinate = [[placemark location] coordinate];
+        
+        // initialize data
+        [self setTitle:title];
+        [self setSubtitle:subtitle];
+        [self setCoordinate:coordinate];
     }
     return self;
 }
 
-- (NSString*)coordinateText
+- (id)initFromDB:(PFObject*)dbObject
+{
+    self = [super init];
+    if(self) {
+        self.dbObject = dbObject;
+        // grab data from db
+        self.title = [dbObject objectForKey:@"title"];
+        self.subtitle = [dbObject objectForKey:@"subtitle"];
+        NSNumber* latitude = [dbObject objectForKey:@"latitude"];
+        NSNumber* longitude = [dbObject objectForKey:@"longitude"];
+        self.coordinate = CLLocationCoordinate2DMake([latitude floatValue], [longitude floatValue]);
+    }
+    return self;
+}
+
+- (void)sync
+{
+    PFObject* db = self.dbObject;
+    [db setObject:self.title forKey:@"title"];
+    [db setObject:self.subtitle forKey:@"subtitle"];
+    [db setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"latitude"];
+    [db setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"longitude"];
+    [db saveEventually];
+}
+
+- (NSString*)coordinateTextWithLatitude:(float)latitude andLongitude:(float)longitude
 {
     NSString* text = [[NSString alloc] initWithFormat:@"%.6f, %.6f",
-                      self.coordinate.latitude, self.coordinate.longitude];
+                      latitude, longitude];
     return text;
 }
 

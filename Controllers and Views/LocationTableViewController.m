@@ -22,6 +22,9 @@
     // hide the table by default, we only want to see the cells
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.opaque = NO;
+    
+    // set model
+    model = [[AppModel model] currentRoadtrip];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,8 +57,8 @@
 - (void)selectLocation:(RoadtripLocation*)location
 {
     // should only be able to select in editmode
-    for(int i = 0; i < [self.roadtripModel.locationArray count]; i++) {
-        RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:i];
+    for(int i = 0; i < [model.locationArray count]; i++) {
+        RoadtripLocation* loc = [model.locationArray objectAtIndex:i];
         if(loc == location) {
             [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i*2 inSection:0]
                                         animated:YES scrollPosition:UITableViewScrollPositionMiddle];
@@ -66,19 +69,19 @@
 
 - (void)deselectAllRows
 {
-    for(int i = 0; i < [self.roadtripModel.locationArray count] + [self.roadtripModel.routeArray count]; i++) {
+    for(int i = 0; i < [model.locationArray count] + [model.routeArray count]; i++) {
         [self.tableView deselectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES];
     }
 }
 
 - (void)enableLocationRearrange
 {
-    if([self.roadtripModel.locationArray count] > 1) {
+    if([model.locationArray count] > 1) {
         // first set flag to only show location cells
         editMode = true;
         // then delete the routing cells
         NSMutableArray* indexPath = [[NSMutableArray alloc] init];
-        for (int i = 0; i < [self.roadtripModel.routeArray count]; i++) {
+        for (int i = 0; i < [model.routeArray count]; i++) {
             [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
         }
         [self.tableView deleteRowsAtIndexPaths:indexPath withRowAnimation:YES];
@@ -100,8 +103,8 @@
     
     // add routing cells back in
     NSMutableArray* indexPath = [[NSMutableArray alloc] init];
-    NSArray* routes = self.roadtripModel.routeArray;
-    NSArray* locations = self.roadtripModel.locationArray;
+    NSArray* routes = model.routeArray;
+    NSArray* locations = model.locationArray;
     for(int i = 0; i < [routes count]; i++) {
         [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
         
@@ -110,6 +113,18 @@
         [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
     }
     [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
+}
+
+- (void)resetLocationsAndRoutes
+{
+    // build index paths
+    NSMutableArray* indexPaths = [[NSMutableArray alloc] init];
+    NSArray* routes = model.routeArray;
+    NSArray* locations = model.locationArray;
+    for(int i = 0; i < [routes count] + [locations count]; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+    }
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:NO];
 }
 
 #pragma mark - Table view data source
@@ -125,9 +140,9 @@
     // Return the number of rows in the section.
     // the table is both location and route arrays
     if(editMode) {
-        return [self.roadtripModel.locationArray count];
+        return [model.locationArray count];
     } else {
-        return 2*[self.roadtripModel.locationArray count]-1;
+        return 2*[model.locationArray count]-1;
     }
 }
 
@@ -143,7 +158,7 @@
             cell = [[LocationTableCell alloc]
                     initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationId];
         }
-        RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:row];
+        RoadtripLocation* loc = [model.locationArray objectAtIndex:row];
         [cell updateLocation:loc];
         return cell;
     } else {
@@ -155,7 +170,7 @@
                         initWithStyle:UITableViewCellStyleDefault reuseIdentifier:locationId];
             }
             int modelRow = row / 2;
-            RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:modelRow];
+            RoadtripLocation* loc = [model.locationArray objectAtIndex:modelRow];
             [cell updateLocation:loc];
             return cell;
             
@@ -166,7 +181,7 @@
                         initWithStyle:UITableViewCellStyleDefault reuseIdentifier:routeId];
             }
             int modelRow = (row-1) / 2;
-            RoadtripRoute* loc = [self.roadtripModel.routeArray objectAtIndex:modelRow];
+            RoadtripRoute* loc = [model.routeArray objectAtIndex:modelRow];
             [cell updateRoute:loc];
             return cell;
         }
@@ -203,7 +218,7 @@
     int to = [toIndexPath row];
     
     // rearrange the location array
-    NSMutableArray* ar = self.roadtripModel.locationArray;
+    NSMutableArray* ar = model.locationArray;
     
     id obj = [ar objectAtIndex:from];
     [ar removeObjectAtIndex:from];

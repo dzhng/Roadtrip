@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RoadtripViewController.h"
 #import "RoadtripModel.h"
+#import "AppModel.h"
 
 @interface SignInViewController : UIViewController
 

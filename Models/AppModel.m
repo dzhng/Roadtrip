@@ -7,6 +7,7 @@
 //
 
 #import "AppModel.h"
+#import "Database.h"
 
 @implementation AppModel
 
@@ -19,6 +20,24 @@ static AppModel* model = nil;
         model = [[super alloc] init];
     }
     return model;
+}
+
+- (NSArray*)getAllRoadtrips
+{
+    PFQuery* query = [PFQuery queryWithClassName:ROADTRIP_CLASS];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    return [query findObjects];
+}
+
+- (RoadtripModel*)newRoadtrip
+{
+    // allocate a new roadtrip object, the roadtrip object will auto sync to db
+    RoadtripModel* roadtrip = [[RoadtripModel alloc] initNewObject];
+    
+    // set current roadtrip object
+    self.currentRoadtrip = roadtrip;
+    
+    return roadtrip;
 }
 
 @end

@@ -35,7 +35,10 @@
     mapView.showsUserLocation = NO;
     [mapView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     [self.contentView addSubview:mapView];
-        
+    
+    // set model
+    model = [[AppModel model] currentRoadtrip];
+    
     // watch route updated notification
     [[NSNotificationCenter defaultCenter]
         addObserver:self
@@ -55,22 +58,20 @@
 - (void)resetLocationsAndRoutes
 {
     [self removeDirectionLocations];
+    [self removeSearchLocations];
     
     // update the map with all the current locations
-    NSArray* locations = self.roadtripModel.locationArray;
+    NSArray* locations = model.locationArray;
     
     for(RoadtripLocation* loc in locations) {
         [loc setSearch:false];
         [mapView addAnnotation:loc];
     }
     
-    NSArray* routes = self.roadtripModel.routeArray;
+    NSArray* routes = model.routeArray;
     if(routes) {
         // draw all routes
         [self drawRoutes:routes];
-        
-        // just center on the first route for now
-        [self centerMapOnRoute:[routes objectAtIndex:0]];
     }
 }
 
@@ -79,14 +80,14 @@
     [self removeSearchLocations];
     
     // get locations
-    NSArray* locations = self.roadtripModel.searchLocationArray;
+    NSArray* locations = model.searchLocationArray;
     
     // center the map on the first search location,
     // we need to center first before adding annotations for the popover to show
     RoadtripLocation* center = [locations objectAtIndex:0];
     [center setSearch:true];
     [self centerMapOnLocation:center];
-    self.roadtripModel.selected = center;
+    model.selected = center;
     
     // update map with annotations of search locations
     for(RoadtripLocation* loc in locations) {
@@ -142,7 +143,7 @@
 // called when a new destination location was added
 - (void)displayNewLocationAtIndex:(NSInteger)index
 {
-    RoadtripLocation* loc = [self.roadtripModel.locationArray objectAtIndex:index];
+    RoadtripLocation* loc = [model.locationArray objectAtIndex:index];
     [loc setSearch:false];
     [mapView addAnnotation:loc];
 }
@@ -178,7 +179,10 @@
     // get all overlays
     NSMutableArray* overlays = [[NSMutableArray alloc] init];
     for(RoadtripRoute* route in routeArray) {
-        [overlays addObject:[route routeOverlay]];
+        MKPolyline* overlay = [route routeOverlay];
+        if(overlay) {
+            [overlays addObject:overlay];
+        }
     }
     [mapView addOverlays:overlays];
     [mapView setNeedsDisplay];
@@ -191,10 +195,10 @@
     RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
     
     // remove old overlays from map
-    [mapView removeOverlay:route.oldRouteOverlay];
+    [mapView removeOverlay:route.currentRouteOverlay];
     
     // add new overlays to map
-    [mapView addOverlay:route.routeOverlay];
+    [mapView addOverlay:[route routeOverlay]];
     [mapView setNeedsDisplay];
 }
 

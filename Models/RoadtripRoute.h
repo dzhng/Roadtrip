@@ -22,10 +22,12 @@
 @property (assign, nonatomic) NSInteger time;
 @property (assign, nonatomic) NSInteger cost;
 
-// array of MKPolyline that stores the actual route drawn
-@property (retain, nonatomic) MKPolyline* routeOverlay;
-// old overlay before the change
-@property (retain, nonatomic) MKPolyline* oldRouteOverlay;
+@property (retain, nonatomic) PFObject* dbObject;
+
+// current overlay, stored here for easy removal
+@property (retain, nonatomic) MKPolyline* currentRouteOverlay;
+// array of CLLocation points that represents the overlay
+@property (retain, nonatomic) NSArray* routePoints;
 
 // center region of the route
 @property (assign, nonatomic) MKCoordinateRegion centerRegion;
@@ -37,7 +39,16 @@
 // initialize with array of CLLocations
 - (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end;
 
+// init from an existing PFObject
+- (id)initFromDB:(PFObject*)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
+
 // update the start and end destination and recalculate overlays, returns true if everything was recalculated
 - (bool)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
+
+// gets the overlay to draw on map from routePoints
+- (MKPolyline*)routeOverlay;
+
+// sync all data with database
+- (void)sync;
 
 @end
