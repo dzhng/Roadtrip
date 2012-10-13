@@ -56,10 +56,31 @@
 {
     self = [super init];
     if(self) {
+        self.start = start;
+        self.end = end;
+        
         self.dbObject = dbObject;
+        
         // grab data from db
+        self.distance = [[dbObject objectForKey:@"distance"] integerValue];
+        self.time = [[dbObject objectForKey:@"time"] integerValue];
+        self.cost = [[dbObject objectForKey:@"cost"] integerValue];
+        
+        // set text value
+        self.distanceText = [NSString stringWithFormat:@"%d", self.distance];
+        self.timeText = [NSString stringWithFormat:@"%d", self.time];
+        self.costText = [NSString stringWithFormat:@"%d", self.cost];
+        
+        PFFile* pointsFile = [dbObject objectForKey:@"points"];
+        [pointsFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+            self.routePoints = [NSKeyedUnarchiver unarchiveObjectWithData:data];
             
-        [self updateStart:start andEnd:end];
+            // get center region
+            self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
+            
+            // tell views that our route was updated
+            [self postRouteUpdateNotificationWithRoute:self];
+        }];
     }
     return self;
 }

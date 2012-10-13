@@ -86,6 +86,11 @@
     if(self) {
         self.dbObject = dbObject;
         // grab data from db
+        self.title = [dbObject objectForKey:@"title"];
+        self.subtitle = [dbObject objectForKey:@"subtitle"];
+        NSNumber* latitude = [dbObject objectForKey:@"latitude"];
+        NSNumber* longitude = [dbObject objectForKey:@"longitude"];
+        self.coordinate = CLLocationCoordinate2DMake([latitude floatValue], [longitude floatValue]);
     }
     return self;
 }
