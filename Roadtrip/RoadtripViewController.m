@@ -7,6 +7,7 @@
 //
 
 #import "RoadtripViewController.h"
+#import "MapConstants.h"
 
 // minimum height for the size of table interaction space in pixels
 #define TABLE_MIN_HEIGHT        200
@@ -92,6 +93,8 @@
     CGSize size = tableController.tableView.contentSize;
     CGRect windowSize = [[UIScreen mainScreen] bounds];
     CGFloat windowHeight = windowSize.size.height;
+    
+    NSLog(@"Table resized to: %f", size.height);
     
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if(orientation == UIInterfaceOrientationLandscapeRight || orientation ==  UIInterfaceOrientationLandscapeLeft){
@@ -184,6 +187,8 @@
     [tableController resetLocationsAndRoutes];
     
     // resize table view to fit
+    // Weird bug: when called for the first time, it always returns 60
+    [self resizeTable];
     [self resizeTable];
 }
 
