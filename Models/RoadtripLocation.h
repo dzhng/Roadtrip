@@ -31,10 +31,14 @@
 // save coordinate and perform reverse Geocoding to convert to streetname
 - (id)initWithLatitude:(float)latitude andLongitude:(float)longitude;
 
-// extract data from input placemark
+// extract data from input placemark,
+// this is used for search locations, so db object is NOT created
 - (id)initWithPlacemark:(CLPlacemark*)placemark;
 
 // init from an existing PFObject
 - (id)initFromDB:(PFObject*)dbObject;
+
+// sync with database
+- (void)sync;
 
 @end

@@ -45,33 +45,39 @@
 - (id)initWithPlacemark:(CLPlacemark*)placemark
 {
     // initialize
-    self.addressDictionary = placemark.addressDictionary;
-    NSString* name = placemark.name;
-    NSArray* addr = [placemark.addressDictionary objectForKey:@"FormattedAddressLines"];
-    NSArray* formattedAddress = addr;
-    
-    NSString* title;
-    NSString* subtitle;
-    CLLocationCoordinate2D coordinate;
-    
-    // if this location have a name, return the name, else return street address
-    if(name) {
-        title = name;
-        subtitle = [formattedAddress objectAtIndex:0];
-    } else {
-        title = [formattedAddress objectAtIndex:0];
-        if([formattedAddress count] > 1) {
-            subtitle = [formattedAddress objectAtIndex:1];
+    self = [super init];
+    if(self) {
+        self.addressDictionary = placemark.addressDictionary;
+        NSString* name = placemark.name;
+        NSArray* addr = [placemark.addressDictionary objectForKey:@"FormattedAddressLines"];
+        NSArray* formattedAddress = addr;
+        
+        NSString* title;
+        NSString* subtitle;
+        CLLocationCoordinate2D coordinate;
+        
+        // if this location have a name, return the name, else return street address
+        if(name) {
+            title = name;
+            subtitle = [formattedAddress objectAtIndex:0];
         } else {
-            subtitle = nil;
+            title = [formattedAddress objectAtIndex:0];
+            if([formattedAddress count] > 1) {
+                subtitle = [formattedAddress objectAtIndex:1];
+            } else {
+                subtitle = nil;
+            }
         }
+        
+        // extract full coordinates
+        coordinate = [[placemark location] coordinate];
+        
+        // initialize data
+        [self setTitle:title];
+        [self setSubtitle:subtitle];
+        [self setCoordinate:coordinate];
     }
-    
-    // extract full coordinates
-    coordinate = [[placemark location] coordinate];
-    
-    // initialize
-    return [self initWithTitle:title subTitle:subtitle andCoordinate:coordinate];
+    return self;
 }
 
 - (id)initFromDB:(PFObject*)dbObject
@@ -82,6 +88,16 @@
         // grab data from db
     }
     return self;
+}
+
+- (void)sync
+{
+    PFObject* db = self.dbObject;
+    [db setObject:self.title forKey:@"title"];
+    [db setObject:self.subtitle forKey:@"subtitle"];
+    [db setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"latitude"];
+    [db setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"longitude"];
+    [db saveEventually];
 }
 
 - (NSString*)coordinateTextWithLatitude:(float)latitude andLongitude:(float)longitude

@@ -24,14 +24,14 @@
         
         // auto login for now
         [PFUser logInWithUsernameInBackground:@"dzz0615" password:@"zhang1234"
-                    block:^(PFUser *user, NSError *error) {
-                        if (user) {
-                            // Do stuff after successful login.
-                        } else {
-                            // The login failed. Check error to see why.
-                            NSLog(@"Login failed");
-                        }
-                    }];
+        block:^(PFUser *user, NSError *error) {
+            if (user) {
+                // Do stuff after successful login.
+            } else {
+                // The login failed. Check error to see why.
+                NSLog(@"Login failed");
+            }
+        }];
     }
     
     // make app model

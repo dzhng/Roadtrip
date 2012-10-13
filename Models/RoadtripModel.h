@@ -62,7 +62,6 @@
 
 // save a new location and route
 - (RoadtripLocation*)newLocationFromLocation:(RoadtripLocation*)location;
-- (void)newRoute;
 
 // update this roadtrip settings to db
 - (void)sync;

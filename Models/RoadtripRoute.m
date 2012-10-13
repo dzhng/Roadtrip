@@ -182,56 +182,56 @@
     NSURLRequest *req = [NSURLRequest requestWithURL:apiUrl];
     [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue]
                            completionHandler:
-                ^(NSURLResponse *response, NSData *data, NSError *error) {
-                    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-                    NSDictionary* parsed = [result objectFromJSONString];
-                    NSArray* routes = [parsed objectForKey:@"routes"];
-                    if ([routes count] <= 0) {
-                        NSLog(@"No roadtrip routes found");
-                        return;
-                    }
-                    
-                    // we only want the first route, for now.. maybe enable different route planning later
-                    NSDictionary* route = [routes objectAtIndex:0];
-                    NSArray* warnings = [route objectForKey:@"warnings"];
-                    if ([warnings count] > 0) {
-                        NSLog(@"Warnings: %@", [warnings objectAtIndex:0]);
-                    }
-                    
-                    NSMutableArray* routePoints = [[NSMutableArray alloc] init];
-                    NSArray* legs = [route objectForKey:@"legs"];
-                    
-                    // we're only interested in the first leg, since we don't do waypoints
-                    NSDictionary* leg = [legs objectAtIndex:0];
-                    NSArray* steps = [leg objectForKey:@"steps"];
-                    for(NSDictionary* step in steps) {
-                        NSDictionary* polyline = [step objectForKey:@"polyline"];
-                        NSString* points = [polyline objectForKey:@"points"];
-                        [routePoints addObjectsFromArray:[self decodePolyLine:points]];
-                    }
-                    
-                    // grab leg values
-                    NSDictionary* dist = [leg objectForKey:@"distance"];
-                    self.distanceText = [dist objectForKey:@"text"];
-                    self.distance = [[dist objectForKey:@"value"] integerValue];
-                   
-                    NSDictionary* dur = [leg objectForKey:@"duration"];
-                    self.timeText = [dur objectForKey:@"text"];
-                    self.time = [[dur objectForKey:@"value"] integerValue];
-                    
-                    // set points
-                    self.routePoints = routePoints;
-                    
-                    // get center region
-                    self.centerRegion = [self getCenterRegionFromPoints:routePoints];
-                    
-                    // tell views that our route was updated
-                    [self postRouteUpdateNotificationWithRoute:self];
-                    
-                    // sync with database
-                    [self sync];
-                }];
+     ^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+
+        NSDictionary* parsed = [result objectFromJSONString];
+        NSArray* routes = [parsed objectForKey:@"routes"];
+        if ([routes count] <= 0) {
+            NSLog(@"No roadtrip routes found");
+            return;
+        }
+        
+        // we only want the first route, for now.. maybe enable different route planning later
+        NSDictionary* route = [routes objectAtIndex:0];
+        NSArray* warnings = [route objectForKey:@"warnings"];
+        if ([warnings count] > 0) {
+            NSLog(@"Warnings: %@", [warnings objectAtIndex:0]);
+        }
+        
+        NSMutableArray* routePoints = [[NSMutableArray alloc] init];
+        NSArray* legs = [route objectForKey:@"legs"];
+        
+        // we're only interested in the first leg, since we don't do waypoints
+        NSDictionary* leg = [legs objectAtIndex:0];
+        NSArray* steps = [leg objectForKey:@"steps"];
+        for(NSDictionary* step in steps) {
+            NSDictionary* polyline = [step objectForKey:@"polyline"];
+            NSString* points = [polyline objectForKey:@"points"];
+            [routePoints addObjectsFromArray:[self decodePolyLine:points]];
+        }
+        
+        // grab leg values
+        NSDictionary* dist = [leg objectForKey:@"distance"];
+        self.distanceText = [dist objectForKey:@"text"];
+        self.distance = [[dist objectForKey:@"value"] integerValue];
+       
+        NSDictionary* dur = [leg objectForKey:@"duration"];
+        self.timeText = [dur objectForKey:@"text"];
+        self.time = [[dur objectForKey:@"value"] integerValue];
+        
+        // set points
+        self.routePoints = routePoints;
+        
+        // get center region
+        self.centerRegion = [self getCenterRegionFromPoints:routePoints];
+        
+        // tell views that our route was updated
+        [self postRouteUpdateNotificationWithRoute:self];
+        
+        // sync with database
+        [self sync];
+    }];
 }
 
 // decode the polyline binary data from GMaps API into an array of CLLocations

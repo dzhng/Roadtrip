@@ -99,10 +99,18 @@
     RoadtripViewController* rvc = (RoadtripViewController*)segue.destinationViewController;
     
     // initialize model
-    RoadtripModel* roadtripModel = [[AppModel model] newRoadtrip];
+    //RoadtripModel* roadtripModel = [[AppModel model] newRoadtrip];
+    
+    // get first roadtrip for user
+    NSArray* roadtrips = [[AppModel model] getAllRoadtrips];
+    // set current roadtrip as first one
+    RoadtripModel* roadtrip = [[RoadtripModel alloc] initFromDB:[roadtrips objectAtIndex:0]];
     
     // set model delegate is this
-    roadtripModel.delegate = rvc;
+    roadtrip.delegate = rvc;
+    
+    // set this new roadtrip as the current roadtrip in model
+    [[AppModel model] setCurrentRoadtrip:roadtrip];
 }
 
 @end

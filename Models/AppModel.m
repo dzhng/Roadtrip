@@ -18,25 +18,21 @@ static AppModel* model = nil;
 {
     if(model == nil) {
         model = [[super alloc] init];
-        
-        // initialize roadtrip models array
-        model.roadtripModels = [[NSMutableArray alloc] init];
     }
     return model;
 }
 
-- (void)getAllRoadtrips
+- (NSArray*)getAllRoadtrips
 {
-    
+    PFQuery* query = [PFQuery queryWithClassName:ROADTRIP_CLASS];
+    [query whereKey:@"user" equalTo:[PFUser currentUser]];
+    return [query findObjects];
 }
 
 - (RoadtripModel*)newRoadtrip
 {
     // allocate a new roadtrip object, the roadtrip object will auto sync to db
     RoadtripModel* roadtrip = [[RoadtripModel alloc] initNewObject];
-    
-    // add the roadtrip to array
-    [self.roadtripModels addObject:roadtrip];
     
     // set current roadtrip object
     self.currentRoadtrip = roadtrip;

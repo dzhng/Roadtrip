@@ -78,6 +78,11 @@
 {
     self.dbObject = dbObject;
     // grab data from db
+    self.name = [dbObject objectForKey:@"name"];
+    self.distance = [dbObject objectForKey:@"distance"];
+    self.stops = [dbObject objectForKey:@"stops"];
+    self.time = [dbObject objectForKey:@"time"];
+    self.cost = [dbObject objectForKey:@"cost"];
     return [self init];
 }
 
@@ -91,30 +96,30 @@
 - (void)geocodeWithAddress:(NSString*)address
 {
     // start geocoding process
-    [geocoder geocodeAddressString:address
-                 completionHandler:^(NSArray *placemarks, NSError *error) {
-                    if(!error) {   // no errors!
-                        // make a new search location array
-                        self.searchLocationArray = [[NSMutableArray alloc] init];
-                        
-                        // build an array of RoadtripLocation objects based on placemerks
-                        for(CLPlacemark* placemark in placemarks) {
-                            [self.searchLocationArray addObject:[[RoadtripLocation alloc] initWithPlacemark:placemark]];
-                        }
-     
-                        // tell our delegate that we're good to go
-                        [self.delegate searchDone:self.searchLocationArray];
-                    } else {
-                        NSLog(@"Error getting geocoding location %@", address);
-                        // show a popup alert
-                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Address not found"
-                                                        message:@"Please modify your search and try again."
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-                        [alert show];
-                    }
-                 }];
+    [geocoder geocodeAddressString:address completionHandler:
+     ^(NSArray *placemarks, NSError *error) {
+        if(!error) {   // no errors!
+            // make a new search location array
+            self.searchLocationArray = [[NSMutableArray alloc] init];
+            
+            // build an array of RoadtripLocation objects based on placemerks
+            for(CLPlacemark* placemark in placemarks) {
+                [self.searchLocationArray addObject:[[RoadtripLocation alloc] initWithPlacemark:placemark]];
+            }
+
+            // tell our delegate that we're good to go
+            [self.delegate searchDone:self.searchLocationArray];
+        } else {
+            NSLog(@"Error getting geocoding location %@", address);
+            // show a popup alert
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Address not found"
+                                            message:@"Please modify your search and try again."
+                                           delegate:nil
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+            [alert show];
+        }
+     }];
 }
 
 - (void)getAllLocationsAndRoutes
@@ -127,12 +132,12 @@
     // copy the location data and make a new location object
     RoadtripLocation* newLocation = [[RoadtripLocation alloc] initWithTitle:location.title
                                        subTitle:location.subtitle andCoordinate:location.coordinate];
-    return newLocation;
-}
-
-- (void)newRoute
-{
     
+    // set new roadtrip location as a child of this model in db
+    [self.dbObject setObject:newLocation.dbObject forKey:@"roadtrip"];
+    [self.dbObject saveEventually];
+    
+    return newLocation;
 }
 
 - (void)sync
@@ -144,6 +149,7 @@
     [db setObject:self.distance forKey:@"distance"];
     [db setObject:self.time forKey:@"time"];
     [db setObject:self.stops forKey:@"stops"];
+    [db setObject:self.cost forKey:@"cost"];
     [db saveEventually];
 }
 
@@ -181,7 +187,12 @@
     
     // if this isn't the first location, we should add a new route
     if([self.locationArray count] > 0) {
-        [self.routeArray addObject:[[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location]];
+        RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
+        [self.routeArray addObject:newRoute];
+        
+        // set new roadtrip location as a child of this model in db
+        [self.dbObject setObject:newRoute.dbObject forKey:@"roadtrip"];
+        [self.dbObject saveEventually];
     }
     
     // add to location array
