@@ -34,7 +34,9 @@
     [super viewDidAppear:animated];
     
     //login view displayed mmodally
-    PFLogInViewController
+    PFLogInViewController *login = [[PFLogInViewController alloc] init];
+    [self presentModalViewController:login animated:YES];
+    
     
 }
 
