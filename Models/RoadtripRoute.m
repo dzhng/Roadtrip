@@ -66,11 +66,6 @@
         self.time = [[dbObject objectForKey:@"time"] integerValue];
         self.cost = [[dbObject objectForKey:@"cost"] integerValue];
         
-        // set text value
-        self.distanceText = [NSString stringWithFormat:@"%d", self.distance];
-        self.timeText = [NSString stringWithFormat:@"%d", self.time];
-        self.costText = [NSString stringWithFormat:@"%d", self.cost];
-        
         PFFile* pointsFile = [dbObject objectForKey:@"points"];
         [pointsFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
             NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithData:data];
@@ -166,6 +161,37 @@
     return nil;
 }
 
+- (NSString*)distanceText
+{
+    float miles = self.distance / METERS_PER_MILE;
+    if(miles < 10) {
+        return [NSString stringWithFormat:@"%0.1f miles", miles];
+    } else {
+        // if greater than 2 digits, dont bother showing the decimal
+        return [NSString stringWithFormat:@"%0.0f miles", miles];
+    }
+}
+
+- (NSString*)timeText
+{
+    NSInteger minutes = self.time / 60;
+    
+    // show minuets if it's under an hour
+    if (minutes <= 60) {
+        return [NSString stringWithFormat:@"%d minutes", minutes];
+    } else {
+        // get hours and leftover minuets
+        NSInteger hours = minutes / 60;
+        minutes = minutes % 60;
+        return [NSString stringWithFormat:@"%d hours and %d minutes", hours, minutes];
+    }
+}
+
+- (NSString*)costText
+{
+    return [NSString stringWithFormat:@"5 dollars"];
+}
+
 - (void)postRouteUpdateNotificationWithRoute:(RoadtripRoute *)route
 {
     NSString *notificationName = ROUTE_UPDATED_NOTIFICATION;
@@ -243,11 +269,9 @@
         
         // grab leg values
         NSDictionary* dist = [leg objectForKey:@"distance"];
-        self.distanceText = [dist objectForKey:@"text"];
         self.distance = [[dist objectForKey:@"value"] integerValue];
        
         NSDictionary* dur = [leg objectForKey:@"duration"];
-        self.timeText = [dur objectForKey:@"text"];
         self.time = [[dur objectForKey:@"value"] integerValue];
         
         // set points

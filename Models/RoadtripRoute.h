@@ -14,10 +14,6 @@
 
 @interface RoadtripRoute : NSObject
 
-@property (copy, nonatomic) NSString* distanceText;
-@property (copy, nonatomic) NSString* timeText;
-@property (copy, nonatomic) NSString* costText;
-
 @property (assign, nonatomic) NSInteger distance;
 @property (assign, nonatomic) NSInteger time;
 @property (assign, nonatomic) NSInteger cost;
@@ -50,5 +46,10 @@
 
 // sync all data with database
 - (void)sync;
+
+// get text representations of route values
+- (NSString*)distanceText;
+- (NSString*)timeText;
+- (NSString*)costText;
 
 @end
