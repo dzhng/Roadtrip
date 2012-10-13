@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="lgE-GI-9yH">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2843" systemVersion="12C54" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" initialViewController="vDq-qd-z0o">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1929"/>
     </dependencies>
     <scenes>
-        <!--Sign In View Controller-->
-        <scene sceneID="gxl-wE-T9H">
+        <!--Main View Controller-->
+        <scene sceneID="sVQ-Tc-aj4">
             <objects>
-                <viewController id="lgE-GI-9yH" customClass="SignInViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="2ne-aC-yse">
+                <viewController id="vDq-qd-z0o" customClass="MainViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="SaG-WE-36K">
                         <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="B86-9w-SEO">
-                                <rect key="frame" x="336" y="770" width="253" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label=""/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" image="facebook-login.png">
-                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="highlighted">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="2" kind="modal" identifier="signInToMain" modalTransitionStyle="crossDissolve" id="Pk1-lD-TaY"/>
-                                </connections>
-                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="All Maps" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wjX-lS-fvo">
+                                <rect key="frame" x="297" y="20" width="136" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="33"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" id="gIQ-71-78g">
+                                <rect key="frame" x="0.0" y="68" width="768" height="945"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="WJ9-OR-B1G">
+                                    <size key="itemSize" width="316" height="275"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="aGJ-Xk-qo0">
+                                        <rect key="frame" x="0.0" y="0.0" width="316" height="275"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="316" height="275"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="bg1-nonretina.png" id="gEi-jB-k7B">
+                                                    <rect key="frame" x="0.0" y="0.0" width="316" height="275"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="2" kind="push" identifier="RoadTripChosenSegue" id="dJp-7W-xJR"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fQR-Py-xwv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M3M-59-fWR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-9405" y="-2073"/>
+            <point key="canvasLocation" x="-9477" y="-2157"/>
         </scene>
         <!--Roadtrip View Controller-->
         <scene sceneID="4">
@@ -308,8 +331,70 @@
         </scene>
     </scenes>
     <resources>
-        <image name="facebook-login.png" width="253" height="50"/>
+        <image name="bg1-nonretina.png" width="768" height="1024"/>
     </resources>
+    <classes>
+        <class className="DetailMapViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailMapViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="contentView" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="LocationTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="subtitleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LocationTableView" superclassName="UITableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationTableView.h"/>
+        </class>
+        <class className="LocationTableViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationTableViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="costLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="stopsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="tableView" candidateClass="LocationTableView"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="MainViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MainViewController.h"/>
+        </class>
+        <class className="RoadtripViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RoadtripViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="rearrangePressed:"/>
+                <relationship kind="action" name="startTripPressed:"/>
+                <relationship kind="outlet" name="editButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="mapContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="searchBackgoundView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="searchBarView" candidateClass="UISearchBar"/>
+                <relationship kind="outlet" name="settingsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="tableContainer" candidateClass="UIView"/>
+            </relationships>
+        </class>
+        <class className="RouteTableCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/RouteTableCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="costLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="UICollectionReusableView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
+        </class>
+        <class className="UICollectionViewCell" superclassName="UICollectionReusableView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewCell.h"/>
+        </class>
+        <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>
