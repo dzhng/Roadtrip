@@ -52,10 +52,6 @@
     editMode = false;
     // change edit button
     [self.editButton setTitle:@"Done" forState:UIControlStateSelected];
-    
-    // resize content table to fit
-    [self resizeTable];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -176,6 +172,19 @@
 {
     // deselect from table row
     [tableController deselectAllRows];
+}
+
+- (void)reloadLocationsAndRoutes
+{
+    // deselect any popovers
+    [mapController deselectAnnotation];
+    
+    // call reset functions
+    [mapController resetLocationsAndRoutes];
+    [tableController resetLocationsAndRoutes];
+    
+    // resize table view to fit
+    [self resizeTable];
 }
 
 @end

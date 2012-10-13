@@ -20,6 +20,9 @@
 - (void)handleSelectedFromMap:(id)selected;
 - (void)handleDeselect;
 
+// reload everything
+- (void)reloadLocationsAndRoutes;
+
 @end
 
 @interface RoadtripModel : NSObject

@@ -32,6 +32,9 @@
         [self setTitle:title];
         [self setSubtitle:subtitle];
         [self setCoordinate:loc];
+        
+        // sync to database
+        [self sync];
     }
     return self;
 }

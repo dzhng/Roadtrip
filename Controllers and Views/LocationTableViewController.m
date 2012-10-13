@@ -115,6 +115,18 @@
     [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
 }
 
+- (void)resetLocationsAndRoutes
+{
+    // build index paths
+    NSMutableArray* indexPaths = [[NSMutableArray alloc] init];
+    NSArray* routes = model.routeArray;
+    NSArray* locations = model.locationArray;
+    for(int i = 0; i < [routes count] + [locations count]; i++) {
+        [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+    }
+    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:NO];
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(LocationTableView *)tableView

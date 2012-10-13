@@ -33,4 +33,7 @@
 - (void)enableLocationRearrange;
 - (void)doneLocationRearrange;
 
+// reload everything from model
+- (void)resetLocationsAndRoutes;
+
 @end

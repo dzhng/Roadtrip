@@ -73,7 +73,16 @@
         
         PFFile* pointsFile = [dbObject objectForKey:@"points"];
         [pointsFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            self.routePoints = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            NSMutableArray* points = [[NSMutableArray alloc] init];
+            for(int i = 0; i < [p count]; i++) {
+                NSDictionary* pt = [p objectAtIndex:i];
+                double latitude = [[pt objectForKey:@"latitude"] doubleValue];
+                double longitude = [[pt objectForKey:@"longitude"] doubleValue];
+                CLLocation* point = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+                [points addObject:point];
+            }
+            self.routePoints = points;
             
             // get center region
             self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];

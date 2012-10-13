@@ -58,6 +58,7 @@
 - (void)resetLocationsAndRoutes
 {
     [self removeDirectionLocations];
+    [self removeSearchLocations];
     
     // update the map with all the current locations
     NSArray* locations = model.locationArray;
@@ -71,9 +72,6 @@
     if(routes) {
         // draw all routes
         [self drawRoutes:routes];
-        
-        // just center on the first route for now
-        [self centerMapOnRoute:[routes objectAtIndex:0]];
     }
 }
 
@@ -181,7 +179,10 @@
     // get all overlays
     NSMutableArray* overlays = [[NSMutableArray alloc] init];
     for(RoadtripRoute* route in routeArray) {
-        [overlays addObject:[route routeOverlay]];
+        MKPolyline* overlay = [route routeOverlay];
+        if(overlay) {
+            [overlays addObject:overlay];
+        }
     }
     [mapView addOverlays:overlays];
     [mapView setNeedsDisplay];
