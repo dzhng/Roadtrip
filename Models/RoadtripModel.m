@@ -8,6 +8,7 @@
 
 #import "RoadtripModel.h"
 #import "Database.h"
+#import "MapConstants.h"
 
 @interface RoadtripModel ()
 
@@ -83,10 +84,10 @@
     self.dbObject = dbObject;
     // grab data from db
     self.name = [dbObject objectForKey:@"name"];
-    self.distance = [dbObject objectForKey:@"distance"];
-    self.stops = [dbObject objectForKey:@"stops"];
-    self.time = [dbObject objectForKey:@"time"];
-    self.cost = [dbObject objectForKey:@"cost"];
+    self.distance = [[dbObject objectForKey:@"distance"] integerValue];
+    self.stops = [[dbObject objectForKey:@"stops"] integerValue];
+    self.time = [[dbObject objectForKey:@"time"] integerValue];
+    self.cost = [[dbObject objectForKey:@"cost"] integerValue];
     
     // if we initialized from db, then this roadtrip might have some locations and routes
     [self getAllLocationsAndRoutes];
@@ -98,6 +99,22 @@
 {
     // make sure to cleanup the notifications
     [[NSNotificationCenter defaultCenter] removeObject:self];
+}
+
+- (NSString*)distanceText
+{
+    float miles = self.distance / METERS_PER_MILE;
+    if(miles < 10) {
+        return [NSString stringWithFormat:@"%0.1f miles", miles];
+    } else {
+        // if greater than 2 digits, dont bother showing the decimal
+        return [NSString stringWithFormat:@"%0.0f miles", miles];
+    }
+}
+
+- (NSString*)stopsText
+{
+    return [NSString stringWithFormat:@"%d stops", self.stops];
 }
 
 // run geocoding with given input address
@@ -227,10 +244,10 @@
 
     // set class properties
     [db setObject:self.name forKey:@"name"];
-    [db setObject:self.distance forKey:@"distance"];
-    [db setObject:self.time forKey:@"time"];
-    [db setObject:self.stops forKey:@"stops"];
-    [db setObject:self.cost forKey:@"cost"];
+    [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
+    [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
+    [db setObject:[NSNumber numberWithInteger:self.stops] forKey:@"stops"];
+    [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
     [db saveEventually];
 }
 

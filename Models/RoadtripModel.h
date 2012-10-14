@@ -34,10 +34,10 @@
 
 // roadtrip settings
 @property (copy, nonatomic) NSString* name;
-@property (copy, nonatomic) NSNumber* distance;
-@property (copy, nonatomic) NSNumber* stops;
-@property (copy, nonatomic) NSNumber* time;
-@property (copy, nonatomic) NSNumber* cost;
+@property (assign, nonatomic) NSInteger distance;
+@property (assign, nonatomic) NSInteger stops;
+@property (assign, nonatomic) NSInteger time;
+@property (assign, nonatomic) NSInteger cost;
 @property (retain, nonatomic) PFObject* dbObject;
 
 // data model of locations
@@ -56,6 +56,10 @@
 - (id)initNewObject;
 // init from an existing PFObject
 - (id)initFromDB:(PFObject*)dbObject;
+
+// get text representations for roadtrip settings
+- (NSString*)distanceText;
+- (NSString*)stopsText;
 
 // translate a search string into coordinates and address
 - (void)geocodeWithAddress:(NSString*)address;

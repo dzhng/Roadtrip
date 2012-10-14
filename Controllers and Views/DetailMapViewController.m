@@ -22,8 +22,10 @@
 @implementation DetailMapViewController
 
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     // stores if we're currently momentum scrolling on the map
     momentumScrolling = false;
     // stores if we manually selected a location via table cell

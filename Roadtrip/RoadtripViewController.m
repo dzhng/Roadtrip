@@ -20,9 +20,9 @@
 
 @implementation RoadtripViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:animated];
+    [super viewDidLoad];
     
     // set model
     model = [[AppModel model] currentRoadtrip];

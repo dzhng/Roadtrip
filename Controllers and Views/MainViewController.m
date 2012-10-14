@@ -66,7 +66,6 @@ static NSString *cellId = @"RoadtripMap";
     if(cell == nil) {
         NSLog(@"Cannot dequeue collection view cell");
     }
-    cell.backgroundColor = [UIColor whiteColor];
     return cell;
 }
 
@@ -81,7 +80,7 @@ static NSString *cellId = @"RoadtripMap";
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(210, 210);
+    return CGSizeMake(210, 260);
 }
 
 @end
