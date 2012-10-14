@@ -2,7 +2,7 @@
 //  SignInViewController.m
 //  Roadtrip
 //
-//  Created by Zachary Zimbler on 10/11/12.
+//  Created by Zachary Zimbler on 10/14/12.
 //  Copyright (c) 2012 David Zhang. All rights reserved.
 //
 
@@ -14,7 +14,20 @@
 
 @implementation SignInViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
 
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -34,8 +47,6 @@
             self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"bg1-nonretina.png"]];
             NSLog(@"Not Retina - background bg1-nonretina.png");
         }
-        
-        
     }
     
     //landscape
@@ -93,26 +104,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-// prepare for segue to roadtrip view controller
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    RoadtripViewController* rvc = (RoadtripViewController*)segue.destinationViewController;
-    
-    // initialize model
-    //RoadtripModel* roadtripModel = [[AppModel model] newRoadtrip];
-    
-    // get first roadtrip for user
-    NSArray* roadtrips = [[AppModel model] getAllRoadtrips];
-    // set current roadtrip as first one
-    RoadtripModel* roadtrip = [[RoadtripModel alloc] initFromDB:[roadtrips objectAtIndex:0]];
-    
-    // set model delegate is this
-    roadtrip.delegate = rvc;
-    
-    // set this new roadtrip as the current roadtrip in model
-    [[AppModel model] setCurrentRoadtrip:roadtrip];
 }
 
 @end

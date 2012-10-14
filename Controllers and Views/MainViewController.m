@@ -7,6 +7,8 @@
 //
 
 #import "MainViewController.h"
+#import "SignInViewController.h"
+#import "SignUpViewController.h"
 
 @interface MainViewController ()
 
@@ -29,14 +31,23 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    //login view displayed mmodally
-    PFLogInViewController *login = [[PFLogInViewController alloc] init];
-    [self presentModalViewController:login animated:YES];
-   
+    // Check if user is logged in
+    if (![PFUser currentUser]) {
+        //login view displayed mmodally
+        PFLogInViewController *login = [[PFLogInViewController alloc] init];
+        login.fields = PFLogInFieldsFacebook | PFLogInFieldsUsernameAndPassword | PFLogInFieldsLogInButton ;
+        [self presentModalViewController:login animated:YES];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning

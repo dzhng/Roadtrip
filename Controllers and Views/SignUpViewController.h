@@ -1,5 +1,5 @@
 //
-//  SignInViewController.h
+//  SignUpViewController.h
 //  Roadtrip
 //
 //  Created by Zachary Zimbler on 10/14/12.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignInViewController : UIViewController
+@interface SignUpViewController : UIViewController
 
 @end
