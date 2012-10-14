@@ -14,7 +14,7 @@
 #import "RoadtripModel.h"
 #import "AppModel.h"
 
-@interface LocationTableViewController : UITableViewController
+@interface LocationTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 {
     bool editMode;
     RoadtripModel* model;

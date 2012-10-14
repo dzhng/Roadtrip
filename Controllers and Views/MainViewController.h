@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RoadtripCollectionCell.h"
 
-@interface MainViewController : UIViewController
+@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @end
