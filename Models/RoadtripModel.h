@@ -11,6 +11,7 @@
 #import "RoadtripLocation.h"
 #import "RoadtripRoute.h"
 #import "ModelNotifications.h"
+#import "TextFormat.h"
 
 @protocol RoadtripModelDelegate <NSObject>
 

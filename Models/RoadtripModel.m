@@ -103,13 +103,7 @@
 
 - (NSString*)distanceText
 {
-    float miles = self.distance / METERS_PER_MILE;
-    if(miles < 10) {
-        return [NSString stringWithFormat:@"%0.1f miles", miles];
-    } else {
-        // if greater than 2 digits, dont bother showing the decimal
-        return [NSString stringWithFormat:@"%0.0f miles", miles];
-    }
+    return [TextFormat formatDistanceFromMeters:self.distance];
 }
 
 - (NSString*)stopsText

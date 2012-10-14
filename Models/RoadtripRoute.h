@@ -11,6 +11,7 @@
 #import <MapKit/MapKit.h>
 #import "RoadtripLocation.h"
 #import "JSONKit.h"
+#import "TextFormat.h"
 
 @interface RoadtripRoute : NSObject
 
