@@ -19,7 +19,7 @@
 + (id)model;
 
 // get list of all roadtrips belonging to user
-// present an array with the roadtrip picture, stops, and distance
+// present an array of PFObjects with the roadtrip picture, stops, and distance
 - (NSArray*)getAllRoadtrips;
 
 // insert a new roadtrip model
