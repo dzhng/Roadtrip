@@ -48,9 +48,13 @@
         
         // set user and save
         [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
-        [self.dbObject saveEventually];
-        
-        [self updateStart:start andEnd:end];
+        [self.dbObject saveEventually:^(BOOL succeeded, NSError *error) {
+            if(succeeded && !error) {
+                [self updateStart:start andEnd:end];
+            } else {
+                NSLog(@"Error saving new route");
+            }
+        }];
     }
     return self;
 }
