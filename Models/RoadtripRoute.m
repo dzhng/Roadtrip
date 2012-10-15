@@ -67,30 +67,33 @@
         self.cost = [[dbObject objectForKey:@"cost"] integerValue];
         
         PFFile* pointsFile = [dbObject objectForKey:@"points"];
-        [pointsFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-            NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-            NSMutableArray* points = [[NSMutableArray alloc] init];
-            for(int i = 0; i < [p count]; i++) {
-                NSDictionary* pt = [p objectAtIndex:i];
-                double latitude = [[pt objectForKey:@"latitude"] doubleValue];
-                double longitude = [[pt objectForKey:@"longitude"] doubleValue];
-                CLLocation* point = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
-                [points addObject:point];
-            }
-            self.routePoints = points;
-            
-            // check if data from db is valid
-            if (self.routePoints == nil) {
-                NSLog(@"Error: DB data invalid, recalculating maps");
-                [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
-            } else {
-                // get center region
-                self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
+        if(pointsFile == nil) {
+            NSLog(@"Error: DB data invalid, recalculating routes");
+            [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
+        } else {
+            [pointsFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                if(error) {
+                    NSLog(@"Error grabbing points file");
+                } else {
+                    NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+                    NSMutableArray* points = [[NSMutableArray alloc] init];
+                    for(int i = 0; i < [p count]; i++) {
+                        NSDictionary* pt = [p objectAtIndex:i];
+                        double latitude = [[pt objectForKey:@"latitude"] doubleValue];
+                        double longitude = [[pt objectForKey:@"longitude"] doubleValue];
+                        CLLocation* point = [[CLLocation alloc] initWithLatitude:latitude longitude:longitude];
+                        [points addObject:point];
+                    }
+                    self.routePoints = points;
                 
-                // tell views that our route was updated
-                [self postRouteUpdateNotificationWithRoute:self];
-            }
-        }];
+                    // get center region
+                    self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
+                    
+                    // tell views that our route was updated
+                    [self postRouteUpdateNotificationWithRoute:self];
+                }
+            }];
+        }
     }
     return self;
 }
@@ -140,6 +143,11 @@
             NSLog(@"Route Save Error: %@", error.debugDescription);
         }
     }];
+}
+
+- (void)remove
+{
+    [self.dbObject deleteEventually];
 }
 
 // convert input points into overlays

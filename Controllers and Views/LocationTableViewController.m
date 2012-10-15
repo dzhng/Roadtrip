@@ -7,8 +7,11 @@
 //
 
 #import "LocationTableViewController.h"
+#import "ModelNotifications.h"
 
 @interface LocationTableViewController ()
+
+- (void)postDeleteLocationNotification:(NSUInteger)index;
 
 @end
 
@@ -78,9 +81,10 @@
 
 - (void)enableLocationRearrange
 {
+    // first set flag to only show location cells
+    editMode = true;
+    
     if([model.locationArray count] > 1) {
-        // first set flag to only show location cells
-        editMode = true;
         // then delete the routing cells
         NSMutableArray* indexPath = [[NSMutableArray alloc] init];
         for (int i = 0; i < [model.routeArray count]; i++) {
@@ -88,11 +92,11 @@
         }
         [self.tableView deleteRowsAtIndexPaths:indexPath withRowAnimation:YES];
         
-        // set table to edit mode
-        [self.tableView setEditing:true animated:true];
-        
         // TODO: gray out map view so there's no interactions there
     }
+    
+    // set table to edit mode
+    [self.tableView setEditing:true animated:true];
 }
 
 - (void)doneLocationRearrange
@@ -103,18 +107,20 @@
     // set table to non-edit mode
     [self.tableView setEditing:false animated:true];
     
-    // add routing cells back in
-    NSMutableArray* indexPath = [[NSMutableArray alloc] init];
-    NSArray* routes = model.routeArray;
-    NSArray* locations = model.locationArray;
-    for(int i = 0; i < [routes count]; i++) {
-        [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
-        
-        // reset route start and destinations and recalculate route
-        RoadtripRoute* route = [routes objectAtIndex:i];
-        [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
+    if([model.locationArray count] > 1) {
+        // add routing cells back in
+        NSMutableArray* indexPath = [[NSMutableArray alloc] init];
+        NSArray* routes = model.routeArray;
+        NSArray* locations = model.locationArray;
+        for(int i = 0; i < [routes count]; i++) {
+            [indexPath addObject:[NSIndexPath indexPathForRow:2*i+1 inSection:0]];
+            
+            // reset route start and destinations and recalculate route
+            RoadtripRoute* route = [routes objectAtIndex:i];
+            [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
+        }
+        [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
     }
-    [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
 }
 
 - (void)resetLocationsAndRoutes
@@ -127,6 +133,14 @@
         [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
     }
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:NO];
+}
+
+- (void)postDeleteLocationNotification:(NSUInteger)index
+{
+    NSString *notificationName = LOCATION_DELETED_NOTIFICATION;
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                [NSNumber numberWithInteger:index], NOTIFICATION_INDEX, nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 #pragma mark - Table view data source
@@ -207,12 +221,6 @@
     }
 }
 
-// we only want to rearrange, not delete
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleNone;
-}
-
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
 {
@@ -228,6 +236,18 @@
         [ar addObject:obj];
     } else {
         [ar insertObject:obj atIndex:to];
+    }
+}
+
+// handle table delete cells
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    int row = [indexPath row];
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        // tell everyone else to update their views
+        [self postDeleteLocationNotification:row];
+        // remove row
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
     }
 }
 

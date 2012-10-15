@@ -126,7 +126,6 @@ static NSString *cellId = @"RoadtripMap";
     
     // segue into roadtrip model
     [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
-    
 }
 
 #pragma mark Collection View Flow Layout functions

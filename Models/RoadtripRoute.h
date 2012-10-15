@@ -48,6 +48,9 @@
 // sync all data with database
 - (void)sync;
 
+// delete from database
+- (void)remove;
+
 // get text representations of route values
 - (NSString*)distanceText;
 - (NSString*)timeText;

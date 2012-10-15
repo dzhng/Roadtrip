@@ -25,9 +25,8 @@
         PFObject* locationObject = [PFObject objectWithClassName:LOCATION_CLASS];
         self.dbObject = locationObject;
         
-        // set user and save
+        // set user
         [locationObject setObject:[PFUser currentUser] forKey:@"user"];
-        [locationObject saveEventually];
         
         [self setTitle:title];
         [self setSubtitle:subtitle];
@@ -106,6 +105,11 @@
     [db setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"latitude"];
     [db setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"longitude"];
     [db saveEventually];
+}
+
+- (void)remove
+{
+    [self.dbObject deleteEventually];
 }
 
 - (NSString*)coordinateTextWithLatitude:(float)latitude andLongitude:(float)longitude

@@ -41,4 +41,7 @@
 // sync with database
 - (void)sync;
 
+// delete from database
+- (void)remove;
+
 @end

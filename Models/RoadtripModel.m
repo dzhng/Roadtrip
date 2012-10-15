@@ -15,6 +15,7 @@
 - (void)locationAddedNotification:(NSNotification*)notification;
 - (void)locationSelectedNotification:(NSNotification*)notification;
 - (void)locationDeselectedNotification:(NSNotification*)notification;
+- (void)locationDeletedNotification:(NSNotification*)notification;
 - (void)routeSelectedNotification:(NSNotification*)notification;
 
 // input an array of db objects representing the routes,
@@ -57,6 +58,12 @@
             name:LOCATION_DESELECTED_NOTIFICATION
             object:nil];
         
+        [[NSNotificationCenter defaultCenter]
+            addObserver:self
+            selector:@selector(locationDeletedNotification:)
+            name:LOCATION_DELETED_NOTIFICATION
+            object:nil];
+                
         [[NSNotificationCenter defaultCenter]
             addObserver:self
             selector:@selector(routeSelectedNotification:)
@@ -290,6 +297,31 @@
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
+}
+
+- (void)locationDeletedNotification:(NSNotification*)notification
+{
+    // grab index
+    NSDictionary* dictionary = [notification userInfo];
+    NSInteger index = [[dictionary valueForKey:NOTIFICATION_INDEX] integerValue];
+    
+    if(index >= [self.locationArray count]) {
+        return;
+    }
+    
+    // get object to be removed and unsync from db
+    RoadtripLocation* location = [self.locationArray objectAtIndex:index];
+    [location remove];
+    
+    // remove from location array
+    [self.locationArray removeObjectAtIndex:index];
+    
+    // we might need to remove route too
+    if([self.locationArray count] > 0) {
+        RoadtripRoute* route = [self.routeArray objectAtIndex:index-1];
+        [route remove];
+        [self.routeArray removeObjectAtIndex:index-1];
+    }
 }
 
 - (void)routeSelectedNotification:(NSNotification *)notification
