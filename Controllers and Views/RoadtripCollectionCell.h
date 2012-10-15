@@ -18,4 +18,7 @@
 // roadtrip represented by this cell
 @property (retain, nonatomic) RoadtripModel* roadtrip;
 
+// update the data in this cell with model data
+- (void)updateRoadtrip:(RoadtripModel*)roadtrip;
+
 @end

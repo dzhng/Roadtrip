@@ -15,11 +15,14 @@
 // store the current ongoing roadtrip
 @property (retain, nonatomic) RoadtripModel* currentRoadtrip;
 
+// store all roadtrips currently saved in database
+@property (retain, nonatomic) NSMutableArray* roadtrips;
+
 // get shared singleton class
 + (id)model;
 
 // get list of all roadtrips belonging to user
-// present an array of PFObjects with the roadtrip picture, stops, and distance
+// present an array of roadtrip models
 - (NSArray*)getAllRoadtrips;
 
 // insert a new roadtrip model

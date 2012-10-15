@@ -22,6 +22,9 @@ static NSString *cellId = @"RoadtripMap";
 {
     [super viewDidLoad];
     
+    // query for objects
+    [[AppModel model] getAllRoadtrips];
+    
     // register collection view
     [self.collectionView registerClass:[RoadtripCollectionCell class] forCellWithReuseIdentifier:cellId];
     
@@ -63,7 +66,8 @@ static NSString *cellId = @"RoadtripMap";
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
-    return 10;
+    // add extra one for new roadtrip picture
+    return [[[AppModel model] roadtrips] count] + 1;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -77,6 +81,16 @@ static NSString *cellId = @"RoadtripMap";
     if(cell == nil) {
         NSLog(@"Cannot dequeue collection view cell");
     }
+    NSInteger row = [indexPath row];
+    
+    // roadtrip icons
+    if(row < [[[AppModel model] roadtrips] count]) {
+        // set view settings
+        [cell updateRoadtrip:[[[AppModel model] roadtrips] objectAtIndex:row]];
+    } else {    // new roadtrip icons
+        
+    }
+    
     return cell;
 }
 
@@ -84,7 +98,26 @@ static NSString *cellId = @"RoadtripMap";
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Selected index %d", [indexPath row]);
+    NSInteger row = [indexPath row];
+    
+    // check if we're segueing into a new roadtrip or existing
+    if(row < [[[AppModel model] roadtrips] count]) {
+        // get roadtrip
+        RoadtripModel* roadtrip = [[[AppModel model] roadtrips] objectAtIndex:row];
+        
+        // tell roadtrip to grab locations and routes before segue
+        [roadtrip getAllLocationsAndRoutes];
+        
+        // set current roadtrip
+        [[AppModel model] setCurrentRoadtrip:roadtrip];
+    } else {    // new roadtrip
+        // initialize new roadtrip model, it will be auto set to current roadtrip
+        [[AppModel model] newRoadtrip];
+    }
+    
+    // segue into roadtrip model
+    [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
+    
 }
 
 #pragma mark Collection View Flow Layout functions

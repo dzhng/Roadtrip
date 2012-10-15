@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppModel.h"
 #import "RoadtripCollectionCell.h"
+#import "RoadtripViewController.h"
 
 
 @interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
