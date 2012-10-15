@@ -22,11 +22,10 @@
 {
     if (self = [super init]) {
         // set database object
-        PFObject* locationObject = [PFObject objectWithClassName:LOCATION_CLASS];
-        self.dbObject = locationObject;
+        self.dbObject = [PFObject objectWithClassName:LOCATION_CLASS];
         
         // set user
-        [locationObject setObject:[PFUser currentUser] forKey:@"user"];
+        [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
         
         [self setTitle:title];
         [self setSubtitle:subtitle];
