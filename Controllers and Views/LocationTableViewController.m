@@ -14,8 +14,10 @@
 
 @implementation LocationTableViewController
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
+    [super viewDidLoad];
+    
     // dont go into edit mode by default
     editMode = false;
     

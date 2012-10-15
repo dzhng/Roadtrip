@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Models/RoadtripModel.m"
-         timestampString = "371804583.086044"
+         timestampString = "371939453.959224"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "175"
-         endingLineNumber = "175"
+         startingLineNumber = "186"
+         endingLineNumber = "186"
          landmarkName = "-setRoutesFromDB:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Models/RoadtripModel.m"
-         timestampString = "371805260.374514"
+         timestampString = "371939453.959224"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "199"
-         endingLineNumber = "199"
+         startingLineNumber = "210"
+         endingLineNumber = "210"
          landmarkName = "-setRoutesFromDB:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Models/RoadtripModel.m"
-         timestampString = "371805260.374514"
+         timestampString = "371939453.959224"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "208"
-         endingLineNumber = "208"
+         startingLineNumber = "219"
+         endingLineNumber = "219"
          landmarkName = "-setRoutesFromDB:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -60,11 +60,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "Controllers and Views/DetailMapViewController.m"
-         timestampString = "371803689.399868"
+         timestampString = "371894836.668347"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "187"
-         endingLineNumber = "187"
+         startingLineNumber = "189"
+         endingLineNumber = "189"
          landmarkName = "-drawRoutes:"
          landmarkType = "5">
       </FileBreakpoint>

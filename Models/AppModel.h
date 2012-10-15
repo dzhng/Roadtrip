@@ -18,7 +18,8 @@
 // get shared singleton class
 + (id)model;
 
-// get list of all roadtrips belonging to user and store in roadtripModels array
+// get list of all roadtrips belonging to user
+// present an array of PFObjects with the roadtrip picture, stops, and distance
 - (NSArray*)getAllRoadtrips;
 
 // insert a new roadtrip model
