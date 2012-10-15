@@ -22,4 +22,7 @@
 // logout button handler
 - (IBAction)logOutPressed:(id)sender;
 
+// new roadtrip handler
+- (IBAction)newRoadtripPressed:(id)sender;
+
 @end

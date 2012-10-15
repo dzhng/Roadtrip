@@ -25,7 +25,7 @@ static NSString *cellId = @"RoadtripMap";
     
     // set layout settings
     UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)[self.collectionView collectionViewLayout];
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
+    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.sectionInset = UIEdgeInsetsMake(40, 20, 40, 20);
     layout.minimumLineSpacing = 40;
     
@@ -71,12 +71,21 @@ static NSString *cellId = @"RoadtripMap";
     [self presentModalViewController:login animated:YES];
 }
 
+- (IBAction)newRoadtripPressed:(id)sender
+{
+    // make a new model
+    [[AppModel model] newRoadtrip];
+    
+    // segue into map view
+    [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
+}
+
 #pragma mark Collection View Data Source functions
 
 - (NSInteger)collectionView:(UICollectionView *)view numberOfItemsInSection:(NSInteger)section
 {
     // add extra one for new roadtrip picture
-    return [[[AppModel model] roadtrips] count] + 1;
+    return [[[AppModel model] roadtrips] count];
 }
 
 - (NSInteger)numberOfSectionsInCollectionView: (UICollectionView *)collectionView
@@ -92,12 +101,10 @@ static NSString *cellId = @"RoadtripMap";
     }
     NSInteger row = [indexPath row];
     
-    // roadtrip icons
+    // run sanity checks
     if(row < [[[AppModel model] roadtrips] count]) {
         // set view settings
         [cell updateRoadtrip:[[[AppModel model] roadtrips] objectAtIndex:row]];
-    } else {    // new roadtrip icons
-        
     }
     
     return cell;
@@ -109,7 +116,7 @@ static NSString *cellId = @"RoadtripMap";
 {
     NSInteger row = [indexPath row];
     
-    // check if we're segueing into a new roadtrip or existing
+    // run sanity check first
     if(row < [[[AppModel model] roadtrips] count]) {
         // get roadtrip
         RoadtripModel* roadtrip = [[[AppModel model] roadtrips] objectAtIndex:row];
@@ -119,20 +126,17 @@ static NSString *cellId = @"RoadtripMap";
         
         // set current roadtrip
         [[AppModel model] setCurrentRoadtrip:roadtrip];
-    } else {    // new roadtrip
-        // initialize new roadtrip model, it will be auto set to current roadtrip
-        [[AppModel model] newRoadtrip];
+        
+        // segue into roadtrip model
+        [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
     }
-    
-    // segue into roadtrip model
-    [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
 }
 
 #pragma mark Collection View Flow Layout functions
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(210, 260);
+    return CGSizeMake(500, 400);
 }
 
 @end
