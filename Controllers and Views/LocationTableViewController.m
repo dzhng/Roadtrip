@@ -107,6 +107,13 @@
     // set table to non-edit mode
     [self.tableView setEditing:false animated:true];
     
+    // set order in db
+    for (int i = 0; i < [model.locationArray count]; i++) {
+        RoadtripLocation* location = [model.locationArray objectAtIndex:i];
+        [location setOrder:i];
+    }
+    
+    // set routing cells
     if([model.locationArray count] > 1) {
         // add routing cells back in
         NSMutableArray* indexPath = [[NSMutableArray alloc] init];
@@ -117,7 +124,11 @@
             
             // reset route start and destinations and recalculate route
             RoadtripRoute* route = [routes objectAtIndex:i];
+            [route resetDB];    // clear db data just incase if we quit before route was calculated
             [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
+            
+            // also set order in db
+            [route setOrder:i];
         }
         [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
     }

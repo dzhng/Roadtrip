@@ -74,4 +74,7 @@
 // update this roadtrip settings to db
 - (void)sync;
 
+// set the order this item belongs to in db
+- (void)setOrder:(NSInteger)idx;
+
 @end

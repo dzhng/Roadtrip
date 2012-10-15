@@ -38,6 +38,9 @@
 // init from an existing PFObject
 - (id)initFromDB:(PFObject*)dbObject;
 
+// set the order this item belongs to in db
+- (void)setOrder:(NSInteger)idx;
+
 // sync with database
 - (void)sync;
 

@@ -45,11 +45,17 @@
 // gets the overlay to draw on map from routePoints
 - (MKPolyline*)routeOverlay;
 
+// sets the order this item belongs to in db
+- (void)setOrder:(NSInteger)idx;
+
 // sync all data with database
 - (void)sync;
 
 // delete from database
 - (void)remove;
+
+// reset fields in database
+- (void)resetDB;
 
 // get text representations of route values
 - (NSString*)distanceText;

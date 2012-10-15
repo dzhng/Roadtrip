@@ -97,6 +97,12 @@
     return self;
 }
 
+- (void)setOrder:(NSInteger)idx
+{
+    [self.dbObject setObject:[NSNumber numberWithInteger:idx] forKey:@"order"];
+    [self.dbObject saveEventually];
+}
+
 - (void)sync
 {
     PFObject* db = self.dbObject;

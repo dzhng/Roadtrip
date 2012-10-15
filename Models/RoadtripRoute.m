@@ -67,7 +67,7 @@
         self.cost = [[dbObject objectForKey:@"cost"] integerValue];
         
         PFFile* pointsFile = [dbObject objectForKey:@"points"];
-        if(pointsFile == nil) {
+        if(pointsFile == nil || [pointsFile class] != [PFFile class]) {
             NSLog(@"Error: DB data invalid, recalculating routes");
             [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
         } else {
@@ -113,6 +113,12 @@
     return false;
 }
 
+- (void)setOrder:(NSInteger)idx
+{
+    [self.dbObject setObject:[NSNumber numberWithInteger:idx] forKey:@"order"];
+    [self.dbObject saveEventually];
+}
+
 - (void)sync
 {
     // code up route points
@@ -148,6 +154,13 @@
 - (void)remove
 {
     [self.dbObject deleteEventually];
+}
+
+- (void)resetDB
+{
+    // null the points field
+    [self.dbObject removeObjectForKey:@"points"];
+    [self.dbObject saveEventually];
 }
 
 // convert input points into overlays

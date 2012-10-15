@@ -153,6 +153,7 @@
     // get locations
     PFQuery* locationQuery = [PFQuery queryWithClassName:LOCATION_CLASS];
     [locationQuery whereKey:@"roadtrip" equalTo:self.dbObject];
+    [locationQuery addAscendingOrder:@"order"];
     [locationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         // iterate through the objects and make models
         for (id object in objects) {
@@ -169,6 +170,7 @@
     
     PFQuery* routeQuery = [PFQuery queryWithClassName:ROUTE_CLASS];
     [routeQuery whereKey:@"roadtrip" equalTo:self.dbObject];
+    [routeQuery addAscendingOrder:@"order"];
     [routeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         routeObjects = objects;
         // if location getter is already done
@@ -236,6 +238,12 @@
     return newLocation;
 }
 
+- (void)setOrder:(NSInteger)idx
+{
+    [self.dbObject setObject:[NSNumber numberWithInteger:idx] forKey:@"order"];
+    [self.dbObject saveEventually];
+}
+
 - (void)sync
 {
     PFObject* db = self.dbObject;
@@ -281,9 +289,15 @@
     NSDictionary *dictionary = [notification userInfo];
     RoadtripLocation* location = [self newLocationFromLocation:[dictionary valueForKey:NOTIFICATION_LOCATION_KEY]];
     
+    // set the location's order in db
+    [location setOrder:[self.locationArray count]];
+    
     // if this isn't the first location, we should add a new route
     if([self.locationArray count] > 0) {
         RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
+        
+        // set order of route
+        [newRoute setOrder:[self.routeArray count]];
         
         // set new roadtrip location as a child of this model in db
         [newRoute.dbObject setObject:self.dbObject forKey:@"roadtrip"];
