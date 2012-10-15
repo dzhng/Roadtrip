@@ -13,8 +13,6 @@
 
 @interface DetailMapViewController ()
 
-- (void)postLocationSelectedNotificationWithLocation:(RoadtripLocation*)location;
-- (void)postDeselectNotification;
 - (void)routeUpdatedNotification:(NSNotification*)notification;
 
 @end
@@ -149,23 +147,6 @@
     [mapView addAnnotation:loc];
 }
 
-// send out notification to add this location to current list of locations
-- (void)postLocationSelectedNotificationWithLocation:(RoadtripLocation*)location
-{
-    NSString *notificationName = LOCATION_SELECTED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:location, NOTIFICATION_LOCATION_KEY,
-                                NOTIFICATION_MAP_SOURCE, NOTIFICATION_SELECTED_SOURCE, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
-}
-
-- (void)postDeselectNotification
-{
-    NSString *notificationName = LOCATION_DESELECTED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                NOTIFICATION_MAP_SOURCE, NOTIFICATION_SELECTED_SOURCE, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
-}
-
 - (void)centerMapOnRoute:(RoadtripRoute*)route
 {
     [mapView setRegion:[route centerRegion] animated:YES];
@@ -283,7 +264,8 @@
     } else {
         if(!manualSelect) {
             // tell model that the user has selected something from the map
-            [self postLocationSelectedNotificationWithLocation:annotation];
+            [[[AppModel model] currentRoadtrip] locationSelected:annotation
+                                                      fromSource:NOTIFICATION_MAP_SOURCE];
         }
         manualSelect = false;
         
@@ -312,7 +294,7 @@
     [self deselectAnnotation];
     
     // we also want to deselect the currently selected location
-    [self postDeselectNotification];
+    [[[AppModel model] currentRoadtrip] locationDeselected:nil];
 }
 
 @end

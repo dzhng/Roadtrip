@@ -35,7 +35,7 @@ static AppModel* model = nil;
 {
     PFQuery* query = [PFQuery queryWithClassName:ROADTRIP_CLASS];
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
-    [query addAscendingOrder:@"order"];
+    [query orderByAscending:@"order"];
     NSArray* dbObjects = [query findObjects];
     
     [self.roadtrips removeAllObjects];

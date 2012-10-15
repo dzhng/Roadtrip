@@ -12,8 +12,6 @@
 
 @interface MapPopoverViewController ()
 
-- (void)postAddLocationsNotification;
-
 @end
 
 @implementation MapPopoverViewController
@@ -44,18 +42,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-// send out notification to add this location to current list of locations
-- (void)postAddLocationsNotification
-{
-    NSString *notificationName = ADD_LOCATIONS_NOTIFICATION;
-    NSString *key = NOTIFICATION_LOCATION_KEY;
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObject:self.location forKey:key];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
-}
-
 - (IBAction)addDestinationPressed:(id)sender {
     // send a message to everyone that a location was added
-    [self postAddLocationsNotification];
+    [[[AppModel model] currentRoadtrip] locationAdded:self.location];
 }
 
 @end

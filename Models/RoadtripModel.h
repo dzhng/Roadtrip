@@ -77,4 +77,11 @@
 // set the order this item belongs to in db
 - (void)setOrder:(NSInteger)idx;
 
+/*** Location and Route Functions ***/
+- (void)locationAdded:(RoadtripLocation*)location;
+- (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source;
+- (void)locationDeselected:(RoadtripLocation*)location;
+- (void)locationDeleted:(NSInteger)index;
+- (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source;
+
 @end

@@ -12,12 +12,6 @@
 
 @interface RoadtripModel ()
 
-- (void)locationAddedNotification:(NSNotification*)notification;
-- (void)locationSelectedNotification:(NSNotification*)notification;
-- (void)locationDeselectedNotification:(NSNotification*)notification;
-- (void)locationDeletedNotification:(NSNotification*)notification;
-- (void)routeSelectedNotification:(NSNotification*)notification;
-
 // input an array of db objects representing the routes,
 // make correct route model objects and connect with locations
 - (void)setRoutesFromDB:(NSArray*)dbObjects;
@@ -38,37 +32,6 @@
         
         // initialize route array
         self.routeArray = [[NSMutableArray alloc] init];
-
-        // setup model to receive notifications
-        [[NSNotificationCenter defaultCenter]
-            addObserver:self
-            selector:@selector(locationAddedNotification:)
-            name:ADD_LOCATIONS_NOTIFICATION
-            object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-            addObserver:self
-            selector:@selector(locationSelectedNotification:)
-            name:LOCATION_SELECTED_NOTIFICATION
-            object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-            addObserver:self
-            selector:@selector(locationDeselectedNotification:)
-            name:LOCATION_DESELECTED_NOTIFICATION
-            object:nil];
-        
-        [[NSNotificationCenter defaultCenter]
-            addObserver:self
-            selector:@selector(locationDeletedNotification:)
-            name:LOCATION_DELETED_NOTIFICATION
-            object:nil];
-                
-        [[NSNotificationCenter defaultCenter]
-            addObserver:self
-            selector:@selector(routeSelectedNotification:)
-            name:ROUTE_SELECTED_NOTIFICATION
-            object:nil];
     }
     return self;
 }
@@ -153,7 +116,7 @@
     // get locations
     PFQuery* locationQuery = [PFQuery queryWithClassName:LOCATION_CLASS];
     [locationQuery whereKey:@"roadtrip" equalTo:self.dbObject];
-    [locationQuery addAscendingOrder:@"order"];
+    [locationQuery orderByAscending:@"order"];
     [locationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         // iterate through the objects and make models
         for (id object in objects) {
@@ -170,7 +133,7 @@
     
     PFQuery* routeQuery = [PFQuery queryWithClassName:ROUTE_CLASS];
     [routeQuery whereKey:@"roadtrip" equalTo:self.dbObject];
-    [routeQuery addAscendingOrder:@"order"];
+    [routeQuery orderByAscending:@"order"];
     [routeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         routeObjects = objects;
         // if location getter is already done
@@ -259,13 +222,8 @@
 
 #pragma mark Notification Handlers
 
-- (void)locationSelectedNotification:(NSNotification*)notification
+- (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source
 {
-    // grab the new location
-    NSDictionary *dictionary = [notification userInfo];
-    RoadtripLocation* location = [dictionary valueForKey:NOTIFICATION_LOCATION_KEY];
-    NSString* source = [dictionary valueForKey:NOTIFICATION_SELECTED_SOURCE];
-    
     // set selected data
     [self setSelected:location];
     
@@ -276,18 +234,16 @@
     }
 }
 
-- (void)locationDeselectedNotification:(NSNotification*)notification
+- (void)locationDeselected:(RoadtripLocation*)location
 {
     // deselect data
     [self setSelected:nil];
     [self.delegate handleDeselect];
 }
 
-- (void)locationAddedNotification:(NSNotification*)notification
+- (void)locationAdded:(RoadtripLocation*)newlocation
 {
-    // grab the new location
-    NSDictionary *dictionary = [notification userInfo];
-    RoadtripLocation* location = [self newLocationFromLocation:[dictionary valueForKey:NOTIFICATION_LOCATION_KEY]];
+    RoadtripLocation* location = [self newLocationFromLocation:newlocation];
     
     // set the location's order in db
     [location setOrder:[self.locationArray count]];
@@ -296,12 +252,12 @@
     if([self.locationArray count] > 0) {
         RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
         
-        // set order of route
-        [newRoute setOrder:[self.routeArray count]];
-        
         // set new roadtrip location as a child of this model in db
         [newRoute.dbObject setObject:self.dbObject forKey:@"roadtrip"];
         [newRoute.dbObject saveEventually];
+        
+        // set order of route
+        [newRoute setOrder:[self.routeArray count]];
         
         [self.routeArray addObject:newRoute];
     }
@@ -313,12 +269,8 @@
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
 }
 
-- (void)locationDeletedNotification:(NSNotification*)notification
+- (void)locationDeleted:(NSInteger)index
 {
-    // grab index
-    NSDictionary* dictionary = [notification userInfo];
-    NSInteger index = [[dictionary valueForKey:NOTIFICATION_INDEX] integerValue];
-    
     if(index >= [self.locationArray count]) {
         return;
     }
@@ -338,13 +290,8 @@
     }
 }
 
-- (void)routeSelectedNotification:(NSNotification *)notification
+- (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source
 {
-    // grab the new route
-    NSDictionary *dictionary = [notification userInfo];
-    RoadtripRoute* route = [dictionary valueForKey:NOTIFICATION_ROUTE_KEY];
-    NSString* source = [dictionary valueForKey:NOTIFICATION_SELECTED_SOURCE];
-    
     // set selected data
     [self setSelected:route];
     

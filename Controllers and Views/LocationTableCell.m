@@ -11,8 +11,6 @@
 
 @interface LocationTableCell()
 
-- (void)postLocationSelectedNotification;
-
 @end
 
 @implementation LocationTableCell
@@ -51,7 +49,8 @@
             // don't want to be sending double notification for when the user clicked on the map
             if(!animated) {
                 // send notification out to model so it knows location has been selected
-                [self postLocationSelectedNotification];
+                [[[AppModel model] currentRoadtrip] locationSelected:self.location
+                                                          fromSource:NOTIFICATION_TABLE_SOURCE];
             }
         }
     } else {
@@ -60,15 +59,6 @@
         self.backgroundView = bgView;
         cellSelected = false;
     }
-}
-
-// send out notification to add this location to current list of locations
-- (void)postLocationSelectedNotification
-{
-    NSString *notificationName = LOCATION_SELECTED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.location, NOTIFICATION_LOCATION_KEY,
-                                NOTIFICATION_TABLE_SOURCE, NOTIFICATION_SELECTED_SOURCE, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 @end

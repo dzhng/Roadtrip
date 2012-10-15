@@ -11,7 +11,6 @@
 
 @interface RouteTableCell()
 
-- (void)postRouteSelectedNotification;
 - (void)routeUpdatedNotification:(NSNotification*)notification;
 
 @end
@@ -60,7 +59,8 @@
             // don't want to be sending double notification for when the user clicked on the map
             if(!animated) {
                 // send notification out to model so it knows location has been selected
-                [self postRouteSelectedNotification];
+                [[[AppModel model] currentRoadtrip] routeSelected:self.route
+                                                       fromSource:NOTIFICATION_TABLE_SOURCE];
             }
         }
     } else {
@@ -82,15 +82,6 @@
         // update current route
         [self updateRoute:route];
     }
-}
-
-// send out notification to add this location to current list of locations
-- (void)postRouteSelectedNotification
-{
-    NSString *notificationName = ROUTE_SELECTED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:self.route, NOTIFICATION_ROUTE_KEY,
-                                NOTIFICATION_TABLE_SOURCE, NOTIFICATION_SELECTED_SOURCE, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
 }
 
 @end

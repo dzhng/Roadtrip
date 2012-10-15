@@ -11,8 +11,6 @@
 
 @interface LocationTableViewController ()
 
-- (void)postDeleteLocationNotification:(NSUInteger)index;
-
 @end
 
 @implementation LocationTableViewController
@@ -146,14 +144,6 @@
     [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:NO];
 }
 
-- (void)postDeleteLocationNotification:(NSUInteger)index
-{
-    NSString *notificationName = LOCATION_DELETED_NOTIFICATION;
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                [NSNumber numberWithInteger:index], NOTIFICATION_INDEX, nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName object:nil userInfo:dictionary];
-}
-
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(LocationTableView *)tableView
@@ -256,7 +246,7 @@
     
     if(editingStyle == UITableViewCellEditingStyleDelete) {
         // tell everyone else to update their views
-        [self postDeleteLocationNotification:row];
+        [[[AppModel model] currentRoadtrip] locationDeleted:row];
         // remove row
         [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
     }

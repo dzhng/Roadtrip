@@ -67,7 +67,7 @@
         self.cost = [[dbObject objectForKey:@"cost"] integerValue];
         
         PFFile* pointsFile = [dbObject objectForKey:@"points"];
-        if(pointsFile == nil || [pointsFile class] != [PFFile class]) {
+        if(pointsFile == nil || ![pointsFile isKindOfClass:[PFFile class]]) {
             NSLog(@"Error: DB data invalid, recalculating routes");
             [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
         } else {
