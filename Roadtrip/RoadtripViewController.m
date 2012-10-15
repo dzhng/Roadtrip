@@ -26,6 +26,7 @@
     
     // set model
     model = [[AppModel model] currentRoadtrip];
+    model.delegate = self;
     
 	// Get rid of ugly gradient on search bar
     for (UIView *searchSubview in self.searchBarView.subviews) {

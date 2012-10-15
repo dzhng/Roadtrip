@@ -89,16 +89,13 @@
     self.time = [[dbObject objectForKey:@"time"] integerValue];
     self.cost = [[dbObject objectForKey:@"cost"] integerValue];
     
-    // if we initialized from db, then this roadtrip might have some locations and routes
-    [self getAllLocationsAndRoutes];
-    
     return [self init];
 }
 
 - (void)dealloc
 {
     // make sure to cleanup the notifications
-    [[NSNotificationCenter defaultCenter] removeObject:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSString*)distanceText

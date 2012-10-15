@@ -14,6 +14,15 @@
 // singleton instance
 static AppModel* model = nil;
 
+- (id)init
+{
+    self = [super init];
+    if(self) {
+        self.roadtrips = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 + (AppModel*)model
 {
     if(model == nil) {
@@ -26,7 +35,14 @@ static AppModel* model = nil;
 {
     PFQuery* query = [PFQuery queryWithClassName:ROADTRIP_CLASS];
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
-    return [query findObjects];
+    NSArray* dbObjects = [query findObjects];
+    
+    for (PFObject* r in dbObjects) {
+        RoadtripModel* roadtrip = [[RoadtripModel alloc] initFromDB:r];
+        [self.roadtrips addObject:roadtrip];
+    }
+    
+    return self.roadtrips;
 }
 
 - (RoadtripModel*)newRoadtrip
@@ -36,6 +52,9 @@ static AppModel* model = nil;
     
     // set current roadtrip object
     self.currentRoadtrip = roadtrip;
+    
+    // append to roadtrips array
+    [self.roadtrips addObject:roadtrip];
     
     return roadtrip;
 }

@@ -98,21 +98,7 @@
 // prepare for segue to roadtrip view controller
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    RoadtripViewController* rvc = (RoadtripViewController*)segue.destinationViewController;
-    
-    // initialize model
-    //RoadtripModel* roadtripModel = [[AppModel model] newRoadtrip];
-    
-    // get first roadtrip for user
-    NSArray* roadtrips = [[AppModel model] getAllRoadtrips];
-    // set current roadtrip as first one
-    RoadtripModel* roadtrip = [[RoadtripModel alloc] initFromDB:[roadtrips objectAtIndex:0]];
-    
-    // set model delegate is this
-    roadtrip.delegate = rvc;
-    
-    // set this new roadtrip as the current roadtrip in model
-    [[AppModel model] setCurrentRoadtrip:roadtrip];
+
 }
 
 @end
