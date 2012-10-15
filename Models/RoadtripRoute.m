@@ -105,6 +105,9 @@
         self.start = start;
         self.end = end;
         
+        // clear the DB on resetart
+        [self resetDB];
+        
         // calculate route and polyline, this function will also update the db when it's done
         [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
         
