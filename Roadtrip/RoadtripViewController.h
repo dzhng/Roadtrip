@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "DetailMapViewController.h"
 #import "LocationTableViewController.h"
+#import "DetailMapViewController.h"
 #import "RoadtripModel.h"
 
 @interface RoadtripViewController : UIViewController <RoadtripModelDelegate>

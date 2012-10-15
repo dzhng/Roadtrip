@@ -7,7 +7,7 @@
 //
 
 #import "DetailMapViewController.h"
-#import "RoadtripViewController.h"
+#import "RoadtripViewController.h"  // this import should stay here to avoid circular imports
 #import "ModelNotifications.h"
 #import "MapConstants.h"
 
@@ -20,7 +20,6 @@
 @end
 
 @implementation DetailMapViewController
-
 
 - (void)viewDidLoad
 {
@@ -200,8 +199,12 @@
     [mapView removeOverlay:route.currentRouteOverlay];
     
     // add new overlays to map
-    [mapView addOverlay:[route routeOverlay]];
-    [mapView setNeedsDisplay];
+    if([route routeOverlay]) {
+        [mapView addOverlay:[route routeOverlay]];
+        [mapView setNeedsDisplay];
+    } else {
+        NSLog(@"Error: Route overlay does not exist");
+    }
 }
 
 #pragma mark Mapview delegate Functions

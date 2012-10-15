@@ -60,7 +60,6 @@
             // don't want to be sending double notification for when the user clicked on the map
             if(!animated) {
                 // send notification out to model so it knows location has been selected
-                NSLog(@"Route cell selected notification sent");
                 [self postRouteSelectedNotification];
             }
         }
@@ -80,7 +79,6 @@
     
     // check is the route updated is this route
     if(route == self.route) {
-        NSLog(@"Route cell updated");
         // update current route
         [self updateRoute:route];
     }

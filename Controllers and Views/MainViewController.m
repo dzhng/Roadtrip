@@ -68,7 +68,7 @@ static NSString *cellId = @"RoadtripMap";
 {
     RoadtripCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     if(cell == nil) {
-        NSLog(@"Cannot dequeue collection view cell");
+        NSLog(@"Error: Cannot dequeue collection view cell");
     }
     NSInteger row = [indexPath row];
     

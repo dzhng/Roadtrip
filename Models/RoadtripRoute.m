@@ -79,11 +79,17 @@
             }
             self.routePoints = points;
             
-            // get center region
-            self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
-            
-            // tell views that our route was updated
-            [self postRouteUpdateNotificationWithRoute:self];
+            // check if data from db is valid
+            if (self.routePoints == nil) {
+                NSLog(@"Error: DB data invalid, recalculating maps");
+                [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
+            } else {
+                // get center region
+                self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
+                
+                // tell views that our route was updated
+                [self postRouteUpdateNotificationWithRoute:self];
+            }
         }];
     }
     return self;
@@ -228,7 +234,7 @@
         NSDictionary* parsed = [result objectFromJSONString];
         NSArray* routes = [parsed objectForKey:@"routes"];
         if ([routes count] <= 0) {
-            NSLog(@"No roadtrip routes found");
+            NSLog(@"Error: No roadtrip routes found");
             return;
         }
         
@@ -236,7 +242,7 @@
         NSDictionary* route = [routes objectAtIndex:0];
         NSArray* warnings = [route objectForKey:@"warnings"];
         if ([warnings count] > 0) {
-            NSLog(@"Warnings: %@", [warnings objectAtIndex:0]);
+            NSLog(@"Routing warnings: %@", [warnings objectAtIndex:0]);
         }
         
         NSMutableArray* routePoints = [[NSMutableArray alloc] init];

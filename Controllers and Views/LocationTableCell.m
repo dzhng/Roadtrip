@@ -51,7 +51,6 @@
             // don't want to be sending double notification for when the user clicked on the map
             if(!animated) {
                 // send notification out to model so it knows location has been selected
-                NSLog(@"Table cell selected notification sent");
                 [self postLocationSelectedNotification];
             }
         }

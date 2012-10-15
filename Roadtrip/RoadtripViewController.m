@@ -95,7 +95,7 @@
     CGRect windowSize = [[UIScreen mainScreen] bounds];
     CGFloat windowHeight = windowSize.size.height;
     
-    NSLog(@"Table resized to: %f", size.height);
+    //NSLog(@"Table resized to: %f", size.height);
     
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if(orientation == UIInterfaceOrientationLandscapeRight || orientation ==  UIInterfaceOrientationLandscapeLeft){
