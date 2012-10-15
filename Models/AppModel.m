@@ -37,6 +37,7 @@ static AppModel* model = nil;
     [query whereKey:@"user" equalTo:[PFUser currentUser]];
     NSArray* dbObjects = [query findObjects];
     
+    [self.roadtrips removeAllObjects];
     for (PFObject* r in dbObjects) {
         RoadtripModel* roadtrip = [[RoadtripModel alloc] initFromDB:r];
         [self.roadtrips addObject:roadtrip];

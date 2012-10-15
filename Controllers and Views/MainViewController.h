@@ -15,4 +15,11 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+// reload the database data, called when first initializing,
+// or if relogging in after logout
+- (void)reloadDataFromDB;
+
+// logout button handler
+- (IBAction)logOutPressed:(id)sender;
+
 @end

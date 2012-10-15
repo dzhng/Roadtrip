@@ -20,9 +20,6 @@ static NSString *cellId = @"RoadtripMap";
 {
     [super viewDidLoad];
     
-    // query for objects
-    [[AppModel model] getAllRoadtrips];
-    
     // register collection view
     [self.collectionView registerClass:[RoadtripCollectionCell class] forCellWithReuseIdentifier:cellId];
     
@@ -32,23 +29,46 @@ static NSString *cellId = @"RoadtripMap";
     layout.sectionInset = UIEdgeInsetsMake(40, 20, 40, 20);
     layout.minimumLineSpacing = 40;
     
-    [self.collectionView reloadData];
+    // TODO: Display loading animation
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    //login view displayed mmodally
-    //PFLogInViewController *login = [[PFLogInViewController alloc] init];
-    //[self presentModalViewController:login animated:YES];
-   
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        // do stuff with the user
+        [self reloadDataFromDB];
+    } else {
+        // show the signup or login screen
+        PFLogInViewController *login = [[PFLogInViewController alloc] init];
+        [self presentModalViewController:login animated:NO];
+    }
+}
+
+- (void)reloadDataFromDB
+{
+    NSLog(@"DB Data reloaded");
+    // query for objects
+    [[AppModel model] getAllRoadtrips];
+    [self.collectionView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)logOutPressed:(id)sender
+{
+    // first log them out
+    [PFUser logOut];
+    
+    //login view displayed modally
+    PFLogInViewController *login = [[PFLogInViewController alloc] init];
+    [self presentModalViewController:login animated:YES];
 }
 
 #pragma mark Collection View Data Source functions
