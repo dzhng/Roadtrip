@@ -84,14 +84,12 @@
 // set the order this item belongs to in db
 - (void)setOrder:(NSInteger)idx;
 
-// this is called when the route data is done calculating
-- (void)routeUpdated:(RoadtripRoute*)route;
-
 /*** Location and Route Functions ***/
 - (void)locationAdded:(RoadtripLocation*)location;
 - (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source;
 - (void)locationDeselected:(RoadtripLocation*)location;
 - (void)locationDeleted:(NSInteger)index;
 - (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source;
+- (void)routeUpdated:(RoadtripRoute*)route;
 
 @end

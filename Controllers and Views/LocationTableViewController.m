@@ -251,4 +251,14 @@
     }
 }
 
+// we only want to delete in edit mode
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Detemine if it's in editing mode
+    if (editMode) {
+        return UITableViewCellEditingStyleDelete;
+    }
+    return UITableViewCellEditingStyleNone;
+}
+
 @end
