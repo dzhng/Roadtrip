@@ -78,6 +78,16 @@
     return [NSString stringWithFormat:@"%d stops", self.stops];
 }
 
+- (NSString*)timeText
+{
+    return [TextFormat formatTimeFromSeconds:self.time];
+}
+
+- (NSString*)costText
+{
+    return [NSString stringWithFormat:@"$%d", self.cost];
+}
+
 // run geocoding with given input address
 - (void)geocodeWithAddress:(NSString*)address
 {
@@ -241,6 +251,13 @@
     self.cost = 0;
 }
 
+- (void)routeUpdated:(RoadtripRoute *)route
+{
+    [self calculateStat];
+    [self.delegate updateStat];
+    [self sync];
+}
+
 #pragma mark Notification Handlers
 
 - (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source
@@ -292,6 +309,7 @@
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location atIndex:[self.locationArray count]-1];
+    [self.delegate updateStat];
 }
 
 - (void)locationDeleted:(NSInteger)index
@@ -328,6 +346,7 @@
     
     // tell our delegate to update their views
     [self.delegate locationDeleted:location withRoute:route atIndex:index];
+    [self.delegate updateStat];
 }
 
 - (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source

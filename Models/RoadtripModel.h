@@ -18,6 +18,7 @@
 - (void)searchDone:(NSArray*)locationObjects;
 - (void)locationInserted:(RoadtripLocation*)location atIndex:(NSInteger)index;
 - (void)locationDeleted:(RoadtripLocation*)location withRoute:(RoadtripRoute*)route atIndex:(NSInteger)index;
+- (void)updateStat;
 - (void)handleSelectedFromTable:(id) selected;
 - (void)handleSelectedFromMap:(id)selected;
 - (void)handleDeselect;
@@ -62,6 +63,8 @@
 // get text representations for roadtrip settings
 - (NSString*)distanceText;
 - (NSString*)stopsText;
+- (NSString*)timeText;
+- (NSString*)costText;
 
 // translate a search string into coordinates and address
 - (void)geocodeWithAddress:(NSString*)address;
@@ -80,6 +83,9 @@
 
 // set the order this item belongs to in db
 - (void)setOrder:(NSInteger)idx;
+
+// this is called when the route data is done calculating
+- (void)routeUpdated:(RoadtripRoute*)route;
 
 /*** Location and Route Functions ***/
 - (void)locationAdded:(RoadtripLocation*)location;

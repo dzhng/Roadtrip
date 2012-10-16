@@ -55,6 +55,7 @@
     // change edit button
     [self.editButton setTitle:@"Done" forState:UIControlStateSelected];
     
+    [self updateStat];
     [self resizeTable];
 }
 
@@ -170,6 +171,14 @@
     }
     
     [self resizeTable];
+}
+
+- (void)updateStat
+{
+    self.stopsLabel.text = [model stopsText];
+    self.distanceLabel.text = [model distanceText];
+    self.timeLabel.text = [model timeText];
+    self.costLabel.text = [model costText];
 }
 
 - (void)handleSelectedFromTable:(id)selected
