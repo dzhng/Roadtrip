@@ -238,9 +238,9 @@
         self.name = [NSString stringWithFormat:@"From %@ to %@",
                      [[self.locationArray objectAtIndex:0] title], [[self.locationArray lastObject] title]];
     } else if(self.stops <= 0) {
-        self.name = @"Unfinished Roadtrip";
+        self.name = @"Roadtrip in planning";
     } else {    // 1 stop
-        self.name = [NSString stringWithFormat:@"From %@", [[self.locationArray objectAtIndex:0] title]];
+        self.name = [NSString stringWithFormat:@"From %@ to ?", [[self.locationArray objectAtIndex:0] title]];
     }
     self.cost = 0;
 }
