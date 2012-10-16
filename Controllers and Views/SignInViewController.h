@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignInViewController : UIViewController
+@interface SignInViewController : PFLogInViewController
 
 @end

@@ -7,6 +7,9 @@
 //
 
 #import "MainViewController.h"
+#import "SignInViewController.h"
+#import "SignUpViewController.h"
+
 
 @interface MainViewController ()
 
@@ -35,17 +38,57 @@ static NSString *cellId = @"RoadtripMap";
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
-    PFUser *currentUser = [PFUser currentUser];
-    if (currentUser) {
-        // do stuff with the user
+   
+    if ([PFUser currentUser]) {
+        NSLog(@"there is a signed in user");
+        //reloads the road trips into the main view
         [self reloadDataFromDB];
     } else {
-        // show the signup or login screen
-        PFLogInViewController *login = [[PFLogInViewController alloc] init];
-        [self presentModalViewController:login animated:NO];
+        
+        // Customize the Log In View Controller
+        SignInViewController *logInViewController = [[SignInViewController alloc] init];
+        [logInViewController setDelegate:self];
+        [logInViewController setFacebookPermissions:[NSArray arrayWithObjects:@"friends_about_me", nil]];
+        [logInViewController setFields:PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook |PFLogInFieldsPasswordForgotten |PFLogInFieldsSignUpButton ];
+        
+        // Customize the Sign Up View Controller
+        //SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
+        //[signUpViewController setDelegate:self];
+        //[signUpViewController setFields:PFSignUpFieldsDefault | PFSignUpFieldsAdditional];
+        //[logInViewController setSignUpController:signUpViewController];
+        
+        // Present Log In View Controller
+        [self presentViewController:logInViewController animated:YES completion:NULL];
     }
 }
+
+#pragma mark - PFLogInViewControllerDelegate
+// Sent to the delegate to determine whether the log in request should be submitted to the server.
+- (BOOL)logInViewController:(PFLogInViewController *)logInController shouldBeginLogInWithUsername:(NSString *)username password:(NSString *)password {
+    if (username && password && username.length && password.length) {
+        return YES;
+    }
+    
+    [[[UIAlertView alloc] initWithTitle:@"Missing Information" message:@"Make sure you fill out all of the information!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+    return NO;
+}
+
+// Sent to the delegate when a PFUser is logged in.
+- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+// Sent to the delegate when the log in attempt fails.
+- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
+    NSLog(@"Failed to log in...");
+}
+
+// Sent to the delegate when the log in screen is dismissed.
+- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 
 - (void)reloadDataFromDB
 {
