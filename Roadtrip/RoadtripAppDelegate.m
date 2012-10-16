@@ -13,9 +13,24 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //set the parse
     [Parse setApplicationId:@"M5xCrPtj9DwJC0RThSMAXn1fgRzH64W341eoOQkz"
                   clientKey:@"pXGmJDkclvhaghWEOdz8kIo2ajJyZddeKLcVxIXl"];
     
+<<<<<<< HEAD
+=======
+    //Initializes the Facebook App Id
+    [PFFacebookUtils initializeWithApplicationId:@"282491441863129"];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        // do stuff with the user
+    } else {
+        // show the signup or login screen
+        
+    }
+    
+>>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
     // make app model
     model = [[AppModel alloc] init];
     

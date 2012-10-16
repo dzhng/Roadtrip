@@ -10,7 +10,6 @@
 #import "SignInViewController.h"
 #import "SignUpViewController.h"
 
-
 @interface MainViewController ()
 
 @end
@@ -33,6 +32,11 @@ static NSString *cellId = @"RoadtripMap";
     layout.minimumLineSpacing = 40;
     
     // TODO: Display loading animation
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
