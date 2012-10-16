@@ -46,19 +46,8 @@
 		63B8700B162AAC02001B0EAD /* TextFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 63B8700A162AAC02001B0EAD /* TextFormat.m */; };
 		63F91AA9161FF0B100056149 /* RouteTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AA8161FF0B100056149 /* RouteTableCell.m */; };
 		63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AAB161FF6AE00056149 /* RoadtripRoute.m */; };
-<<<<<<< HEAD
 		9315F9E31627A08B0060C146 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DF1627A08B0060C146 /* bg.png */; };
 		9315F9E41627A08B0060C146 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9E01627A08B0060C146 /* bg@2x.png */; };
-=======
-		9300D649162AA56C0018274F /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300D647162AA56C0018274F /* SignUpViewController.m */; };
-		9300D64A162AA56C0018274F /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9300D648162AA56C0018274F /* SignUpViewController.xib */; };
-		9300D656162AA7280018274F /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9300D654162AA7280018274F /* SignInViewController.m */; };
-		9300D657162AA7280018274F /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9300D655162AA7280018274F /* SignInViewController.xib */; };
-		9315F9E11627A08B0060C146 /* bg1-nonretina.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DD1627A08B0060C146 /* bg1-nonretina.png */; };
-		9315F9E21627A08B0060C146 /* bg1.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DE1627A08B0060C146 /* bg1.png */; };
-		9315F9E31627A08B0060C146 /* bg2-nonretina.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DF1627A08B0060C146 /* bg2-nonretina.png */; };
-		9315F9E41627A08B0060C146 /* bg2.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9E01627A08B0060C146 /* bg2.png */; };
->>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
 		93268244162888CD00DFF7EA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268241162888CD00DFF7EA /* Accounts.framework */; };
 		93268245162888CD00DFF7EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268242162888CD00DFF7EA /* AdSupport.framework */; };
 		93268246162888CD00DFF7EA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268243162888CD00DFF7EA /* Social.framework */; };
@@ -133,21 +122,8 @@
 		63F91AA8161FF0B100056149 /* RouteTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RouteTableCell.m; path = "Controllers and Views/RouteTableCell.m"; sourceTree = "<group>"; };
 		63F91AAA161FF6AE00056149 /* RoadtripRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RoadtripRoute.h; path = Models/RoadtripRoute.h; sourceTree = "<group>"; };
 		63F91AAB161FF6AE00056149 /* RoadtripRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripRoute.m; path = Models/RoadtripRoute.m; sourceTree = "<group>"; };
-<<<<<<< HEAD
 		9315F9DF1627A08B0060C146 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		9315F9E01627A08B0060C146 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
-=======
-		9300D646162AA56C0018274F /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = "Controllers and Views/SignUpViewController.h"; sourceTree = "<group>"; };
-		9300D647162AA56C0018274F /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = "Controllers and Views/SignUpViewController.m"; sourceTree = "<group>"; };
-		9300D648162AA56C0018274F /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignUpViewController.xib; path = "Controllers and Views/SignUpViewController.xib"; sourceTree = "<group>"; };
-		9300D653162AA7280018274F /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = "Controllers and Views/SignInViewController.h"; sourceTree = "<group>"; };
-		9300D654162AA7280018274F /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = "Controllers and Views/SignInViewController.m"; sourceTree = "<group>"; };
-		9300D655162AA7280018274F /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignInViewController.xib; path = "Controllers and Views/SignInViewController.xib"; sourceTree = "<group>"; };
-		9315F9DD1627A08B0060C146 /* bg1-nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg1-nonretina.png"; sourceTree = "<group>"; };
-		9315F9DE1627A08B0060C146 /* bg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg1.png; sourceTree = "<group>"; };
-		9315F9DF1627A08B0060C146 /* bg2-nonretina.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg2-nonretina.png"; sourceTree = "<group>"; };
-		9315F9E01627A08B0060C146 /* bg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg2.png; sourceTree = "<group>"; };
->>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
 		93268241162888CD00DFF7EA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		93268242162888CD00DFF7EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		93268243162888CD00DFF7EA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -302,19 +278,10 @@
 				6372C2D9161D1E8B00AEE38A /* LocationTableViewController.m */,
 				635EE844161D183200E2635F /* RoadtripViewController.h */,
 				635EE845161D183200E2635F /* RoadtripViewController.m */,
-<<<<<<< HEAD
 				9329F23E162BAE7F003EA77E /* SignUpViewController.h */,
 				9329F23F162BAE7F003EA77E /* SignUpViewController.m */,
 				9329F239162BAE6D003EA77E /* SignInViewController.h */,
 				9329F23A162BAE6D003EA77E /* SignInViewController.m */,
-=======
-				9300D653162AA7280018274F /* SignInViewController.h */,
-				9300D654162AA7280018274F /* SignInViewController.m */,
-				9300D655162AA7280018274F /* SignInViewController.xib */,
-				9300D646162AA56C0018274F /* SignUpViewController.h */,
-				9300D647162AA56C0018274F /* SignUpViewController.m */,
-				9300D648162AA56C0018274F /* SignUpViewController.xib */,
->>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
 				93C742F71629CFA800F32FC9 /* MainViewController.h */,
 				93C742F81629CFA800F32FC9 /* MainViewController.m */,
 			);
@@ -402,13 +369,8 @@
 				9315F9E41627A08B0060C146 /* bg@2x.png in Resources */,
 				932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */,
 				932AD4731627FC6A00F9775B /* facebook-login@2x~ipad.png in Resources */,
-<<<<<<< HEAD
 				9350734B162CAE29009A4D5D /* logo.png in Resources */,
 				93507356162CB7C4009A4D5D /* logo@2x.png in Resources */,
-=======
-				9300D64A162AA56C0018274F /* SignUpViewController.xib in Resources */,
-				9300D657162AA7280018274F /* SignInViewController.xib in Resources */,
->>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
