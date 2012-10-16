@@ -48,13 +48,15 @@
 		63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = 63F91AAB161FF6AE00056149 /* RoadtripRoute.m */; };
 		9315F9E31627A08B0060C146 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9DF1627A08B0060C146 /* bg.png */; };
 		9315F9E41627A08B0060C146 /* bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9315F9E01627A08B0060C146 /* bg@2x.png */; };
+		931769D1162D1C5D001BB1EB /* facebook-hover.png in Resources */ = {isa = PBXBuildFile; fileRef = 931769CD162D1C5D001BB1EB /* facebook-hover.png */; };
+		931769D2162D1C5D001BB1EB /* facebook-hover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 931769CE162D1C5D001BB1EB /* facebook-hover@2x.png */; };
+		931769D3162D1C5D001BB1EB /* facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = 931769CF162D1C5D001BB1EB /* facebook.png */; };
+		931769D4162D1C5D001BB1EB /* facebook@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 931769D0162D1C5D001BB1EB /* facebook@2x.png */; };
 		93268244162888CD00DFF7EA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268241162888CD00DFF7EA /* Accounts.framework */; };
 		93268245162888CD00DFF7EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268242162888CD00DFF7EA /* AdSupport.framework */; };
 		93268246162888CD00DFF7EA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268243162888CD00DFF7EA /* Social.framework */; };
 		9329F23C162BAE6D003EA77E /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
 		9329F241162BAE7F003EA77E /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
-		932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD46B1627F9FF00F9775B /* facebook-login.png */; };
-		932AD4731627FC6A00F9775B /* facebook-login@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD4721627FC6A00F9775B /* facebook-login@2x~ipad.png */; };
 		9350734B162CAE29009A4D5D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 93507349162CAE29009A4D5D /* logo.png */; };
 		93507356162CB7C4009A4D5D /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93507355162CB7C4009A4D5D /* logo@2x.png */; };
 		93C742F91629CFA800F32FC9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C742F81629CFA800F32FC9 /* MainViewController.m */; };
@@ -124,6 +126,10 @@
 		63F91AAB161FF6AE00056149 /* RoadtripRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RoadtripRoute.m; path = Models/RoadtripRoute.m; sourceTree = "<group>"; };
 		9315F9DF1627A08B0060C146 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		9315F9E01627A08B0060C146 /* bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg@2x.png"; sourceTree = "<group>"; };
+		931769CD162D1C5D001BB1EB /* facebook-hover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-hover.png"; sourceTree = "<group>"; };
+		931769CE162D1C5D001BB1EB /* facebook-hover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-hover@2x.png"; sourceTree = "<group>"; };
+		931769CF162D1C5D001BB1EB /* facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = facebook.png; sourceTree = "<group>"; };
+		931769D0162D1C5D001BB1EB /* facebook@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook@2x.png"; sourceTree = "<group>"; };
 		93268241162888CD00DFF7EA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		93268242162888CD00DFF7EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		93268243162888CD00DFF7EA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -131,8 +137,6 @@
 		9329F23A162BAE6D003EA77E /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = "Controllers and Views/SignInViewController.m"; sourceTree = "<group>"; };
 		9329F23E162BAE7F003EA77E /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = "Controllers and Views/SignUpViewController.h"; sourceTree = "<group>"; };
 		9329F23F162BAE7F003EA77E /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = "Controllers and Views/SignUpViewController.m"; sourceTree = "<group>"; };
-		932AD46B1627F9FF00F9775B /* facebook-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login.png"; sourceTree = "<group>"; };
-		932AD4721627FC6A00F9775B /* facebook-login@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login@2x~ipad.png"; sourceTree = "<group>"; };
 		93507349162CAE29009A4D5D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		93507355162CB7C4009A4D5D /* logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo@2x.png"; sourceTree = "<group>"; };
 		93C742F71629CFA800F32FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = "Controllers and Views/MainViewController.h"; sourceTree = "<group>"; };
@@ -238,10 +242,12 @@
 		635EE830161D183200E2635F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				931769CD162D1C5D001BB1EB /* facebook-hover.png */,
+				931769CE162D1C5D001BB1EB /* facebook-hover@2x.png */,
+				931769CF162D1C5D001BB1EB /* facebook.png */,
+				931769D0162D1C5D001BB1EB /* facebook@2x.png */,
 				93507355162CB7C4009A4D5D /* logo@2x.png */,
 				93507349162CAE29009A4D5D /* logo.png */,
-				932AD4721627FC6A00F9775B /* facebook-login@2x~ipad.png */,
-				932AD46B1627F9FF00F9775B /* facebook-login.png */,
 				9315F9DF1627A08B0060C146 /* bg.png */,
 				9315F9E01627A08B0060C146 /* bg@2x.png */,
 				635EE831161D183200E2635F /* Roadtrip-Info.plist */,
@@ -367,10 +373,12 @@
 				637F442B161ED410001CAB44 /* SelectedPopoverViewController.xib in Resources */,
 				9315F9E31627A08B0060C146 /* bg.png in Resources */,
 				9315F9E41627A08B0060C146 /* bg@2x.png in Resources */,
-				932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */,
-				932AD4731627FC6A00F9775B /* facebook-login@2x~ipad.png in Resources */,
 				9350734B162CAE29009A4D5D /* logo.png in Resources */,
 				93507356162CB7C4009A4D5D /* logo@2x.png in Resources */,
+				931769D1162D1C5D001BB1EB /* facebook-hover.png in Resources */,
+				931769D2162D1C5D001BB1EB /* facebook-hover@2x.png in Resources */,
+				931769D3162D1C5D001BB1EB /* facebook.png in Resources */,
+				931769D4162D1C5D001BB1EB /* facebook@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -397,8 +405,6 @@
 				63F91AAC161FF6AE00056149 /* RoadtripRoute.m in Sources */,
 				6353F54E1627D78100525EF8 /* AppModel.m in Sources */,
 				93C742F91629CFA800F32FC9 /* MainViewController.m in Sources */,
-				9300D649162AA56C0018274F /* SignUpViewController.m in Sources */,
-				9300D656162AA7280018274F /* SignInViewController.m in Sources */,
 				63B87008162A79E5001B0EAD /* RoadtripCollectionCell.m in Sources */,
 				63B8700B162AAC02001B0EAD /* TextFormat.m in Sources */,
 				9329F23C162BAE6D003EA77E /* SignInViewController.m in Sources */,
