@@ -32,10 +32,6 @@
         
         // initialize route array
         self.routeArray = [[NSMutableArray alloc] init];
-        
-        // default states
-        [self calculateStat];
-        [self sync];
     }
     return self;
 }

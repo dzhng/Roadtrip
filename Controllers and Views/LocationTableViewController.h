@@ -21,11 +21,6 @@
 }
 
 @property (strong, nonatomic) IBOutlet LocationTableView *tableView;
-@property (weak, nonatomic) IBOutlet UIView *footerView;
-@property (weak, nonatomic) IBOutlet UILabel *stopsLabel;
-@property (weak, nonatomic) IBOutlet UILabel *distanceLabel;
-@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *costLabel;
 
 - (void)displayNewLocationAtIndex:(NSInteger)index;
 - (void)selectLocation:(RoadtripLocation*)location;

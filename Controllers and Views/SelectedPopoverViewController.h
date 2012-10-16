@@ -20,7 +20,5 @@
 
 - (id)initWithLocation:(RoadtripLocation*)location;
 
-- (IBAction)navigateButtonPressed:(id)sender;
-- (IBAction)searchButtonPressed:(id)sender;
 
 @end

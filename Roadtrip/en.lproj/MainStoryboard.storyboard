@@ -145,6 +145,45 @@
                                     <segue destination="QUO-ib-4VZ" kind="embed" id="3Be-6y-4rb"/>
                                 </connections>
                             </containerView>
+                            <view opaque="NO" contentMode="scaleToFill" id="Do6-go-rKL">
+                                <rect key="frame" x="717" y="683" width="300" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Stops" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="92P-JI-PLU">
+                                        <rect key="frame" x="20" y="30" width="118" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BjG-7f-R1v">
+                                        <rect key="frame" x="20" y="12" width="118" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Cost" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uzf-He-Ony">
+                                        <rect key="frame" x="146" y="30" width="134" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Lvv-4q-RSn">
+                                        <rect key="frame" x="146" y="12" width="134" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <containerView opaque="NO" contentMode="left" id="SSR-Gq-A0h">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -233,13 +272,18 @@
                     </view>
                     <navigationItem key="navigationItem" id="d96-je-yrg"/>
                     <connections>
+                        <outlet property="costLabel" destination="uzf-He-Ony" id="STs-7I-RrH"/>
+                        <outlet property="distanceLabel" destination="BjG-7f-R1v" id="vmf-8d-AJ6"/>
                         <outlet property="editButton" destination="imf-dZ-CSz" id="52d-be-sLg"/>
+                        <outlet property="footerView" destination="Do6-go-rKL" id="WS4-5v-Gd7"/>
                         <outlet property="mapContainer" destination="Iet-HE-Ixo" id="yUu-4r-mUf"/>
                         <outlet property="searchBackgoundView" destination="haz-tY-kTR" id="2k5-VL-2Kh"/>
                         <outlet property="searchBarView" destination="kao-Qo-Xzf" id="LxU-fb-YL8"/>
                         <outlet property="searchDisplayController" destination="IAT-Qg-Dfn" id="Ijg-kD-1fv"/>
                         <outlet property="settingsView" destination="pyF-se-z1s" id="5f9-Mb-dYR"/>
+                        <outlet property="stopsLabel" destination="92P-JI-PLU" id="NQX-s7-sMY"/>
                         <outlet property="tableContainer" destination="SSR-Gq-A0h" id="HyO-HQ-3dO"/>
+                        <outlet property="timeLabel" destination="Lvv-4q-RSn" id="8on-GY-eNe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
@@ -289,45 +333,6 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                        <view key="tableFooterView" opaque="NO" contentMode="scaleToFill" id="XNs-lx-Iwm">
-                            <rect key="frame" x="0.0" y="162" width="300" height="60"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Stops" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="50Y-LV-zEW">
-                                    <rect key="frame" x="20" y="30" width="118" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                    <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Z2M-xT-vHR">
-                                    <rect key="frame" x="20" y="12" width="118" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                    <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Cost" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="85d-UR-WxN">
-                                    <rect key="frame" x="146" y="30" width="134" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                    <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                </label>
-                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="irl-5v-mHv">
-                                    <rect key="frame" x="146" y="12" width="134" height="21"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <nil key="highlightedColor"/>
-                                    <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                </label>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell opaque="NO" contentMode="scaleToFill" restorationIdentifier="LocationCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationCell" rowHeight="100" id="klO-P8-fz4" customClass="LocationTableCell">
                                 <rect key="frame" x="0.0" y="22" width="300" height="100"/>
@@ -405,12 +410,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="costLabel" destination="85d-UR-WxN" id="b92-CO-V59"/>
-                        <outlet property="distanceLabel" destination="Z2M-xT-vHR" id="4Kn-jD-4cZ"/>
-                        <outlet property="footerView" destination="XNs-lx-Iwm" id="1Os-ix-O6r"/>
-                        <outlet property="stopsLabel" destination="50Y-LV-zEW" id="tLK-uA-0DG"/>
                         <outlet property="tableView" destination="QSb-9s-7Qe" id="h6R-UJ-z11"/>
-                        <outlet property="timeLabel" destination="irl-5v-mHv" id="SMg-C7-TO8"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IMT-Vb-CwC" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -471,12 +471,17 @@
                 <relationship kind="action" name="backPressed:"/>
                 <relationship kind="action" name="rearrangePressed:"/>
                 <relationship kind="action" name="startTripPressed:"/>
+                <relationship kind="outlet" name="costLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="distanceLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="editButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="footerView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="mapContainer" candidateClass="UIView"/>
                 <relationship kind="outlet" name="searchBackgoundView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="searchBarView" candidateClass="UISearchBar"/>
                 <relationship kind="outlet" name="settingsView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="stopsLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="tableContainer" candidateClass="UIView"/>
+                <relationship kind="outlet" name="timeLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="RouteTableCell" superclassName="UITableViewCell">

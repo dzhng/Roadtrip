@@ -85,6 +85,15 @@
 
 - (IBAction)startTripPressed:(id)sender
 {
+    RoadtripLocation* location = [model.locationArray objectAtIndex:0];
+    // start the maps app navigating to next location
+    MKMapItem* mapItem = [[MKMapItem alloc] initWithPlacemark:
+                          [[MKPlacemark alloc] initWithCoordinate:[location coordinate]
+                                                addressDictionary:[location addressDictionary]]];
+    NSDictionary* launchKeys = [NSDictionary dictionaryWithObjectsAndKeys:
+                                MKLaunchOptionsDirectionsModeDriving, MKLaunchOptionsDirectionsModeKey,
+                                nil];
+    [mapItem openInMapsWithLaunchOptions:launchKeys];
 }
 
 - (IBAction)backPressed:(id)sender

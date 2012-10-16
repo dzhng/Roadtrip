@@ -47,4 +47,9 @@
     [[[AppModel model] currentRoadtrip] locationAdded:self.location];
 }
 
+- (IBAction)findHotelsPressed:(id)sender
+{
+    NSLog(@"Find hotesls pressed");
+}
+
 @end

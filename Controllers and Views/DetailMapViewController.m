@@ -143,7 +143,9 @@
 - (void)displayNewLocationAtIndex:(NSInteger)index
 {
     RoadtripLocation* loc = [model.locationArray objectAtIndex:index];
+    // change annotation type
     [loc setSearch:false];
+    [self removeSearchLocations];
     [mapView addAnnotation:loc];
 }
 
@@ -256,7 +258,7 @@
         self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
         
         //size as needed
-        self.mapPopover.popoverContentSize = CGSizeMake(240, 250);
+        self.mapPopover.popoverContentSize = CGSizeMake(240, 336);
 
         //show the popover next to the annotation view (pin)
         [self.mapPopover presentPopoverFromRect:view.bounds inView:view
@@ -280,7 +282,7 @@
         self.mapPopover.passthroughViews = [[NSArray alloc] initWithObjects:parent.tableContainer, nil];
 
         //size as needed
-        self.mapPopover.popoverContentSize = CGSizeMake(240, 300);
+        self.mapPopover.popoverContentSize = CGSizeMake(240, 430);
 
         //show the popover next to the annotation view (pin)
         [self.mapPopover presentPopoverFromRect:view.bounds inView:view

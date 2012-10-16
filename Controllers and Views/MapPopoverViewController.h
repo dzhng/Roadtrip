@@ -15,11 +15,13 @@
 @property (weak, nonatomic) IBOutlet MKMapView *miniMap;
 @property (weak, nonatomic) IBOutlet UILabel *locationTitle;
 @property (weak, nonatomic) IBOutlet UILabel *locationSubtitle;
+@property (weak, nonatomic) IBOutlet UILabel *arrivalTime;
 
 @property (retain, nonatomic) RoadtripLocation* location;
 
 - (id)initWithLocation:(RoadtripLocation*)location;
 
 - (IBAction)addDestinationPressed:(id)sender;
+- (IBAction)findHotelsPressed:(id)sender;
 
 @end
