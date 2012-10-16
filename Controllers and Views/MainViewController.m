@@ -14,14 +14,9 @@
 
 @implementation MainViewController
 
-static NSString *cellId = @"RoadtripMap";
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // register collection view
-    [self.collectionView registerClass:[RoadtripCollectionCell class] forCellWithReuseIdentifier:cellId];
     
     // set layout settings
     UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)[self.collectionView collectionViewLayout];
@@ -95,6 +90,8 @@ static NSString *cellId = @"RoadtripMap";
 
 - (RoadtripCollectionCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    static NSString *cellId = @"RoadtripMap";
+
     RoadtripCollectionCell *cell = [cv dequeueReusableCellWithReuseIdentifier:cellId forIndexPath:indexPath];
     if(cell == nil) {
         NSLog(@"Error: Cannot dequeue collection view cell");

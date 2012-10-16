@@ -71,6 +71,7 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <size key="customSize" width="500" height="400"/>
                                         <connections>
                                             <outlet property="mapImage" destination="gEi-jB-k7B" id="UPU-Zv-a7M"/>

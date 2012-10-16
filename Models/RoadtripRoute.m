@@ -10,6 +10,7 @@
 #import "ModelNotifications.h"
 #import "MapConstants.h"
 #import "Database.h"
+#import "AppModel.h"
 
 @interface RoadtripRoute()
 
@@ -295,6 +296,10 @@
         
         // get center region
         self.centerRegion = [self getCenterRegionFromPoints:routePoints];
+         
+        // update model
+        [[AppModel model] currentRoadtrip].distance += self.distance;
+        [[[AppModel model] currentRoadtrip] sync];
         
         // tell views that our route was updated
         [self postRouteUpdateNotificationWithRoute:self];

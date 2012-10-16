@@ -212,7 +212,7 @@
     PFObject* db = self.dbObject;
 
     // set class properties
-    [db setObject:self.name forKey:@"name"];
+    //[db setObject:self.name forKey:@"name"];
     [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
     [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
     [db setObject:[NSNumber numberWithInteger:self.stops] forKey:@"stops"];
@@ -248,8 +248,11 @@
     // set the location's order in db
     [location setOrder:[self.locationArray count]];
     
+    // update model data
+    self.stops = [self.locationArray count];
+    
     // if this isn't the first location, we should add a new route
-    if([self.locationArray count] > 0) {
+    if(self.stops > 0) {
         RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
         
         // set new roadtrip location as a child of this model in db
@@ -264,9 +267,13 @@
     
     // add to location array
     [self.locationArray addObject:location];
+    self.stops++;
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
+    
+    // sync updates with db
+    [self sync];
 }
 
 - (void)locationDeleted:(NSInteger)index
@@ -282,12 +289,19 @@
     // remove from location array
     [self.locationArray removeObjectAtIndex:index];
     
+    // update model data
+    self.stops = [self.locationArray count];
+    
     // we might need to remove route too
-    if([self.locationArray count] > 0) {
+    if(self.stops > 0) {
         RoadtripRoute* route = [self.routeArray objectAtIndex:index-1];
         [route remove];
+        self.distance -= route.distance;
         [self.routeArray removeObjectAtIndex:index-1];
     }
+    
+    // sync updates with db
+    [self sync];
 }
 
 - (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source
