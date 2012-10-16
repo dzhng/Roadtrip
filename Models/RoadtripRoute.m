@@ -298,7 +298,7 @@
         self.centerRegion = [self getCenterRegionFromPoints:routePoints];
          
         // update model
-        [[AppModel model] currentRoadtrip].distance += self.distance;
+        [[[AppModel model] currentRoadtrip] calculateStat];
         [[[AppModel model] currentRoadtrip] sync];
         
         // tell views that our route was updated

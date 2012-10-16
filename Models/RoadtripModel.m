@@ -220,6 +220,21 @@
     [db saveEventually];
 }
 
+- (void)calculateStat
+{
+    self.stops = [self.locationArray count];
+    self.time = 0;
+    self.distance = 0;
+    if(self.stops > 0) {
+        // sum up all stats for routes
+        for(RoadtripRoute* r in self.routeArray) {
+            self.time += r.time;
+            self.distance += r.distance;
+        }
+    }
+    self.cost = 0;
+}
+
 #pragma mark Notification Handlers
 
 - (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source
@@ -248,11 +263,8 @@
     // set the location's order in db
     [location setOrder:[self.locationArray count]];
     
-    // update model data
-    self.stops = [self.locationArray count];
-    
     // if this isn't the first location, we should add a new route
-    if(self.stops > 0) {
+    if([self.locationArray count] > 0) {
         RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
         
         // set new roadtrip location as a child of this model in db
@@ -267,12 +279,12 @@
     
     // add to location array
     [self.locationArray addObject:location];
-    self.stops++;
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
     
     // sync updates with db
+    [self calculateStat];
     [self sync];
 }
 
@@ -289,18 +301,15 @@
     // remove from location array
     [self.locationArray removeObjectAtIndex:index];
     
-    // update model data
-    self.stops = [self.locationArray count];
-    
     // we might need to remove route too
-    if(self.stops > 0) {
+    if([self.locationArray count] > 0) {
         RoadtripRoute* route = [self.routeArray objectAtIndex:index-1];
         [route remove];
-        self.distance -= route.distance;
         [self.routeArray removeObjectAtIndex:index-1];
     }
     
     // sync updates with db
+    [self calculateStat];
     [self sync];
 }
 
