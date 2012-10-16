@@ -286,12 +286,12 @@
     // add to location array
     [self.locationArray addObject:location];
     
-    // tell our delegate to update their views
-    [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
-    
     // sync updates with db
     [self calculateStat];
     [self sync];
+    
+    // tell our delegate to update their views
+    [self.delegate locationInserted:location atIndex:[self.locationArray count]-1];
 }
 
 - (void)locationDeleted:(NSInteger)index
@@ -308,8 +308,9 @@
     [self.locationArray removeObjectAtIndex:index];
     
     // we might need to remove route too
+    RoadtripRoute* route = nil;
     if([self.locationArray count] > 0) {
-        RoadtripRoute* route = [self.routeArray objectAtIndex:index-1];
+        route = [self.routeArray objectAtIndex:index-1];
         [route remove];
         [self.routeArray removeObjectAtIndex:index-1];
     }
@@ -317,6 +318,9 @@
     // sync updates with db
     [self calculateStat];
     [self sync];
+    
+    // tell our delegate to update their views
+    [self.delegate locationDeleted:location withRoute:route atIndex:index];
 }
 
 - (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source

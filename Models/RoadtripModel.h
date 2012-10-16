@@ -16,7 +16,8 @@
 @protocol RoadtripModelDelegate <NSObject>
 
 - (void)searchDone:(NSArray*)locationObjects;
-- (void)locationInserted:(RoadtripLocation*)location AtIndex:(NSInteger)index;
+- (void)locationInserted:(RoadtripLocation*)location atIndex:(NSInteger)index;
+- (void)locationDeleted:(RoadtripLocation*)location withRoute:(RoadtripRoute*)route atIndex:(NSInteger)index;
 - (void)handleSelectedFromTable:(id) selected;
 - (void)handleSelectedFromMap:(id)selected;
 - (void)handleDeselect;

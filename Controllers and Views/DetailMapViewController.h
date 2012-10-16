@@ -44,8 +44,11 @@
 // remove all the search locations on the map
 - (void)removeSearchLocations;
 
-// remove the indicated search location on the map and disable popover
-- (void)removeSearchLocation:(RoadtripLocation*)location;
+// remove the indicated location on the map and disable popover
+- (void)removeLocation:(RoadtripLocation*)location;
+
+// remove input route from the map
+- (void)removeRoute:(RoadtripRoute*)route;
 
 // deselect all annotations on the map.
 // Called when popover is dismissed, we just want to dismiss annotation with it

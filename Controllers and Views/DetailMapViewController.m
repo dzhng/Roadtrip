@@ -124,12 +124,19 @@
     }
 }
 
-- (void)removeSearchLocation:(RoadtripLocation*)location
+- (void)removeLocation:(RoadtripLocation*)location
 {
     // remove the pin
     [mapView removeAnnotation:location];
     // also remove popover box
     [self.mapPopover dismissPopoverAnimated:YES];
+}
+
+- (void)removeRoute:(RoadtripRoute*)route
+{
+    // remove overlay
+    [mapView removeOverlay:route.routeOverlay];
+    [mapView setNeedsDisplay];
 }
 
 - (void)deselectAnnotation

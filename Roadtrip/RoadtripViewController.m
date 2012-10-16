@@ -10,7 +10,7 @@
 #import "MapConstants.h"
 
 // minimum height for the size of table interaction space in pixels
-#define TABLE_MIN_HEIGHT        200
+#define TABLE_MIN_HEIGHT        40
 // extra height to leave off of table height on bottom
 #define TABLE_HEIGHT_PADDING    100
 
@@ -54,6 +54,8 @@
     editMode = false;
     // change edit button
     [self.editButton setTitle:@"Done" forState:UIControlStateSelected];
+    
+    [self resizeTable];
 }
 
 - (void)didReceiveMemoryWarning
@@ -105,11 +107,10 @@
 - (void)resizeTable
 {
     // resize table view
-    CGSize size = tableController.tableView.contentSize;
     CGRect windowSize = [[UIScreen mainScreen] bounds];
     CGFloat windowHeight = windowSize.size.height;
-    
-    //NSLog(@"Table resized to: %f", size.height);
+    // calculate table height
+    CGFloat height = 100*[model.locationArray count] + 40*[model.routeArray count];
     
     UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
     if(orientation == UIInterfaceOrientationLandscapeRight || orientation ==  UIInterfaceOrientationLandscapeLeft){
@@ -117,8 +118,8 @@
     }
 
     windowHeight -= TABLE_HEIGHT_PADDING;
-    self.tableContainer.frame = CGRectMake(0, 0, size.width,
-           ((size.height + TABLE_MIN_HEIGHT > windowHeight) ? windowHeight : size.height + TABLE_MIN_HEIGHT));
+    self.tableContainer.frame = CGRectMake(0, 0, 300,
+           ((height + TABLE_MIN_HEIGHT > windowHeight) ? windowHeight : height + TABLE_MIN_HEIGHT));
     
     // redraw background
     [tableController.tableView setNeedsDisplay];
@@ -142,12 +143,12 @@
     [self.searchBarView resignFirstResponder];
 }
 
-- (void)locationInserted:(RoadtripLocation*)location AtIndex:(NSInteger)index
+- (void)locationInserted:(RoadtripLocation*)location atIndex:(NSInteger)index
 {
     // deselect the map popover box
     [mapController deselectAnnotation];
     // remove this search location from annotation
-    [mapController removeSearchLocation:location];
+    [mapController removeLocation:location];
     
     // clear search bar
     self.searchBarView.text = @"";
@@ -156,6 +157,18 @@
     [mapController displayNewLocationAtIndex:index];
     [tableController displayNewLocationAtIndex:index];
    
+    [self resizeTable];
+}
+
+- (void)locationDeleted:(RoadtripLocation *)location withRoute:(RoadtripRoute *)route atIndex:(NSInteger)index
+{
+    // remove annotation
+    [mapController removeLocation:location];
+    // remove route
+    if(route != nil) {
+        [mapController removeRoute:route];
+    }
+    
     [self resizeTable];
 }
 
@@ -202,8 +215,6 @@
     [tableController resetLocationsAndRoutes];
     
     // resize table view to fit
-    // Weird bug: when called for the first time, it always returns 60
-    [self resizeTable];
     [self resizeTable];
 }
 
