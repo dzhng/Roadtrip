@@ -23,16 +23,8 @@
 {
     self.roadtrip = roadtrip;
     // set display labels
-    self.title.text = @"Roadtrip";
+    self.title.text = roadtrip.name;
     self.subTitle.text = [NSString stringWithFormat:@"%@, %@", roadtrip.stopsText, roadtrip.distanceText];
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    // make background white
-    UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
-    bgView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
-    self.backgroundView = bgView;
 }
 
 @end

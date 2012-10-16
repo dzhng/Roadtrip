@@ -32,6 +32,10 @@
         
         // initialize route array
         self.routeArray = [[NSMutableArray alloc] init];
+        
+        // default states
+        [self calculateStat];
+        [self sync];
     }
     return self;
 }
@@ -220,6 +224,27 @@
     [db saveEventually];
 }
 
+- (void)calculateStat
+{
+    self.stops = [self.locationArray count];
+    self.time = 0;
+    self.distance = 0;
+    if(self.stops > 1) {
+        // sum up all stats for routes
+        for(RoadtripRoute* r in self.routeArray) {
+            self.time += r.time;
+            self.distance += r.distance;
+        }
+        self.name = [NSString stringWithFormat:@"From %@ to %@",
+                     [[self.locationArray objectAtIndex:0] title], [[self.locationArray lastObject] title]];
+    } else if(self.stops <= 0) {
+        self.name = @"Unfinished Roadtrip";
+    } else {    // 1 stop
+        self.name = [NSString stringWithFormat:@"From %@", [[self.locationArray objectAtIndex:0] title]];
+    }
+    self.cost = 0;
+}
+
 #pragma mark Notification Handlers
 
 - (void)locationSelected:(RoadtripLocation*)location fromSource:(NSString*)source
@@ -267,6 +292,10 @@
     
     // tell our delegate to update their views
     [self.delegate locationInserted:location AtIndex:[self.locationArray count]-1];
+    
+    // sync updates with db
+    [self calculateStat];
+    [self sync];
 }
 
 - (void)locationDeleted:(NSInteger)index
@@ -288,6 +317,10 @@
         [route remove];
         [self.routeArray removeObjectAtIndex:index-1];
     }
+    
+    // sync updates with db
+    [self calculateStat];
+    [self sync];
 }
 
 - (void)routeSelected:(RoadtripRoute*)route fromSource:(NSString*)source

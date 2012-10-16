@@ -22,18 +22,21 @@
 {
     if (self = [super init]) {
         // set database object
-        PFObject* locationObject = [PFObject objectWithClassName:LOCATION_CLASS];
-        self.dbObject = locationObject;
-        
-        // set user
-        [locationObject setObject:[PFUser currentUser] forKey:@"user"];
+        self.dbObject = [PFObject objectWithClassName:LOCATION_CLASS];
         
         [self setTitle:title];
         [self setSubtitle:subtitle];
         [self setCoordinate:loc];
         
-        // sync to database
-        [self sync];
+        // set user and save this object to make sure the DB got it
+        [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
+        [self.dbObject saveEventually:^(BOOL succeeded, NSError *error) {
+            if(succeeded && !error) {
+                [self sync];
+            } else {
+                NSLog(@"Error saving new location");
+            }
+        }];
     }
     return self;
 }

@@ -14,6 +14,10 @@
 #import "TextFormat.h"
 
 @interface RoadtripRoute : NSObject
+{
+    // path for the route files
+    NSString* routeFilePath;
+}
 
 @property (assign, nonatomic) NSInteger distance;
 @property (assign, nonatomic) NSInteger time;

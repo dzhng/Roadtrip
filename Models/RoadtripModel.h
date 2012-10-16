@@ -74,6 +74,9 @@
 // update this roadtrip settings to db
 - (void)sync;
 
+// calculate all model statistics and store
+- (void)calculateStat;
+
 // set the order this item belongs to in db
 - (void)setOrder:(NSInteger)idx;
 
