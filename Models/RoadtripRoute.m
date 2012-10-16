@@ -38,8 +38,7 @@
     self = [super init];
     if(self) {
         //get the documents directory
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        routeFilePath = [paths objectAtIndex:0];
+        routeFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
         
         self.start = nil;
         self.end = nil;
@@ -143,11 +142,13 @@
     }
     
     PFObject* db = self.dbObject;
-    
+
     // get data representation and save to disk
     NSString* filePath = [routeFilePath stringByAppendingPathComponent:db.objectId];
-    NSLog(@"Route saved to: %@", filePath);
-    [NSKeyedArchiver archiveRootObject:points toFile:filePath];
+    //NSLog(@"Route saved to: %@", filePath);
+    if(![NSKeyedArchiver archiveRootObject:points toFile:filePath]) {
+        NSLog(@"Error saving route file");
+    }
     
     // sync update with database
     [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
@@ -165,7 +166,7 @@
 {
     // clear the archived file
     NSString* filePath = [routeFilePath stringByAppendingPathComponent:self.dbObject.objectId];
-    NSLog(@"Reset database %@", filePath);
+    //NSLog(@"Reset database %@", filePath);
     [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
 }
 
