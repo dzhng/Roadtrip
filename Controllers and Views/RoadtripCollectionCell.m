@@ -23,7 +23,7 @@
 {
     self.roadtrip = roadtrip;
     // set display labels
-    self.title.text = @"Roadtrip";
+    self.title.text = roadtrip.name;
     self.subTitle.text = [NSString stringWithFormat:@"%@, %@", roadtrip.stopsText, roadtrip.distanceText];
 }
 
