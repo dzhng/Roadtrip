@@ -35,8 +35,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-<<<<<<< HEAD
 @end
-=======
-@end
->>>>>>> bfc5cdd5a0756d4eb9131c94e9c2ccd4c6cc04f3
