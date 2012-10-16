@@ -310,9 +310,16 @@
     // we might need to remove route too
     RoadtripRoute* route = nil;
     if([self.locationArray count] > 0) {
-        route = [self.routeArray objectAtIndex:index-1];
+        NSInteger rmIdx = 0;
+        if(index < [self.locationArray count] - 1) {
+            rmIdx = index;
+        } else {
+            rmIdx = index-1;
+        }
+        
+        route = [self.routeArray objectAtIndex:rmIdx];
         [route remove];
-        [self.routeArray removeObjectAtIndex:index-1];
+        [self.routeArray removeObjectAtIndex:rmIdx];
     }
     
     // sync updates with db
