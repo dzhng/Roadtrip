@@ -135,7 +135,7 @@
 - (void)removeRoute:(RoadtripRoute*)route
 {
     // remove overlay
-    [mapView removeOverlay:route.routeOverlay];
+    [mapView removeOverlay:route.currentRouteOverlay];
     [mapView setNeedsDisplay];
 }
 
