@@ -11,7 +11,6 @@
 
 @interface RouteTableCell : UITableViewCell
 {
-    bool cellSelected;  // prevent double selecting (when figer enter / leaves)
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;

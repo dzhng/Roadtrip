@@ -33,24 +33,31 @@
 @implementation RoadtripRoute
 
 // initialize with array of CLLocations
-- (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end
+- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip
 {
     self = [super init];
     if(self) {
         //get the documents directory
         routeFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
         
+        dirty = true;
+        
         self.start = nil;
         self.end = nil;
+        self.order = order;
         
         // set database object
         self.dbObject = [PFObject objectWithClassName:ROUTE_CLASS];
         
         // set user and save
         [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
+        [self.dbObject setObject:[NSNumber numberWithInteger:order] forKey:@"order"];
+        [self.dbObject setObject:roadtrip forKey:@"roadtrip"];
         [self.dbObject saveEventually:^(BOOL succeeded, NSError *error) {
             if(succeeded && !error) {
                 [self updateStart:start andEnd:end];
+                dirty = false;
+                NSLog(@"New route successfully created");
             } else {
                 NSLog(@"Error saving new route");
             }
@@ -97,6 +104,7 @@
             self.distance = [[dbObject objectForKey:@"distance"] integerValue];
             self.time = [[dbObject objectForKey:@"time"] integerValue];
             self.cost = [[dbObject objectForKey:@"cost"] integerValue];
+            self.order = [[dbObject objectForKey:@"order"] integerValue];
             
             // tell views that our route was updated
             [self postRouteUpdateNotificationWithRoute:self];
@@ -121,12 +129,6 @@
         return true;
     }
     return false;
-}
-
-- (void)setOrder:(NSInteger)idx
-{
-    [self.dbObject setObject:[NSNumber numberWithInteger:idx] forKey:@"order"];
-    [self.dbObject saveEventually];
 }
 
 - (void)sync
@@ -154,6 +156,7 @@
     [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
     [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
     [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
+    [db setObject:[NSNumber numberWithInteger:self.order] forKey:@"order"];
     [db saveEventually];
 }
 

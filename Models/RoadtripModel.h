@@ -72,17 +72,11 @@
 // get all locations and rotues for this roadtrip
 - (void)getAllLocationsAndRoutes;
 
-// save a new location and route
-- (RoadtripLocation*)newLocationFromLocation:(RoadtripLocation*)location;
-
 // update this roadtrip settings to db
 - (void)sync;
 
 // calculate all model statistics and store
 - (void)calculateStat;
-
-// set the order this item belongs to in db
-- (void)setOrder:(NSInteger)idx;
 
 /*** Location and Route Functions ***/
 - (void)locationAdded:(RoadtripLocation*)location;

@@ -17,7 +17,12 @@
 {
     // path for the route files
     NSString* routeFilePath;
+    
+    // if the object still need to be synced to DB after creation
+    bool dirty;
 }
+
+@property (assign, nonatomic) NSInteger order;  // display order of this item
 
 @property (assign, nonatomic) NSInteger distance;
 @property (assign, nonatomic) NSInteger time;
@@ -38,7 +43,7 @@
 @property (retain, nonatomic) RoadtripLocation* end;
 
 // initialize with array of CLLocations
-- (id)initWithStartLocation:(RoadtripLocation*)start andEndLocation:(RoadtripLocation*)end;
+- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip;
 
 // init from an existing PFObject
 - (id)initFromDB:(PFObject*)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;

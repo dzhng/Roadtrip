@@ -13,10 +13,14 @@
 @interface RoadtripLocation : NSObject <MKAnnotation>
 {
     MKCoordinateRegion region;  // stores region to be used for map placements
+    
+    // if the object still need to be synced to DB after creation
+    bool dirty;
 }
 
 @property (retain, nonatomic) NSDictionary* addressDictionary;  // dictionary form of address
 @property (assign, nonatomic) bool search;      // stores if this is a search location
+@property (assign, nonatomic) NSInteger order;  // display order of this item
 
 @property (retain, nonatomic) PFObject* dbObject;
 
@@ -26,10 +30,10 @@
 @property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 
 // just initialize with the raw data needed for display
-- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle andCoordinate:(CLLocationCoordinate2D)loc;
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle coordinate:(CLLocationCoordinate2D)loc order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip;
 
 // save coordinate and perform reverse Geocoding to convert to streetname
-- (id)initWithLatitude:(float)latitude andLongitude:(float)longitude;
+- (id)initWithLatitude:(float)latitude longitude:(float)longitude order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip;
 
 // extract data from input placemark,
 // this is used for search locations, so db object is NOT created
@@ -37,9 +41,6 @@
 
 // init from an existing PFObject
 - (id)initFromDB:(PFObject*)dbObject;
-
-// set the order this item belongs to in db
-- (void)setOrder:(NSInteger)idx;
 
 // sync with database
 - (void)sync;

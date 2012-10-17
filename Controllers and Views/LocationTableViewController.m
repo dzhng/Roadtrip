@@ -113,6 +113,7 @@
     for (int i = 0; i < [model.locationArray count]; i++) {
         RoadtripLocation* location = [model.locationArray objectAtIndex:i];
         [location setOrder:i];
+        [location sync];
     }
     
     // set routing cells
@@ -130,6 +131,7 @@
             
             // also set order in db
             [route setOrder:i];
+            [route sync];
         }
         [self.tableView insertRowsAtIndexPaths:indexPath withRowAnimation:YES];
     }
@@ -225,6 +227,22 @@
     }
 }
 
+- (NSIndexPath*)tableView:(UITableView *)tableView willSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    int rrow = (row-1)/2;
+    if(!(row == 0 || row % 2 == 0)) {
+        // make it so we can't select route cell
+        if ([model.routeArray objectAtIndex:rrow] != model.selected) {
+            // send notification out to model so it knows location has been selected
+            [[[AppModel model] currentRoadtrip] routeSelected:[model.routeArray objectAtIndex:rrow]
+                                                      fromSource:NOTIFICATION_TABLE_SOURCE];
+        }
+        return nil;
+    }
+    return indexPath;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     int row = [indexPath row];
@@ -232,13 +250,19 @@
     if(!manualSelect) {
         // location cell
         if(row == 0 || row % 2 == 0) {
-            // send notification out to model so it knows location has been selected
-            [[[AppModel model] currentRoadtrip] locationSelected:[model.locationArray objectAtIndex:row/2]
-                                                      fromSource:NOTIFICATION_TABLE_SOURCE];
+            int lrow = row/2;
+            if ([model.locationArray objectAtIndex:lrow] != model.selected) {
+                // send notification out to model so it knows location has been selected
+                [[[AppModel model] currentRoadtrip] locationSelected:[model.locationArray objectAtIndex:lrow]
+                                                          fromSource:NOTIFICATION_TABLE_SOURCE];
+            }
         } else {    // route cell
-            // send notification out to model so it knows location has been selected
-            [[[AppModel model] currentRoadtrip] routeSelected:[model.routeArray objectAtIndex:(row-1)/2]
-                                                      fromSource:NOTIFICATION_TABLE_SOURCE];
+            int rrow = (row-1)/2;
+            if ([model.routeArray objectAtIndex:rrow] != model.selected) {
+                // send notification out to model so it knows location has been selected
+                [[[AppModel model] currentRoadtrip] routeSelected:[model.routeArray objectAtIndex:rrow]
+                                                          fromSource:NOTIFICATION_TABLE_SOURCE];
+            }
         }
     }
     manualSelect = false;

@@ -19,8 +19,6 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
-        // Initialization code
-        cellSelected = false;
     }
     return self;
 }
@@ -38,18 +36,14 @@
 
     // draw table based on state
     if(selected) {
-        if(!cellSelected) {
-            cellSelected = true;
-            // Configure the view for the selected state
-            UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
-            bgView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1];
-            self.backgroundView = bgView;
-        }
+        // Configure the view for the selected state
+        UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
+        bgView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1];
+        self.backgroundView = bgView;
     } else {
         UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
         bgView.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
         self.backgroundView = bgView;
-        cellSelected = false;
     }
 }
 

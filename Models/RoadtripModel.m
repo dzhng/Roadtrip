@@ -198,19 +198,6 @@
     [self.delegate reloadLocationsAndRoutes];
 }
 
-- (RoadtripLocation*)newLocationFromLocation:(RoadtripLocation*)location
-{
-    // copy the location data and make a new location object
-    RoadtripLocation* newLocation = [[RoadtripLocation alloc] initWithTitle:location.title
-                                       subTitle:location.subtitle andCoordinate:location.coordinate];
-    
-    // set new roadtrip location as a child of this model in db
-    [newLocation.dbObject setObject:self.dbObject forKey:@"roadtrip"];
-    [newLocation.dbObject saveEventually];
-    
-    return newLocation;
-}
-
 - (void)setOrder:(NSInteger)idx
 {
     [self.dbObject setObject:[NSNumber numberWithInteger:idx] forKey:@"order"];
@@ -281,21 +268,14 @@
 
 - (void)locationAdded:(RoadtripLocation*)newlocation
 {
-    RoadtripLocation* location = [self newLocationFromLocation:newlocation];
-    
-    // set the location's order in db
-    [location setOrder:[self.locationArray count]];
+    // copy the location data and make a new location object
+    RoadtripLocation* location = [[RoadtripLocation alloc] initWithTitle:newlocation.title
+                           subTitle:newlocation.subtitle coordinate:newlocation.coordinate
+                               order:[self.locationArray count] andRoadtrip:self.dbObject];
     
     // if this isn't the first location, we should add a new route
     if([self.locationArray count] > 0) {
-        RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] andEndLocation:location];
-        
-        // set new roadtrip location as a child of this model in db
-        [newRoute.dbObject setObject:self.dbObject forKey:@"roadtrip"];
-        [newRoute.dbObject saveEventually];
-        
-        // set order of route
-        [newRoute setOrder:[self.routeArray count]];
+        RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] endLocation:location order:[self.routeArray count] andRoadtrip:self.dbObject];
         
         [self.routeArray addObject:newRoute];
     }
