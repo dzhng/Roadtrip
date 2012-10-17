@@ -117,10 +117,6 @@
     if(row < [[[AppModel model] roadtrips] count]) {
         // get roadtrip
         RoadtripModel* roadtrip = [[[AppModel model] roadtrips] objectAtIndex:row];
-        
-        // tell roadtrip to grab locations and routes before segue
-        [roadtrip getAllLocationsAndRoutes];
-        
         // set current roadtrip
         [[AppModel model] setCurrentRoadtrip:roadtrip];
         

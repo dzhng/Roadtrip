@@ -59,6 +59,12 @@
     [self resizeTable];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [model getAllLocationsAndRoutes];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -148,8 +154,6 @@
 {
     // deselect the map popover box
     [mapController deselectAnnotation];
-    // remove this search location from annotation
-    [mapController removeLocation:location];
     
     // clear search bar
     self.searchBarView.text = @"";

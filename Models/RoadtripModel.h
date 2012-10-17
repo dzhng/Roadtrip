@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import <Parse/Parse.h>
 #import "RoadtripLocation.h"
 #import "RoadtripRoute.h"
 #import "ModelNotifications.h"

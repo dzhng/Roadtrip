@@ -46,7 +46,7 @@
 // initialize with array of CLLocations
 - (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(RoadtripModel*)roadtrip;
 
-// init from an existing PFObject
+// init from an existing database object
 - (id)initFromDB:(NSDictionary*)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end andRoadtrip:(RoadtripModel*)roadtrip;
 
 // update the start and end destination and recalculate overlays, returns true if everything was recalculated
