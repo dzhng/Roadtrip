@@ -12,6 +12,8 @@
 
 @interface MainViewController ()
 
+- (void)setUpSignInAndSignUp;
+
 @end
 
 @implementation MainViewController
@@ -43,21 +45,7 @@
         //reloads the road trips into the main view
         [self reloadDataFromDB];
     } else {
-        
-        // Customize the Log In View Controller
-        SignInViewController *logInViewController = [[SignInViewController alloc] init];
-        [logInViewController setDelegate:self];
-        [logInViewController setFacebookPermissions:[NSArray arrayWithObjects:@"friends_about_me", nil]];
-        [logInViewController setFields:PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook |PFLogInFieldsPasswordForgotten |PFLogInFieldsSignUpButton ];
-        
-        // Customize the Sign Up View Controller
-        //SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
-        //[signUpViewController setDelegate:self];
-        //[signUpViewController setFields:PFSignUpFieldsDefault | PFSignUpFieldsAdditional];
-        //[logInViewController setSignUpController:signUpViewController];
-        
-        // Present Log In View Controller
-        [self presentViewController:logInViewController animated:YES completion:NULL];
+        [self setUpSignInAndSignUp ];
     }
 }
 
@@ -87,8 +75,44 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+#pragma mark - PFSignUpViewControllerDelegate
+
+// Sent to the delegate to determine whether the sign up request should be submitted to the server.
+- (BOOL)signUpViewController:(PFSignUpViewController *)signUpController shouldBeginSignUp:(NSDictionary *)info {
+    BOOL informationComplete = YES;
+    for (id key in info) {
+        NSString *field = [info objectForKey:key];
+        if (!field || field.length == 0) {
+            informationComplete = NO;
+            break;
+        }
+    }
+    
+    if (!informationComplete) {
+        [[[UIAlertView alloc] initWithTitle:@"Missing Information" message:@"Make sure you fill out all of the information!" delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil] show];
+    }
+    
+    return informationComplete;
+}
+
+// Sent to the delegate when a PFUser is signed up.
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+// Sent to the delegate when the sign up attempt fails.
+- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
+    NSLog(@"Failed to sign up...");
+}
+
+// Sent to the delegate when the sign up screen is dismissed.
+- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
+    NSLog(@"User dismissed the signUpViewController");
+}
 
 
+
+//reload the DB data
 - (void)reloadDataFromDB
 {
     NSLog(@"DB Data reloaded");
@@ -108,9 +132,8 @@
     // first log them out
     [PFUser logOut];
     
-    //login view displayed modally
-    PFLogInViewController *login = [[PFLogInViewController alloc] init];
-    [self presentModalViewController:login animated:YES];
+    //load the login page since the user has been logged out
+    [self setUpSignInAndSignUp ];
 }
 
 - (IBAction)newRoadtripPressed:(id)sender
@@ -120,6 +143,25 @@
     
     // segue into map view
     [self performSegueWithIdentifier:@"RoadTripChosenSegue" sender:self];
+}
+
+- (void)setUpSignInAndSignUp
+{
+    // Customize the Log In View Controller
+    SignInViewController *logInViewController = [[SignInViewController alloc] init];
+    [logInViewController setDelegate:self];
+    [logInViewController setFacebookPermissions:[NSArray arrayWithObjects:@"friends_about_me", nil]];
+    [logInViewController setFields:PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook |PFLogInFieldsPasswordForgotten | PFLogInFieldsSignUpButton];
+    
+    // Customize the Sign Up View Controller
+    SignUpViewController *signUpViewController = [[SignUpViewController alloc] init];
+    [signUpViewController setDelegate:self];
+    [signUpViewController setFields: PFSignUpFieldsUsernameAndPassword | PFSignUpFieldsDismissButton | PFSignUpFieldsSignUpButton];
+    [logInViewController setSignUpController:signUpViewController];
+    
+    // Present Log In View Controller
+    [self presentViewController:logInViewController animated:NO completion:NULL];
+
 }
 
 #pragma mark Collection View Data Source functions
