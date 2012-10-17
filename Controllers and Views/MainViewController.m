@@ -7,6 +7,8 @@
 //
 
 #import "MainViewController.h"
+#import "SignInViewController.h"
+#import "SignUpViewController.h"
 
 @interface MainViewController ()
 
@@ -27,6 +29,11 @@
     // TODO: Display loading animation
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
@@ -38,6 +45,7 @@
     } else {
         // show the signup or login screen
         PFLogInViewController *login = [[PFLogInViewController alloc] init];
+        login.fields = PFLogInFieldsFacebook | PFLogInFieldsUsernameAndPassword | PFLogInFieldsLogInButton ;
         [self presentModalViewController:login animated:NO];
     }
 }

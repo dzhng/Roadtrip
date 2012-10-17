@@ -11,7 +11,8 @@
 #import "RoadtripCollectionCell.h"
 #import "RoadtripViewController.h"
 
-@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@interface MainViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
