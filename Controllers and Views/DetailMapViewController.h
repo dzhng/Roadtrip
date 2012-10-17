@@ -55,7 +55,7 @@
 - (void)deselectAnnotation;
 
 // called when a new location is added. make a new destination annotation
-- (void)displayNewLocationAtIndex:(NSInteger)index;
+- (void)displayNewLocation:(RoadtripLocation*)location;
 
 // routing methods
 // draw input routes on map, input is an array of RoadtripRoute

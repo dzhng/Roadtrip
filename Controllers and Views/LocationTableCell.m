@@ -44,14 +44,6 @@
             UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];
             bgView.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1];
             self.backgroundView = bgView;
-            
-            // we only send out the notification if the user clicked on the table
-            // don't want to be sending double notification for when the user clicked on the map
-            if(!animated) {
-                // send notification out to model so it knows location has been selected
-                [[[AppModel model] currentRoadtrip] locationSelected:self.location
-                                                          fromSource:NOTIFICATION_TABLE_SOURCE];
-            }
         }
     } else {
         UIView * bgView = [[UIView alloc] initWithFrame:CGRectZero];

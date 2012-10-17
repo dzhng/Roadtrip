@@ -155,9 +155,13 @@
     self.searchBarView.text = @"";
     
     // add new annotation to map and table
-    [mapController displayNewLocationAtIndex:index];
+    [mapController displayNewLocation:location];
     [tableController displayNewLocationAtIndex:index];
-   
+    
+    // select the new annotation
+    [mapController centerMapOnLocation:location];
+    [tableController selectLocation:location];
+    
     [self resizeTable];
 }
 

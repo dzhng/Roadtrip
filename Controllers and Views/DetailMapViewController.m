@@ -147,13 +147,14 @@
 }
 
 // called when a new destination location was added
-- (void)displayNewLocationAtIndex:(NSInteger)index
+- (void)displayNewLocation:(RoadtripLocation*)location
 {
-    RoadtripLocation* loc = [model.locationArray objectAtIndex:index];
     // change annotation type
-    [loc setSearch:false];
+    [location setSearch:false];
     [self removeSearchLocations];
-    [mapView addAnnotation:loc];
+    
+    // add new annotation
+    [mapView addAnnotation:location];
 }
 
 - (void)centerMapOnRoute:(RoadtripRoute*)route
@@ -289,7 +290,7 @@
         self.mapPopover.passthroughViews = [[NSArray alloc] initWithObjects:parent.tableContainer, nil];
 
         //size as needed
-        self.mapPopover.popoverContentSize = CGSizeMake(240, 430);
+        self.mapPopover.popoverContentSize = CGSizeMake(240, 250);
 
         //show the popover next to the annotation view (pin)
         [self.mapPopover presentPopoverFromRect:view.bounds inView:view

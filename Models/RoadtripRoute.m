@@ -75,7 +75,7 @@
         
         // grab local points file
         NSString* filePath = [routeFilePath stringByAppendingPathComponent:dbObject.objectId];
-        NSLog(@"Getting route from: %@", filePath);
+        //NSLog(@"Getting route from: %@", filePath);
         NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
         if(p == nil) {
             NSLog(@"Error: DB data invalid, recalculating routes");

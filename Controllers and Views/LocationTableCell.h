@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "RoadtripLocation.h"
-#import "AppModel.h"
 
 
 @interface LocationTableCell : UITableViewCell

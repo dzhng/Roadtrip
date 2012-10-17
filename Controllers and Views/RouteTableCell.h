@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 #import "RoadtripRoute.h"
-#import "AppModel.h"
 
 @interface RouteTableCell : UITableViewCell
 {

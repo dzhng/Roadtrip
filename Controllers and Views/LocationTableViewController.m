@@ -22,6 +22,9 @@
     // dont go into edit mode by default
     editMode = false;
     
+    // we're not manually selecting
+    manualSelect = false;
+    
     // hide the table by default, we only want to see the cells
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.opaque = NO;
@@ -63,8 +66,9 @@
     for(int i = 0; i < [model.locationArray count]; i++) {
         RoadtripLocation* loc = [model.locationArray objectAtIndex:i];
         if(loc == location) {
+            manualSelect = true;
             [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i*2 inSection:0]
-                                        animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+                                        animated:YES scrollPosition:UITableViewScrollPositionBottom];
             break;
         }
     }
@@ -219,6 +223,25 @@
             return 40;
         }
     }
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    int row = [indexPath row];
+    
+    if(!manualSelect) {
+        // location cell
+        if(row == 0 || row % 2 == 0) {
+            // send notification out to model so it knows location has been selected
+            [[[AppModel model] currentRoadtrip] locationSelected:[model.locationArray objectAtIndex:row/2]
+                                                      fromSource:NOTIFICATION_TABLE_SOURCE];
+        } else {    // route cell
+            // send notification out to model so it knows location has been selected
+            [[[AppModel model] currentRoadtrip] routeSelected:[model.routeArray objectAtIndex:(row-1)/2]
+                                                      fromSource:NOTIFICATION_TABLE_SOURCE];
+        }
+    }
+    manualSelect = false;
 }
 
 // Override to support rearranging the table view.

@@ -17,6 +17,8 @@
 @interface LocationTableViewController : UITableViewController <UITableViewDataSource, UITableViewDelegate>
 {
     bool editMode;
+    bool manualSelect;  // store if we're manually selecting a location via map
+    
     RoadtripModel* model;
 }
 
