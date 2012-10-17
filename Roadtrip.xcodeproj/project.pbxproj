@@ -57,10 +57,6 @@
 		93268244162888CD00DFF7EA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268241162888CD00DFF7EA /* Accounts.framework */; };
 		93268245162888CD00DFF7EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268242162888CD00DFF7EA /* AdSupport.framework */; };
 		93268246162888CD00DFF7EA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268243162888CD00DFF7EA /* Social.framework */; };
-		9329F23C162BAE6D003EA77E /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
-		9329F23D162BAE6D003EA77E /* SignInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9329F23B162BAE6D003EA77E /* SignInViewController.xib */; };
-		9329F241162BAE7F003EA77E /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
-		9329F242162BAE7F003EA77E /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9329F240162BAE7F003EA77E /* SignUpViewController.xib */; };
 		932AD46C1627F9FF00F9775B /* facebook-login.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD46B1627F9FF00F9775B /* facebook-login.png */; };
 		932AD4731627FC6A00F9775B /* facebook-login@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 932AD4721627FC6A00F9775B /* facebook-login@2x~ipad.png */; };
 		93C742F91629CFA800F32FC9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C742F81629CFA800F32FC9 /* MainViewController.m */; };
@@ -141,12 +137,6 @@
 		93268241162888CD00DFF7EA /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		93268242162888CD00DFF7EA /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		93268243162888CD00DFF7EA /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		9329F239162BAE6D003EA77E /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignInViewController.h; path = "Controllers and Views/SignInViewController.h"; sourceTree = "<group>"; };
-		9329F23A162BAE6D003EA77E /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignInViewController.m; path = "Controllers and Views/SignInViewController.m"; sourceTree = "<group>"; };
-		9329F23B162BAE6D003EA77E /* SignInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignInViewController.xib; path = "Controllers and Views/SignInViewController.xib"; sourceTree = "<group>"; };
-		9329F23E162BAE7F003EA77E /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SignUpViewController.h; path = "Controllers and Views/SignUpViewController.h"; sourceTree = "<group>"; };
-		9329F23F162BAE7F003EA77E /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SignUpViewController.m; path = "Controllers and Views/SignUpViewController.m"; sourceTree = "<group>"; };
-		9329F240162BAE7F003EA77E /* SignUpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SignUpViewController.xib; path = "Controllers and Views/SignUpViewController.xib"; sourceTree = "<group>"; };
 		932AD46B1627F9FF00F9775B /* facebook-login.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login.png"; sourceTree = "<group>"; };
 		932AD4721627FC6A00F9775B /* facebook-login@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "facebook-login@2x~ipad.png"; sourceTree = "<group>"; };
 		93C742F71629CFA800F32FC9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = "Controllers and Views/MainViewController.h"; sourceTree = "<group>"; };
@@ -419,8 +409,6 @@
 				9300D656162AA7280018274F /* SignInViewController.m in Sources */,
 				63B87008162A79E5001B0EAD /* RoadtripCollectionCell.m in Sources */,
 				63B8700B162AAC02001B0EAD /* TextFormat.m in Sources */,
-				9329F23C162BAE6D003EA77E /* SignInViewController.m in Sources */,
-				9329F241162BAE7F003EA77E /* SignUpViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
