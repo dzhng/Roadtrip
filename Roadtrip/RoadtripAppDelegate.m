@@ -16,6 +16,7 @@
     //set the parse
     [Parse setApplicationId:@"M5xCrPtj9DwJC0RThSMAXn1fgRzH64W341eoOQkz"
                   clientKey:@"pXGmJDkclvhaghWEOdz8kIo2ajJyZddeKLcVxIXl"];
+<<<<<<< HEAD
     
     //Initializes the Facebook App Id
     [PFFacebookUtils initializeWithApplicationId:@"282491441863129"];
@@ -27,6 +28,11 @@
         // show the signup or login screen
         
     }
+=======
+    //Initializes the Facebook App Id
+    [PFFacebookUtils initializeWithApplicationId:@"282491441863129"];
+
+>>>>>>> 87905047dae28b0a04f1198acf3c4c9625074639
     // make app model
     model = [[AppModel alloc] init];
     
