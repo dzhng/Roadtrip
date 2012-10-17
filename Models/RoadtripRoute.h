@@ -13,22 +13,23 @@
 #import "JSONKit.h"
 #import "TextFormat.h"
 
+@class RoadtripModel;
+
 @interface RoadtripRoute : NSObject
 {
     // path for the route files
     NSString* routeFilePath;
     
-    // if the object still need to be synced to DB after creation
-    bool dirty;
+    // file name
+    NSString* fileName;
 }
 
 @property (assign, nonatomic) NSInteger order;  // display order of this item
+@property (retain, nonatomic) RoadtripModel* model;
 
 @property (assign, nonatomic) NSInteger distance;
 @property (assign, nonatomic) NSInteger time;
 @property (assign, nonatomic) NSInteger cost;
-
-@property (retain, nonatomic) PFObject* dbObject;
 
 // current overlay, stored here for easy removal
 @property (retain, nonatomic) MKPolyline* currentRouteOverlay;
@@ -43,10 +44,10 @@
 @property (retain, nonatomic) RoadtripLocation* end;
 
 // initialize with array of CLLocations
-- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip;
+- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(RoadtripModel*)roadtrip;
 
 // init from an existing PFObject
-- (id)initFromDB:(PFObject*)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
+- (id)initFromDB:(NSDictionary*)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end andRoadtrip:(RoadtripModel*)roadtrip;
 
 // update the start and end destination and recalculate overlays, returns true if everything was recalculated
 - (bool)updateStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end;
@@ -59,6 +60,9 @@
 
 // sync all data with database
 - (void)sync;
+
+// get serialized data from database
+- (NSDictionary*)serialize;
 
 // delete from database
 - (void)remove;

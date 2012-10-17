@@ -7,6 +7,7 @@
 //
 
 #import "RoadtripLocation.h"
+#import "RoadtripModel.h"
 #import "Database.h"
 
 @interface RoadtripLocation()
@@ -18,38 +19,22 @@
 
 @implementation RoadtripLocation
 
-- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle coordinate:(CLLocationCoordinate2D)loc order:(NSInteger)order andRoadtrip:(PFObject *)roadtrip
+- (id)initWithTitle:(NSString*)title subTitle:(NSString*)subtitle coordinate:(CLLocationCoordinate2D)loc order:(NSInteger)order andRoadtrip:(RoadtripModel*)model
 {
     if (self = [super init]) {
         self.order = order;
         
-        // set database object
-        self.dbObject = [PFObject objectWithClassName:LOCATION_CLASS];
-        
-        dirty = true;
-        
         [self setTitle:title];
         [self setSubtitle:subtitle];
         [self setCoordinate:loc];
+        [self setModel:model];
         
-        // set user and save this object to make sure the DB got it
-        [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
-        [self.dbObject setObject:[NSNumber numberWithInteger:order] forKey:@"order"];
-        [self.dbObject setObject:roadtrip forKey:@"roadtrip"];
-        [self.dbObject saveEventually:^(BOOL succeeded, NSError *error) {
-            if(succeeded && !error) {
-                [self sync];
-                dirty = false;
-                NSLog(@"New location successfully created");
-            } else {
-                NSLog(@"Error saving new location");
-            }
-        }];
+        [self sync];
     }
     return self;
 }
 
-- (id)initWithLatitude:(float)latitude longitude:(float)longitude order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip
+- (id)initWithLatitude:(float)latitude longitude:(float)longitude order:(NSInteger)order andRoadtrip:(RoadtripModel*)roadtrip
 {
     return [self initWithTitle:[self coordinateTextWithLatitude:latitude andLongitude:longitude]
                       subTitle:nil coordinate:CLLocationCoordinate2DMake(latitude, longitude)
@@ -94,37 +79,43 @@
     return self;
 }
 
-- (id)initFromDB:(PFObject*)dbObject
+- (id)initFromDB:(NSDictionary*)db andModel:(RoadtripModel*)model
 {
     self = [super init];
     if(self) {
-        dirty = false;
-        self.dbObject = dbObject;
+        [self setModel:model];
+        
         // grab data from db
-        self.title = [dbObject objectForKey:@"title"];
-        self.subtitle = [dbObject objectForKey:@"subtitle"];
-        NSNumber* latitude = [dbObject objectForKey:@"latitude"];
-        NSNumber* longitude = [dbObject objectForKey:@"longitude"];
+        self.title = [db objectForKey:@"title"];
+        self.subtitle = [db objectForKey:@"subtitle"];
+        NSNumber* latitude = [db objectForKey:@"latitude"];
+        NSNumber* longitude = [db objectForKey:@"longitude"];
         self.coordinate = CLLocationCoordinate2DMake([latitude floatValue], [longitude floatValue]);
-        self.order = [[dbObject objectForKey:@"order"] integerValue];
+        self.order = [[db objectForKey:@"order"] integerValue];
     }
     return self;
 }
 
 - (void)sync
 {
-    PFObject* db = self.dbObject;
-    [db setObject:self.title forKey:@"title"];
-    [db setObject:self.subtitle forKey:@"subtitle"];
-    [db setObject:[NSNumber numberWithDouble:self.coordinate.latitude] forKey:@"latitude"];
-    [db setObject:[NSNumber numberWithDouble:self.coordinate.longitude] forKey:@"longitude"];
-    [db setObject:[NSNumber numberWithInteger:self.order] forKey:@"order"];
-    [db saveEventually];
+    // set model as dirty
+    [self.model setDirty:true];
+}
+
+- (NSDictionary*)serialize
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+                self.title, @"title",
+                self.subtitle, @"subtitle",
+                [NSNumber numberWithDouble:self.coordinate.latitude], @"latitude",
+                [NSNumber numberWithDouble:self.coordinate.longitude], @"longitude",
+                [NSNumber numberWithInteger:self.order], @"order",
+                nil];
 }
 
 - (void)remove
 {
-    [self.dbObject deleteEventually];
+    // we dont need to clean up anything here.. yet
 }
 
 - (NSString*)coordinateTextWithLatitude:(float)latitude andLongitude:(float)longitude

@@ -128,8 +128,6 @@
             // reset route start and destinations and recalculate route
             RoadtripRoute* route = [routes objectAtIndex:i];
             [route updateStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
-            
-            // also set order in db
             [route setOrder:i];
             [route sync];
         }

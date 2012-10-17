@@ -7,10 +7,10 @@
 //
 
 #import "RoadtripRoute.h"
+#import "RoadtripModel.h"
 #import "ModelNotifications.h"
 #import "MapConstants.h"
 #import "Database.h"
-#import "AppModel.h"
 
 @interface RoadtripRoute()
 
@@ -33,57 +33,41 @@
 @implementation RoadtripRoute
 
 // initialize with array of CLLocations
-- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(PFObject*)roadtrip
+- (id)initWithStartLocation:(RoadtripLocation*)start endLocation:(RoadtripLocation*)end order:(NSInteger)order andRoadtrip:(RoadtripModel*)roadtrip
 {
     self = [super init];
     if(self) {
         //get the documents directory
-        routeFilePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
+        fileName = [NSString stringWithFormat:@"%d", arc4random()];
+        NSString* doc = [NSString stringWithFormat:@"Documents/%@", fileName];
+        routeFilePath = [NSHomeDirectory() stringByAppendingPathComponent:doc];
         
-        dirty = true;
-        
+        self.model = roadtrip;
         self.start = nil;
         self.end = nil;
         self.order = order;
         
-        // set database object
-        self.dbObject = [PFObject objectWithClassName:ROUTE_CLASS];
-        
-        // set user and save
-        [self.dbObject setObject:[PFUser currentUser] forKey:@"user"];
-        [self.dbObject setObject:[NSNumber numberWithInteger:order] forKey:@"order"];
-        [self.dbObject setObject:roadtrip forKey:@"roadtrip"];
-        [self.dbObject saveEventually:^(BOOL succeeded, NSError *error) {
-            if(succeeded && !error) {
-                [self updateStart:start andEnd:end];
-                dirty = false;
-                NSLog(@"New route successfully created");
-            } else {
-                NSLog(@"Error saving new route");
-            }
-        }];
+        [self updateStart:start andEnd:end];
     }
     return self;
 }
 
-- (id)initFromDB:(PFObject *)dbObject withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end
+- (id)initFromDB:(NSDictionary *)db withStart:(RoadtripLocation*)start andEnd:(RoadtripLocation*)end andRoadtrip:(RoadtripModel*)roadtrip
 {
     self = [super init];
     if(self) {
-        //get the documents directory
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        routeFilePath = [paths objectAtIndex:0];
+        fileName = [db objectForKey:@"filename"];
         
+        //get the documents directory
+        NSString* doc = [NSString stringWithFormat:@"Documents/%@", fileName];
+        routeFilePath = [NSHomeDirectory() stringByAppendingPathComponent:doc];
+        
+        self.model = roadtrip;
         self.start = start;
         self.end = end;
         
-        // grab data from db
-        self.dbObject = dbObject;
-        
-        // grab local points file
-        NSString* filePath = [routeFilePath stringByAppendingPathComponent:dbObject.objectId];
         //NSLog(@"Getting route from: %@", filePath);
-        NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+        NSMutableArray* p = [NSKeyedUnarchiver unarchiveObjectWithFile:routeFilePath];
         if(p == nil) {
             NSLog(@"Error: DB data invalid, recalculating routes");
             [self calculateRoutesWithOrigin:start.coordinate destination:end.coordinate withWaypoints:nil];
@@ -101,10 +85,10 @@
             // get center region
             self.centerRegion = [self getCenterRegionFromPoints:self.routePoints];
             
-            self.distance = [[dbObject objectForKey:@"distance"] integerValue];
-            self.time = [[dbObject objectForKey:@"time"] integerValue];
-            self.cost = [[dbObject objectForKey:@"cost"] integerValue];
-            self.order = [[dbObject objectForKey:@"order"] integerValue];
+            self.distance = [[db objectForKey:@"distance"] integerValue];
+            self.time = [[db objectForKey:@"time"] integerValue];
+            self.cost = [[db objectForKey:@"cost"] integerValue];
+            self.order = [[db objectForKey:@"order"] integerValue];
             
             // tell views that our route was updated
             [self postRouteUpdateNotificationWithRoute:self];
@@ -143,34 +127,34 @@
         [points addObject:p];
     }
     
-    PFObject* db = self.dbObject;
-
-    // get data representation and save to disk
-    NSString* filePath = [routeFilePath stringByAppendingPathComponent:db.objectId];
     //NSLog(@"Route saved to: %@", filePath);
-    if(![NSKeyedArchiver archiveRootObject:points toFile:filePath]) {
+    if(![NSKeyedArchiver archiveRootObject:points toFile:routeFilePath]) {
         NSLog(@"Error saving route file");
     }
     
-    // sync update with database
-    [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
-    [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
-    [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
-    [db setObject:[NSNumber numberWithInteger:self.order] forKey:@"order"];
-    [db saveEventually];
+    [self.model setDirty:true];
+}
+
+- (NSDictionary*)serialize
+{
+    return [NSDictionary dictionaryWithObjectsAndKeys:
+                [NSNumber numberWithInteger: self.time], @"time",
+                [NSNumber numberWithInteger: self.cost], @"cost",
+                [NSNumber numberWithInteger: self.distance], @"distance",
+                [NSNumber numberWithInteger: self.order], @"order",
+                fileName, @"filename",
+                nil];
 }
 
 - (void)remove
 {
-    [self.dbObject deleteEventually];
+    [self resetDB];
 }
 
 - (void)resetDB
 {
-    // clear the archived file
-    NSString* filePath = [routeFilePath stringByAppendingPathComponent:self.dbObject.objectId];
     //NSLog(@"Reset database %@", filePath);
-    [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:routeFilePath error:nil];
 }
 
 // convert input points into overlays
@@ -302,7 +286,7 @@
         self.centerRegion = [self getCenterRegionFromPoints:routePoints];
          
         // update model
-        [[[AppModel model] currentRoadtrip] routeUpdated:self];
+        [self.model routeUpdated:self];
         
         // tell views that our route was updated
         [self postRouteUpdateNotificationWithRoute:self];

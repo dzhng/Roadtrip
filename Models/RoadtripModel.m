@@ -12,10 +12,6 @@
 
 @interface RoadtripModel ()
 
-// input an array of db objects representing the routes,
-// make correct route model objects and connect with locations
-- (void)setRoutesFromDB:(NSArray*)dbObjects;
-
 @end
 
 @implementation RoadtripModel
@@ -120,45 +116,9 @@
 
 - (void)getAllLocationsAndRoutes
 {
-    __block bool done = false;
-    __block NSArray* routeObjects = [[NSArray alloc] init];
-    
-    // get locations
-    PFQuery* locationQuery = [PFQuery queryWithClassName:LOCATION_CLASS];
-    [locationQuery whereKey:@"roadtrip" equalTo:self.dbObject];
-    [locationQuery orderByAscending:@"order"];
-    [locationQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        // iterate through the objects and make models
-        for (id object in objects) {
-            RoadtripLocation* location = [[RoadtripLocation alloc] initFromDB:object];
-            [self.locationArray addObject:location];
-        }
-        // if route getter is already done
-        if(done) {
-            [self setRoutesFromDB:routeObjects];
-        } else {
-            done = true;
-        }
-    }];
-    
-    PFQuery* routeQuery = [PFQuery queryWithClassName:ROUTE_CLASS];
-    [routeQuery whereKey:@"roadtrip" equalTo:self.dbObject];
-    [routeQuery orderByAscending:@"order"];
-    [routeQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        routeObjects = objects;
-        // if location getter is already done
-        if(done) {
-            [self setRoutesFromDB:routeObjects];
-        } else {
-            done = true;
-        }
-    }];
-}
-
-- (void)setRoutesFromDB:(NSArray*)dbObjects
-{
-    NSMutableArray* routes = [dbObjects mutableCopy];
-    NSMutableArray* locations = self.locationArray;
+    // get locations and routes
+    NSMutableArray* locations = [[self.dbObject objectForKey:@"locations"] mutableCopy];
+    NSMutableArray* routes = [[self.dbObject objectForKey:@"routes"] mutableCopy];
     int numLocations = [locations count];
     int numRoutes = [routes count];
     
@@ -168,29 +128,29 @@
             NSLog(@"ERROR: locations and routes out of sync, locations too high");
             // kill locations until it's the correct number
             while([locations count] > numRoutes + 1 && [locations count] != 0) {
-                [[[locations lastObject] dbObject] deleteEventually];
-                
                 [locations removeLastObject];
             }
         } else if(numLocations < numRoutes + 1) {
             NSLog(@"ERROR: locations and routes out of sync, routes too high");
             // kill routes until it's the correct number
             while([routes count] + 1 > numLocations && [routes count] != 0) {
-                PFObject* object = [routes lastObject];
-                // delete this in database
-                [object deleteEventually];
-                
-                // remove from array
                 [routes removeLastObject];
             }
         }
+    }
+    
+    // iterate through the objects and make models
+    for (NSDictionary* locationData in locations) {
+        RoadtripLocation* location = [[RoadtripLocation alloc] initFromDB:locationData andModel:self];
+        [self.locationArray addObject:location];
     }
     
     // make new route models and set locations
     // we need to use [routes count] here, since we may remove routes above, so numRoutes will be outdated
     for(int i = 0; i < [routes count]; i++) {
         RoadtripRoute* route = [[RoadtripRoute alloc] initFromDB:[routes objectAtIndex:i]
-                   withStart:[locations objectAtIndex:i] andEnd:[locations objectAtIndex:i+1]];
+                               withStart:[self.locationArray objectAtIndex:i]
+                              andEnd:[self.locationArray objectAtIndex:i+1] andRoadtrip:self];
         [self.routeArray addObject:route];
     }
     
@@ -207,6 +167,18 @@
 - (void)sync
 {
     PFObject* db = self.dbObject;
+    
+    // serialize locations and routes
+    NSMutableArray* locations = [[NSMutableArray alloc] init];
+    for (RoadtripLocation* location in self.locationArray) {
+        NSDictionary* locationData = [location serialize];
+        [locations addObject:locationData];
+    }
+    NSMutableArray* routes = [[NSMutableArray alloc] init];
+    for (RoadtripRoute* route in self.routeArray) {
+        NSDictionary* routeData = [route serialize];
+        [routes addObject:routeData];
+    }
 
     // set class properties
     [db setObject:self.name forKey:@"name"];
@@ -214,6 +186,8 @@
     [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
     [db setObject:[NSNumber numberWithInteger:self.stops] forKey:@"stops"];
     [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
+    [db setObject:locations forKey:@"locations"];
+    [db setObject:routes forKey:@"routes"];
     [db saveEventually];
 }
 
@@ -271,11 +245,11 @@
     // copy the location data and make a new location object
     RoadtripLocation* location = [[RoadtripLocation alloc] initWithTitle:newlocation.title
                            subTitle:newlocation.subtitle coordinate:newlocation.coordinate
-                               order:[self.locationArray count] andRoadtrip:self.dbObject];
+                               order:[self.locationArray count] andRoadtrip:self];
     
     // if this isn't the first location, we should add a new route
     if([self.locationArray count] > 0) {
-        RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] endLocation:location order:[self.routeArray count] andRoadtrip:self.dbObject];
+        RoadtripRoute* newRoute = [[RoadtripRoute alloc] initWithStartLocation:[self.locationArray lastObject] endLocation:location order:[self.routeArray count] andRoadtrip:self];
         
         [self.routeArray addObject:newRoute];
     }

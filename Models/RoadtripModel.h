@@ -31,9 +31,13 @@
 @interface RoadtripModel : NSObject
 {
     CLGeocoder* geocoder;        // stores geocoder used for location lookup
+    
 }
 
 @property (assign, nonatomic) id <RoadtripModelDelegate> delegate;
+
+// flag indicating if the current data has changed and should be synced with server
+@property (assign, nonatomic) bool dirty;
 
 // roadtrip settings
 @property (copy, nonatomic) NSString* name;

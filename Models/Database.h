@@ -10,7 +10,5 @@
 #define Roadtrip_Database_h
 
 #define ROADTRIP_CLASS      @"Roadtrip"
-#define LOCATION_CLASS      @"Location"
-#define ROUTE_CLASS         @"Route"
 
 #endif
