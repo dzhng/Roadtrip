@@ -421,7 +421,6 @@
     <resources>
         <image name="bg1-nonretina.png" width="16" height="16"/>
     </resources>
-<<<<<<< HEAD
     <classes>
         <class className="DetailMapViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/DetailMapViewController.h"/>
@@ -506,8 +505,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
-=======
->>>>>>> 87905047dae28b0a04f1198acf3c4c9625074639
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

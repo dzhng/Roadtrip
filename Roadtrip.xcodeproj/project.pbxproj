@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
+		632DD3D8162F1FEE00841978 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
+		632DD3D9162F1FEE00841978 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
 		6353F54E1627D78100525EF8 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353F54D1627D78100525EF8 /* AppModel.m */; };
 		635EE82A161D183200E2635F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE829161D183200E2635F /* UIKit.framework */; };
 		635EE82C161D183200E2635F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82B161D183200E2635F /* Foundation.framework */; };
@@ -58,8 +60,6 @@
 		93268244162888CD00DFF7EA /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268241162888CD00DFF7EA /* Accounts.framework */; };
 		93268245162888CD00DFF7EA /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268242162888CD00DFF7EA /* AdSupport.framework */; };
 		93268246162888CD00DFF7EA /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93268243162888CD00DFF7EA /* Social.framework */; };
-		9329F23C162BAE6D003EA77E /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
-		9329F241162BAE7F003EA77E /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
 		9350734B162CAE29009A4D5D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 93507349162CAE29009A4D5D /* logo.png */; };
 		93507356162CB7C4009A4D5D /* logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 93507355162CB7C4009A4D5D /* logo@2x.png */; };
 		93C742F91629CFA800F32FC9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C742F81629CFA800F32FC9 /* MainViewController.m */; };
@@ -401,6 +401,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				632DD3D8162F1FEE00841978 /* SignUpViewController.m in Sources */,
+				632DD3D9162F1FEE00841978 /* SignInViewController.m in Sources */,
 				635EE836161D183200E2635F /* main.m in Sources */,
 				635EE83A161D183200E2635F /* RoadtripAppDelegate.m in Sources */,
 				635EE846161D183200E2635F /* RoadtripViewController.m in Sources */,
