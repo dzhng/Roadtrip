@@ -101,6 +101,9 @@
     MKCoordinateRegion newRegion =  MKCoordinateRegionMakeWithDistance(location.coordinate, MAP_ZOOM, MAP_ZOOM);
     [mapView setRegion:newRegion animated:NO];
     
+    // get rid of existing popover
+    [self.mapPopover dismissPopoverAnimated:YES];
+    
     // set the flag that this is a manual select, so we don't send any notifications
     manualSelect = true;
     [mapView selectAnnotation:location animated:YES];

@@ -166,29 +166,34 @@
 
 - (void)sync
 {
-    PFObject* db = self.dbObject;
-    
-    // serialize locations and routes
-    NSMutableArray* locations = [[NSMutableArray alloc] init];
-    for (RoadtripLocation* location in self.locationArray) {
-        NSDictionary* locationData = [location serialize];
-        [locations addObject:locationData];
-    }
-    NSMutableArray* routes = [[NSMutableArray alloc] init];
-    for (RoadtripRoute* route in self.routeArray) {
-        NSDictionary* routeData = [route serialize];
-        [routes addObject:routeData];
-    }
+    if(self.dirty) {
+        PFObject* db = self.dbObject;
+        
+        // serialize locations and routes
+        NSMutableArray* locations = [[NSMutableArray alloc] init];
+        for (RoadtripLocation* location in self.locationArray) {
+            NSDictionary* locationData = [location serialize];
+            [locations addObject:locationData];
+        }
+        NSMutableArray* routes = [[NSMutableArray alloc] init];
+        for (RoadtripRoute* route in self.routeArray) {
+            NSDictionary* routeData = [route serialize];
+            [routes addObject:routeData];
+        }
 
-    // set class properties
-    [db setObject:self.name forKey:@"name"];
-    [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
-    [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
-    [db setObject:[NSNumber numberWithInteger:self.stops] forKey:@"stops"];
-    [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
-    [db setObject:locations forKey:@"locations"];
-    [db setObject:routes forKey:@"routes"];
-    [db saveEventually];
+        // set class properties
+        [db setObject:self.name forKey:@"name"];
+        [db setObject:[NSNumber numberWithInteger:self.distance] forKey:@"distance"];
+        [db setObject:[NSNumber numberWithInteger:self.time] forKey:@"time"];
+        [db setObject:[NSNumber numberWithInteger:self.stops] forKey:@"stops"];
+        [db setObject:[NSNumber numberWithInteger:self.cost] forKey:@"cost"];
+        [db setObject:locations forKey:@"locations"];
+        [db setObject:routes forKey:@"routes"];
+        [db saveEventually];
+        
+        self.dirty = false;
+        NSLog(@"Roadtrip saved");
+    }
 }
 
 - (void)calculateStat
