@@ -238,6 +238,8 @@
             [[[AppModel model] currentRoadtrip] routeSelected:[model.routeArray objectAtIndex:rrow]
                                                       fromSource:NOTIFICATION_TABLE_SOURCE];
         }
+        // deselect any other cells
+        [self deselectAllRows];
         return nil;
     }
     return indexPath;
