@@ -81,15 +81,17 @@
 - (void)viewDidLayoutSubviews {
     
     // Set frame position for elements
-    [self.logInView.logo setFrame:CGRectMake(300.0f, 15.0f, 426.0f, 239.0f)];
-    [self.fieldsBackground setFrame:CGRectMake(395.0f, 265.0f, 240.0f, 100.0f)];
-    [self.logInView.usernameField setFrame:CGRectMake(420.0f, 270.0f, 190.0f, 50.0f)];
-    [self.logInView.passwordField setFrame:CGRectMake(420.0f, 310.0f, 190.0f, 50.0f)];
-    [self.logInView.passwordForgottenButton setFrame:CGRectMake(385.0f, 290.0f, 21.0f, 55.0f)];
-    [self.logInView.facebookButton setFrame:CGRectMake(405.0, 365.0f, 221.0f, 50.0f)];
-    [self.logInView.signUpButton setFrame:CGRectMake(408.0f, 405.0f, 216.0f, 40.0f)];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.logInView.logo setFrame:CGRectMake(300.0f, 15.0f, 426.0f, 239.0f)];
+        [self.fieldsBackground setFrame:CGRectMake(395.0f, 265.0f, 240.0f, 100.0f)];
+        [self.logInView.usernameField setFrame:CGRectMake(420.0f, 270.0f, 190.0f, 50.0f)];
+        [self.logInView.passwordField setFrame:CGRectMake(420.0f, 310.0f, 190.0f, 50.0f)];
+        [self.logInView.passwordForgottenButton setFrame:CGRectMake(385.0f, 290.0f, 21.0f, 55.0f)];
+        [self.logInView.facebookButton setFrame:CGRectMake(405.0, 365.0f, 221.0f, 50.0f)];
+        [self.logInView.signUpButton setFrame:CGRectMake(408.0f, 405.0f, 216.0f, 40.0f)];
+    } else {
     
-    
+    }
 }
 
 @end

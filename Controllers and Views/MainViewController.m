@@ -24,7 +24,6 @@
     
     // set layout settings
     UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)[self.collectionView collectionViewLayout];
-    layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
     layout.sectionInset = UIEdgeInsetsMake(40, 20, 40, 20);
     layout.minimumLineSpacing = 40;
     
@@ -218,7 +217,11 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return CGSizeMake(500, 400);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return CGSizeMake(500, 400);
+    } else {
+        return CGSizeMake(300, 264);
+    }
 }
 
 @end

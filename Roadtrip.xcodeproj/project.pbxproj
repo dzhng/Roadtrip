@@ -10,6 +10,7 @@
 		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
 		632DD3D8162F1FEE00841978 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
 		632DD3D9162F1FEE00841978 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
+		632DD3DD1630EEEE00841978 /* MainStoryboard-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632DD3DB1630EEEE00841978 /* MainStoryboard-iPhone.storyboard */; };
 		6353F54E1627D78100525EF8 /* AppModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353F54D1627D78100525EF8 /* AppModel.m */; };
 		635EE82A161D183200E2635F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE829161D183200E2635F /* UIKit.framework */; };
 		635EE82C161D183200E2635F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 635EE82B161D183200E2635F /* Foundation.framework */; };
@@ -68,6 +69,7 @@
 /* Begin PBXFileReference section */
 		630B2731161FC070004BAE04 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Libraries/JSONKit.h; sourceTree = "<group>"; };
 		630B2732161FC070004BAE04 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Libraries/JSONKit.m; sourceTree = "<group>"; };
+		632DD3DC1630EEEE00841978 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/MainStoryboard-iPhone.storyboard"; sourceTree = "<group>"; };
 		6353F54C1627D78100525EF8 /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModel.h; path = Models/AppModel.h; sourceTree = "<group>"; };
 		6353F54D1627D78100525EF8 /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppModel.m; path = Models/AppModel.m; sourceTree = "<group>"; };
 		635EE825161D183200E2635F /* Roadtrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Roadtrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -240,6 +242,7 @@
 				635EE838161D183200E2635F /* RoadtripAppDelegate.h */,
 				635EE839161D183200E2635F /* RoadtripAppDelegate.m */,
 				635EE841161D183200E2635F /* MainStoryboard.storyboard */,
+				632DD3DB1630EEEE00841978 /* MainStoryboard-iPhone.storyboard */,
 				635EE830161D183200E2635F /* Supporting Files */,
 			);
 			path = Roadtrip;
@@ -391,6 +394,7 @@
 				931769DE162D60B9001BB1EB /* field-bg.png in Resources */,
 				931769E1162E1421001BB1EB /* signin.png in Resources */,
 				931769E5162E21D8001BB1EB /* forgot-bg.png in Resources */,
+				632DD3DD1630EEEE00841978 /* MainStoryboard-iPhone.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +431,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		632DD3DB1630EEEE00841978 /* MainStoryboard-iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				632DD3DC1630EEEE00841978 /* en */,
+			);
+			name = "MainStoryboard-iPhone.storyboard";
+			sourceTree = "<group>";
+		};
 		635EE832161D183200E2635F /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -512,6 +524,7 @@
 				INFOPLIST_FILE = "Roadtrip/Roadtrip-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -529,6 +542,7 @@
 				INFOPLIST_FILE = "Roadtrip/Roadtrip-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
