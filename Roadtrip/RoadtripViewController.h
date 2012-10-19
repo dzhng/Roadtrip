@@ -44,5 +44,6 @@
 - (IBAction)rearrangePressed:(id)sender;
 - (IBAction)startTripPressed:(id)sender;
 - (IBAction)backPressed:(id)sender;
+- (IBAction)mapSwiped:(id)sender;
 
 @end

@@ -110,6 +110,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)mapSwiped:(id)sender {
+    NSLog(@"map swiped");
+}
+
 // resize the table container to fit cells
 - (void)resizeTable
 {

@@ -22,11 +22,6 @@
 {
     [super viewDidLoad];
     
-    // set layout settings
-    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)[self.collectionView collectionViewLayout];
-    layout.sectionInset = UIEdgeInsetsMake(40, 20, 40, 20);
-    layout.minimumLineSpacing = 40;
-    
     // TODO: Display loading animation
 }
 
