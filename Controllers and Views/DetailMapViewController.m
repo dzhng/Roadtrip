@@ -102,7 +102,9 @@
     [mapView setRegion:newRegion animated:NO];
     
     // get rid of existing popover
-    [self.mapPopover dismissPopoverAnimated:YES];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.mapPopover dismissPopoverAnimated:YES];
+    }
     
     // set the flag that this is a manual select, so we don't send any notifications
     manualSelect = true;
@@ -132,7 +134,9 @@
     // remove the pin
     [mapView removeAnnotation:location];
     // also remove popover box
-    [self.mapPopover dismissPopoverAnimated:YES];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        [self.mapPopover dismissPopoverAnimated:YES];
+    }
 }
 
 - (void)removeRoute:(RoadtripRoute*)route
@@ -261,43 +265,45 @@
 {
     // if it's a search annotation, open popover by default
     RoadtripLocation* annotation = (RoadtripLocation*)(view.annotation);
-    if([annotation search]) {
-        // the annotation is actually just the roadtrip location class acting as delegate
-        MapPopoverViewController *vc = [[MapPopoverViewController alloc] initWithLocation:view.annotation];
-        
-        self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
-        self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
-        
-        //size as needed
-        self.mapPopover.popoverContentSize = CGSizeMake(240, 336);
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if([annotation search]) {
+            // the annotation is actually just the roadtrip location class acting as delegate
+            MapPopoverViewController *vc = [[MapPopoverViewController alloc] initWithLocation:view.annotation];
+            
+            self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
+            self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
+            
+            //size as needed
+            self.mapPopover.popoverContentSize = CGSizeMake(240, 336);
 
-        //show the popover next to the annotation view (pin)
-        [self.mapPopover presentPopoverFromRect:view.bounds inView:view
-            permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-    } else {
-        if(!manualSelect) {
-            // tell model that the user has selected something from the map
-            [[[AppModel model] currentRoadtrip] locationSelected:annotation
-                                                      fromSource:NOTIFICATION_MAP_SOURCE];
+            //show the popover next to the annotation view (pin)
+            [self.mapPopover presentPopoverFromRect:view.bounds inView:view
+                permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+        } else {
+            if(!manualSelect) {
+                // tell model that the user has selected something from the map
+                [[[AppModel model] currentRoadtrip] locationSelected:annotation
+                                                          fromSource:NOTIFICATION_MAP_SOURCE];
+            }
+            manualSelect = false;
+            
+            // make the selected popover
+            SelectedPopoverViewController *vc = [[SelectedPopoverViewController alloc] initWithLocation:view.annotation];
+            
+            self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
+            self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
+
+            // tableviews should ignore popover dismiss actions
+            RoadtripViewController* parent = (RoadtripViewController*)self.parentViewController;
+            self.mapPopover.passthroughViews = [[NSArray alloc] initWithObjects:parent.tableContainer, nil];
+
+            //size as needed
+            self.mapPopover.popoverContentSize = CGSizeMake(240, 250);
+
+            //show the popover next to the annotation view (pin)
+            [self.mapPopover presentPopoverFromRect:view.bounds inView:view
+                permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         }
-        manualSelect = false;
-        
-        // make the selected popover
-        SelectedPopoverViewController *vc = [[SelectedPopoverViewController alloc] initWithLocation:view.annotation];
-        
-        self.mapPopover = [[UIPopoverController alloc] initWithContentViewController:vc];
-        self.mapPopover.delegate = self;    // we need to assign ourself as delegate to catch dismiss popover action
-
-        // tableviews should ignore popover dismiss actions
-        RoadtripViewController* parent = (RoadtripViewController*)self.parentViewController;
-        self.mapPopover.passthroughViews = [[NSArray alloc] initWithObjects:parent.tableContainer, nil];
-
-        //size as needed
-        self.mapPopover.popoverContentSize = CGSizeMake(240, 250);
-
-        //show the popover next to the annotation view (pin)
-        [self.mapPopover presentPopoverFromRect:view.bounds inView:view
-            permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
     }
 }
 

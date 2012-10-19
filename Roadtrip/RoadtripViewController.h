@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "LocationTableViewController.h"
 #import "DetailMapViewController.h"
 #import "RoadtripModel.h"
 #import "RoadtripLocation.h"
+#import "BezelSwipe.h"
 
 @interface RoadtripViewController : UIViewController <RoadtripModelDelegate>
 {
@@ -21,8 +23,14 @@
     // model object for this roadtrip
     RoadtripModel* model;
     
+    // swipe gesture
+    UISwipeGestureRecognizer* swipeRecognizer;
+    
     // store if we're currently in table rearrange mode
     bool editMode;
+    
+    // store if table is currently showing
+    bool tableShowing;
 }
 
 // view data
@@ -44,6 +52,5 @@
 - (IBAction)rearrangePressed:(id)sender;
 - (IBAction)startTripPressed:(id)sender;
 - (IBAction)backPressed:(id)sender;
-- (IBAction)mapSwiped:(id)sender;
 
 @end

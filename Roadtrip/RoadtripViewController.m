@@ -16,6 +16,10 @@
 
 @interface RoadtripViewController ()
 
+- (void)openTableMenu;
+- (void)closeTableMenu;
+- (void)handleSwipe:(UIGestureRecognizer*)sender;
+
 @end
 
 @implementation RoadtripViewController
@@ -57,6 +61,23 @@
     
     [self updateStat];
     [self resizeTable];
+    
+    // initialize gesture recognizer
+    BezelSwipe* bezelRecognizer = [[BezelSwipe alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    bezelRecognizer.delaysTouchesBegan = YES;
+    [self.mapContainer addGestureRecognizer:bezelRecognizer];
+    
+    swipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(handleSwipe:)];
+    swipeRecognizer.delaysTouchesBegan = NO;
+    swipeRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    [self.tableContainer addGestureRecognizer:swipeRecognizer];
+    
+    tableShowing = false;
+    
+    // dont show table menu on phone by default
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        [self closeTableMenu];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -110,10 +131,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)mapSwiped:(id)sender {
-    NSLog(@"map swiped");
-}
-
 // resize the table container to fit cells
 - (void)resizeTable
 {
@@ -134,6 +151,44 @@
     
     // redraw background
     [tableController.tableView setNeedsDisplay];
+}
+
+- (void)openTableMenu
+{
+    [UIView animateWithDuration:0.3 delay:0 options: UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.tableContainer.hidden = NO;
+        CGRect curFrame = self.tableContainer.frame;
+        self.tableContainer.frame = CGRectMake(0, 0, curFrame.size.width, curFrame.size.height);
+    } completion:^(BOOL finished) {
+    }];
+}
+
+- (void)closeTableMenu
+{
+    [UIView animateWithDuration:0.3 delay:0 options: UIViewAnimationOptionLayoutSubviews | UIViewAnimationOptionBeginFromCurrentState animations:^{
+        CGRect curFrame = self.tableContainer.frame;
+        self.tableContainer.frame = CGRectMake(-1*curFrame.size.width, 0, curFrame.size.width, curFrame.size.height);
+    } completion:^(BOOL finished) {
+        self.tableContainer.hidden = YES;
+    }];
+}
+
+- (void)handleSwipe:(UIGestureRecognizer*)sender
+{
+    if ([sender class] == [BezelSwipe class]) {
+        // HACK: need to figure out why it's cancelled here
+        if (!tableShowing && (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled)) {
+            [self openTableMenu];
+            tableShowing = true;
+            swipeRecognizer.delaysTouchesBegan = YES;
+        }
+    } else if ([sender class] == [UISwipeGestureRecognizer class]) {
+        if (tableShowing) {
+            [self closeTableMenu];
+            tableShowing = false;
+            swipeRecognizer.delaysTouchesBegan = NO;
+        }
+    }
 }
 
 #pragma mark Search Bar delegate methods
@@ -198,8 +253,13 @@
     // hide the keyboard
     [self.searchBarView resignFirstResponder];
     
-    // dismiss popover
-    [mapController.mapPopover dismissPopoverAnimated:true];
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        // dismiss popover
+        [mapController.mapPopover dismissPopoverAnimated:true];
+    } else {
+        [self closeTableMenu];
+        tableShowing = false;
+    }
     
     if ([selected isKindOfClass:[RoadtripLocation class]]) {
         // since we pressed on it from the table, we should center the map view to the pin

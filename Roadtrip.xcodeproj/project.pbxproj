@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		630B2733161FC070004BAE04 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 630B2732161FC070004BAE04 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc -DNS_BLOCK_ASSERTIONS -O2"; }; };
+		632047A41631341600FE566F /* BezelSwipe.m in Sources */ = {isa = PBXBuildFile; fileRef = 632047A31631341600FE566F /* BezelSwipe.m */; };
 		632DD3D8162F1FEE00841978 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23F162BAE7F003EA77E /* SignUpViewController.m */; };
 		632DD3D9162F1FEE00841978 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9329F23A162BAE6D003EA77E /* SignInViewController.m */; };
 		632DD3DD1630EEEE00841978 /* MainStoryboard-iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 632DD3DB1630EEEE00841978 /* MainStoryboard-iPhone.storyboard */; };
@@ -69,6 +70,8 @@
 /* Begin PBXFileReference section */
 		630B2731161FC070004BAE04 /* JSONKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSONKit.h; path = Libraries/JSONKit.h; sourceTree = "<group>"; };
 		630B2732161FC070004BAE04 /* JSONKit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSONKit.m; path = Libraries/JSONKit.m; sourceTree = "<group>"; };
+		632047A21631341600FE566F /* BezelSwipe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BezelSwipe.h; path = Libraries/BezelSwipe.h; sourceTree = "<group>"; };
+		632047A31631341600FE566F /* BezelSwipe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BezelSwipe.m; path = Libraries/BezelSwipe.m; sourceTree = "<group>"; };
 		632DD3DC1630EEEE00841978 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = "en.lproj/MainStoryboard-iPhone.storyboard"; sourceTree = "<group>"; };
 		6353F54C1627D78100525EF8 /* AppModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppModel.h; path = Models/AppModel.h; sourceTree = "<group>"; };
 		6353F54D1627D78100525EF8 /* AppModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppModel.m; path = Models/AppModel.m; sourceTree = "<group>"; };
@@ -187,6 +190,8 @@
 				63B8700A162AAC02001B0EAD /* TextFormat.m */,
 				630B2731161FC070004BAE04 /* JSONKit.h */,
 				630B2732161FC070004BAE04 /* JSONKit.m */,
+				632047A21631341600FE566F /* BezelSwipe.h */,
+				632047A31631341600FE566F /* BezelSwipe.m */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				93C742F91629CFA800F32FC9 /* MainViewController.m in Sources */,
 				63B87008162A79E5001B0EAD /* RoadtripCollectionCell.m in Sources */,
 				63B8700B162AAC02001B0EAD /* TextFormat.m in Sources */,
+				632047A41631341600FE566F /* BezelSwipe.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

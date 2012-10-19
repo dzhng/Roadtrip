@@ -226,14 +226,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
-                            <containerView contentMode="scaleToFill" id="BnB-hv-ngn">
-                                <rect key="frame" x="-265" y="0.0" width="300" height="548"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <segue destination="de9-kG-ZiX" kind="embed" id="Dlo-yH-eNH"/>
-                                </connections>
-                            </containerView>
                             <view contentMode="scaleToFill" id="eOz-FB-ee1">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="52"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -247,12 +239,17 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <containerView contentMode="scaleToFill" id="BnB-hv-ngn">
+                                <rect key="frame" x="0.0" y="0.0" width="250" height="548"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <segue destination="de9-kG-ZiX" kind="embed" id="Dlo-yH-eNH"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="2HG-Bc-56A" appends="YES" id="Xun-Fd-OtJ"/>
-                        </connections>
                     </view>
                     <connections>
                         <outlet property="costLabel" destination="oRd-5i-zde" id="tEl-RG-pFQ"/>
@@ -269,11 +266,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bvU-GF-hfC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <swipeGestureRecognizer direction="right" id="2HG-Bc-56A">
-                    <connections>
-                        <action selector="mapSwiped:" destination="Fpf-Sj-7Bs" id="1tF-ZC-G6Y"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-304" y="-137"/>
         </scene>
@@ -300,27 +292,27 @@
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TnQ-kx-r5D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="de9-kG-ZiX" customClass="LocationTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xS4-ZR-OHn" customClass="LocationTableView">
-                        <rect key="frame" x="0.0" y="0.0" width="300" height="548"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="xS4-ZR-OHn" customClass="LocationTableView">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell opaque="NO" contentMode="scaleToFill" restorationIdentifier="LocationCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="LocationCell" rowHeight="100" id="eHb-hH-bkI" customClass="LocationTableCell">
-                                <rect key="frame" x="0.0" y="22" width="300" height="100"/>
+                                <rect key="frame" x="0.0" y="22" width="250" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="99"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Street Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BhM-PU-MWj">
-                                            <rect key="frame" x="20" y="25" width="260" height="26"/>
+                                            <rect key="frame" x="10" y="20" width="230" height="26"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VY4-QO-FpA">
-                                            <rect key="frame" x="20" y="54" width="260" height="21"/>
+                                            <rect key="frame" x="10" y="54" width="230" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -336,28 +328,28 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell opaque="NO" contentMode="scaleToFill" restorationIdentifier="RouteCell" selectionStyle="none" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="RouteCell" rowHeight="40" id="TKm-mw-ZJB" customClass="RouteTableCell">
-                                <rect key="frame" x="0.0" y="122" width="300" height="40"/>
+                                <rect key="frame" x="0.0" y="122" width="250" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="300" height="39"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Distance" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aKn-Ov-v0e">
-                                            <rect key="frame" x="20" y="9" width="131" height="21"/>
+                                            <rect key="frame" x="10" y="9" width="131" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Time" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R6S-oo-m2Q">
-                                            <rect key="frame" x="148" y="0.0" width="132" height="18"/>
+                                            <rect key="frame" x="106" y="1" width="134" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Cost" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="r6D-KJ-aZP">
-                                            <rect key="frame" x="148" y="16" width="132" height="18"/>
+                                            <rect key="frame" x="136" y="20" width="104" height="18"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -431,7 +423,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/RoadtripViewController.h"/>
             <relationships>
                 <relationship kind="action" name="backPressed:"/>
-                <relationship kind="action" name="mapSwiped:"/>
                 <relationship kind="action" name="rearrangePressed:"/>
                 <relationship kind="action" name="startTripPressed:"/>
                 <relationship kind="outlet" name="costLabel" candidateClass="UILabel"/>
@@ -463,9 +454,6 @@
         </class>
         <class className="UICollectionViewFlowLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewFlowLayout.h"/>
-        </class>
-        <class className="UICollectionViewLayout" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionViewLayout.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

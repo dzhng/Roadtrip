@@ -25,7 +25,7 @@
 - (void)drawRect:(CGRect)rect
 {
     // draw a gradient as the background of this table
-    CGContextRef context = UIGraphicsGetCurrentContext();
+    /*CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGColorRef darkColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5].CGColor;
     CGColorRef lightColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.3].CGColor;
@@ -60,7 +60,7 @@
     CGPoint points[] = {CGPointMake(CGRectGetMaxX(rect), CGRectGetMinY(rect)),
         CGPointMake(CGRectGetMaxX(rect), CGRectGetMaxY(rect))};
     CGContextStrokeLineSegments(context, points, 2);
-    CGContextRestoreGState(context);
+    CGContextRestoreGState(context);*/
     
     // draw the text on top
 }
