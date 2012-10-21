@@ -22,6 +22,11 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesBegan:touches withEvent:event];
     
+    if ([touches count] > 1) {
+        self.state = UIGestureRecognizerStateFailed;
+        return;
+    }
+    
     UITouch *touch = [touches anyObject];
     if ([touch locationInView:self.view].x > BEGIN_BOUND) {
         self.state = UIGestureRecognizerStateFailed;
@@ -34,7 +39,10 @@
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesMoved:touches withEvent:event];
     
-    if (self.state == UIGestureRecognizerStateFailed) {
+    if ([touches count] > 1) {
+        self.state = UIGestureRecognizerStateFailed;
+        return;
+    } else if (self.state == UIGestureRecognizerStateFailed) {
         return;
     }
     
@@ -50,6 +58,11 @@
 
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     [super touchesEnded:touches withEvent:event];
+    
+    if ([touches count] > 1) {
+        self.state = UIGestureRecognizerStateFailed;
+        return;
+    }
     
     UITouch *touch = [touches anyObject];
     if (self.state == UIGestureRecognizerStateBegan && [touch locationInView:self.view].x > TRIGGER_BOUND) {
